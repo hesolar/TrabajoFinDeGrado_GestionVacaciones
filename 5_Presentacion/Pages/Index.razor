@@ -1,0 +1,33 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@if(empleados is null){
+    <p> no data </p>
+}
+
+else{
+    @foreach(var e in empleados) {
+        <p>@e.ToString()</p>
+
+    }
+
+}
+
+@code{
+    ICollection<Employee> empleados = null;
+    swaggerClient ApiClient=null;
+    protected override void OnAfterRender(bool firstRender) {
+        base.OnAfterRender(firstRender);
+        ApiClient = new("https://localhost:7140/", new());
+        empleados = ApiClient.EmployeeAllAsync().Result;
+        StateHasChanged();
+    }
+
+}

@@ -6,8 +6,7 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
-
+<button @onclick="go"></button>
 @if(empleados is null){
     <p> no data </p>
 }
@@ -26,8 +25,12 @@ else{
     protected override void OnAfterRender(bool firstRender) {
         base.OnAfterRender(firstRender);
         ApiClient = new("https://localhost:7140/", new());
-        empleados = ApiClient.EmployeeAllAsync().Result;
+        //empleados = ApiClient.EmployeeAllAsync().Result;
         StateHasChanged();
+    }
+    public void go() {
+       empleados= ApiClient.EmployeeAllAsync().Result;
+
     }
 
 }

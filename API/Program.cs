@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString= builder.Configuration.GetConnectionString("EmployeeDB");
+var connectionString= builder.Configuration.GetConnectionString("TFG_DB");
 
 builder.Services.AddDbContext<EmployeeContext>( m => m.UseSqlServer(connectionString), ServiceLifetime.Singleton);
 

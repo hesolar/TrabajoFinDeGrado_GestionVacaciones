@@ -11,7 +11,7 @@ public class CreateEmployeeHandler : IRequestHandler<CreateEmployeeCommand, Empl
     }
     public async Task<EmployeeResponse> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
     {
-        var employeeEntitiy = EmployeeMapper.Mapper.Map<Core.Entities.Employee>(request);
+        Core.Entities.Employee employeeEntitiy = EmployeeMapper.Mapper.Map<Core.Entities.Employee>(request);
         if(employeeEntitiy is null)
         {
             throw new ApplicationException("Issue with mapper");

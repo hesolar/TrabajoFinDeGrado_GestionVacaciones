@@ -11,18 +11,23 @@ namespace Employee.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllEmployee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<List<Core.Entities.Employee>> Get()
         {
             return await _mediator.Send(new GetAllEmployeeQuery());
         }
-        [HttpPost]
+        [HttpPost("CreateEmployee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<EmployeeResponse>> CreateEmployee([FromBody] CreateEmployeeCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+
+
+
+
     }
 }

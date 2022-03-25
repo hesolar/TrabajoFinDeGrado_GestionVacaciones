@@ -26,7 +26,9 @@ builder.Services.AddDbContext<EmployeeContext>( m => m.UseSqlServer(connectionSt
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddMediatR(typeof(CreateEmployeeHandler).GetTypeInfo().Assembly);
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 
 

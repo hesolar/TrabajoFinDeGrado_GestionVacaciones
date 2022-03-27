@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Employee": {
+    "/api/Employee/GetAllEmployee": {
       "get": {
         "tags": [
           "Employee"
@@ -41,7 +41,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/Employee/CreateEmployee": {
       "post": {
         "tags": [
           "Employee"
@@ -88,6 +90,92 @@
           }
         }
       }
+    },
+    "/api/Usuario/GetAllUsers": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/CreateUser": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -102,20 +190,12 @@
           "lastName": {
             "type": "string",
             "nullable": true
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
           }
         },
+        "additionalProperties": false
+      },
+      "CreateUsuarioCommand": {
+        "type": "object",
         "additionalProperties": false
       },
       "Employee": {
@@ -150,17 +230,236 @@
           "lastName": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
           },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "phoneNumber": {
+          "nombre": {
             "type": "string",
             "nullable": true
           },
-          "email": {
+          "apellido1": {
             "type": "string",
+            "nullable": true
+          },
+          "apellido2": {
+            "type": "string",
+            "nullable": true
+          },
+          "nif": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailPersonal": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailCorporativo": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono1": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono2": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaAltaEmpresa": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaBajaEmpresa": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "webContrasena": {
+            "type": "string",
+            "nullable": true
+          },
+          "webRol": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimientNotificacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimientoFecha": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "seguimientoIntervalo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "empresaTarifa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "empresaCategoria": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clienteCuenta": {
+            "type": "string",
+            "nullable": true
+          },
+          "clienteCategoria": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clienteNivel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "redmineAPIKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "redmineIdProyecto": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UsuarioResponse": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "apellido1": {
+            "type": "string",
+            "nullable": true
+          },
+          "apellido2": {
+            "type": "string",
+            "nullable": true
+          },
+          "nif": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailPersonal": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailCorporativo": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono1": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono2": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaAltaEmpresa": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaBajaEmpresa": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "webContrasena": {
+            "type": "string",
+            "nullable": true
+          },
+          "webRol": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimientNotificacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimientoFecha": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "seguimientoIntervalo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "empresaTarifa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "empresaCategoria": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clienteCuenta": {
+            "type": "string",
+            "nullable": true
+          },
+          "clienteCategoria": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clienteNivel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "redmineAPIKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "redmineIdProyecto": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

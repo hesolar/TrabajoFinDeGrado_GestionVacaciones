@@ -19,17 +19,20 @@ builder.Services.AddSwaggerGen();
 
 var connectionString= builder.Configuration.GetConnectionString("TFG_DB");
 
-builder.Services.AddDbContext<EmployeeContext>( m => m.UseSqlServer(connectionString), ServiceLifetime.Singleton);
+//works perfect
+builder.Services.AddDbContext<EmployeeContext>(m => m.UseSqlServer(connectionString));
+//error
+builder.Services.AddDbContext<UsuariosContext>( m => m.UseSqlServer(connectionString));
 
-
-
+//stuff automapper and mediatr
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddMediatR(typeof(CreateEmployeeHandler).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(CreateUsuarioHandler).GetTypeInfo().Assembly);
 
 
-//builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 
 
 

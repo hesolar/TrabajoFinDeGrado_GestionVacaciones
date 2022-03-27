@@ -1,6 +1,6 @@
 ﻿namespace Core.Repositories
 {
-    public interface IUsuarioRepository : IRepository<Core.Entities.Usuario,int>
+    public interface IUsuarioRepository : IRepository<Usuario,int>
     {
         //custom operations here
     }

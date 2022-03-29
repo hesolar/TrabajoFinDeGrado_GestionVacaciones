@@ -1,6 +1,6 @@
 ﻿
 namespace Infrastructure.Repositories;
-public class EmployeeRepository : IRepository<Core.Entities.Employee,int>, IEmployeeRepository {
+public class EmployeeRepository : IEmployeeRepository {
 
     EmployeeContext _context;
     RepositoryBase<Core.Entities.Employee,int,EmployeeContext> baseOperations;
@@ -26,7 +26,8 @@ public class EmployeeRepository : IRepository<Core.Entities.Employee,int>, IEmpl
     }
     
 
-    public Task DeleteAsync(Employee entity)=> baseOperations.DeleteAsync(entity);
+    public Task<bool> DeleteAsync(Employee entity)
+        => baseOperations.DeleteAsync(entity);
 
     public Task<IReadOnlyList<Employee>> GetAllAsync() => baseOperations.GetAllAsync();
 
@@ -37,8 +38,13 @@ public class EmployeeRepository : IRepository<Core.Entities.Employee,int>, IEmpl
         return await _context.Employees.Where(m => m.LastName == lastname).ToListAsync();
     }
 
-    public virtual Task UpdateAsync(Employee entity) {
-        throw new NotImplementedException();
+    public Task<bool> UpdateAsync(Employee entity) {
+        var oldEntity= _context.Employees.First(X=> X.EmployeeId == entity.EmployeeId);
+       return  baseOperations.UpdateAsync(oldEntity, entity);
     }
+    
+
+   
+    
 }
 

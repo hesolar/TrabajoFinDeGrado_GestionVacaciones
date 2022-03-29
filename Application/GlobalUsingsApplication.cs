@@ -1,9 +1,10 @@
 ﻿global using MediatR;
 global using AutoMapper;
 global using Application.Mapper;
-global using Application.Queries;
+global using Application.Mapper.MappingProfiles;
+global using Application.Operations.Queries;
 global using Application.Responses;
-global using Application.Commands;
+global using Application.Operations.Commands;
 global using Application.Handlers.QueryHandlers;
 global using Application.Handlers.CommandHandlers;
 global using Core.Repositories;

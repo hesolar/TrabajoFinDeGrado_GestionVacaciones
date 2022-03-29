@@ -1,4 +1,4 @@
-﻿namespace Application.Commands;
+﻿namespace Application.Operations.Commands;
 
 public class CreateEmployeeCommand : IRequest<EmployeeResponse> 
 {

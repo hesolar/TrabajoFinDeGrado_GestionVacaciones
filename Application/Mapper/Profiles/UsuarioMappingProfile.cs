@@ -1,5 +1,4 @@
-﻿namespace Application.Mapper;
-
+﻿namespace Application.Mapper.MappingProfiles;
 
 public class UsuarioMappingProfile : Profile {
     public UsuarioMappingProfile() {

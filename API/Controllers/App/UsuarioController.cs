@@ -19,7 +19,7 @@ namespace Employee.API.Controllers
         }
         [HttpPost("CreateUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<UsuarioResponse>> CreateEmployee([FromBody] CreateUsuarioCommand command)
+        public async Task<ActionResult<UsuarioResponse>> CreateUsuario([FromBody] CreateUsuarioCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

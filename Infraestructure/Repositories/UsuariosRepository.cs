@@ -1,6 +1,6 @@
 ﻿
 namespace Infrastructure.Repositories;
-public class UsuarioRepository : IRepository<Core.Entities.Usuario, int>, IUsuarioRepository {
+public class UsuarioRepository :  IUsuarioRepository {
 
     UsuariosContext _context;
     RepositoryBase<Core.Entities.Usuario, int, UsuariosContext> baseOperations;
@@ -22,20 +22,17 @@ public class UsuarioRepository : IRepository<Core.Entities.Usuario, int>, IUsuar
     }
 
 
-    public Task DeleteAsync(Usuario entity) => baseOperations.DeleteAsync(entity);
 
-    public async Task<IReadOnlyList<Usuario>> GetAllAsync() {
-
-        var a =_context.Usuarios;
-        return   await _context.Set<Usuario>().ToListAsync();
-
-
-    }
+    public  Task<IReadOnlyList<Usuario>> GetAllAsync() =>baseOperations.GetAllAsync();
+      
 
     public Task<Usuario> GetByIdAsync(int id) => baseOperations.GetByIdAsync(id);
 
-    public Task UpdateAsync(Usuario entity) {
-        throw new NotImplementedException();
-    }
+  
+    public async Task<bool> DeleteAsync(Usuario entity) 
+        =>await baseOperations.DeleteAsync(entity);
+
+    public Task<bool> UpdateAsync(Usuario entity)
+      =>  baseOperations.UpdateAsync(_context.Usuarios.First(x=> entity.IdTecnico==x.IdTecnico),entity);
 }
 

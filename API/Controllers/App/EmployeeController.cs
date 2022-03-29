@@ -25,7 +25,18 @@ namespace Employee.API.Controllers
             return Ok(result);
         }
 
-
+        [HttpDelete("DeleteEmployee")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<String>> DeleteEmployee(DeleteEmployeeCommand command) {
+            var result = await _mediator.Send(command);
+            return Ok(result.Completion());
+        }
+        [HttpPut("ReplaceEmployee")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<String>> UpdateEmployee(UpdateEmployeeCommand command) {
+            var result = await _mediator.Send(command);
+            return Ok(result.Completion());
+        }
 
 
 

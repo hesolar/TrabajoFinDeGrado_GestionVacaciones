@@ -1,5 +1,5 @@
 ﻿
-namespace Application.Queries;
+namespace Application.Operations.Queries;
 
 
 public class GetAllUsuariosQuery : IRequest<List<Core.Entities.Usuario>> {

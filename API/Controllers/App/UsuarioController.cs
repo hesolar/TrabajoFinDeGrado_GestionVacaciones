@@ -25,7 +25,18 @@ namespace Employee.API.Controllers
             return Ok(result);
         }
 
-
+        [HttpDelete("DeleteUsuario")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<String>> DeleteUsuario(DeleteUsuarioCommand command) {
+            var result = await _mediator.Send(command);
+            return Ok(result.Completion());
+        }
+        [HttpPut("ReplaceUsuario")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<String>> UpdateUsuario(UpdateUsuarioCommand command) {
+            var result = await _mediator.Send(command);
+            return Ok(result.Completion());
+        }
 
 
 

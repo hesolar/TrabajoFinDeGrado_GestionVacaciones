@@ -2,6 +2,6 @@
 public class CalendarioVacacionesContext : DbContext {
     public CalendarioVacacionesContext(DbContextOptions<CalendarioVacacionesContext> options) : base(options) {
     }
-    public DbSet<Usuario> CalendarioVacaciones { get; set; }
+    public DbSet<Core.Entities.CalendarioVacaciones> CalendarioVacaciones { get; set; }
 }
 

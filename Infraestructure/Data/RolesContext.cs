@@ -3,5 +3,5 @@ public class RolesContext : DbContext {
     public RolesContext(DbContextOptions<RolesContext> options) : base(options) {
 
     }
-    public DbSet<ProyectosContext> Roles { get; set; }
+    public DbSet<Core.Entities.Roles> Roles { get; set; }
 }

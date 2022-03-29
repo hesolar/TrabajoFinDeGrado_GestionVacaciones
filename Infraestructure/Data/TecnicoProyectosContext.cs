@@ -3,5 +3,5 @@ public class TecnicoProyectosContext : DbContext {
     public TecnicoProyectosContext(DbContextOptions<TecnicoProyectosContext> options) : base(options) {
 
     }
-    public DbSet<TecnicoProyectosContext> TecnicoProyectos { get; set; }
+    public DbSet<Core.Entities.TecnicoProyecto> TecnicoProyectos { get; set; }
 }

@@ -1,7 +1,6 @@
-﻿namespace Core.Repositories
+﻿namespace Core.Repositories;
+
+public interface IUsuarioRepository : IRepository<Usuario,int>
 {
-    public interface IUsuarioRepository : IRepository<Usuario,int>
-    {
-        //custom operations here
-    }
+    //custom operations here
 }

@@ -7,6 +7,6 @@ public class EmployeeContext : DbContext {
 
     }
 
-    public DbSet<Employee> Employees { get; set; }
+    public DbSet<Core.Entities.Employee> Employees { get; set; }
 }
 

@@ -10,11 +10,7 @@ public class EmployeeRepository : IEmployeeRepository {
     
     }
 
-    public Task<Employee> AddAsync(Employee entity) {
-        entity.EmployeeId = GenerateKey();
-
-
-
+    public Task<bool> AddAsync(Employee entity) {
         return baseOperations.AddAsync(entity);
     }
     public int GenerateKey() {

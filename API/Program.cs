@@ -1,10 +1,9 @@
+
+
 using Application.Handlers.CommandHandlers;
 using Core.Repositories;
-using Core.Repositories.Base;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
-using Infrastructure.Repositories.Base;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -19,20 +18,22 @@ builder.Services.AddSwaggerGen();
 
 var connectionString= builder.Configuration.GetConnectionString("TFG_DB");
 
-//works perfect
+//DB Context
 builder.Services.AddDbContext<EmployeeContext>(m => m.UseSqlServer(connectionString));
-//error
 builder.Services.AddDbContext<UsuariosContext>( m => m.UseSqlServer(connectionString));
+builder.Services.AddDbContext<CalendarioVacacionesContext>( m => m.UseSqlServer(connectionString));
 
 //stuff automapper and mediatr
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddMediatR(typeof(CreateEmployeeHandler).GetTypeInfo().Assembly);
 builder.Services.AddMediatR(typeof(CreateUsuarioHandler).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(CreateCalendarioVacacionesHandler).GetTypeInfo().Assembly);
 
 
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<ICalendarioVacacionesRepository, CalendarioVacacionesRepository>();
 
 
 

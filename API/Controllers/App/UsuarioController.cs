@@ -13,13 +13,13 @@ namespace Employee.API.Controllers
 
         [HttpGet("GetAllUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Usuario>> Get()
+        public async Task<IEnumerable<UsuarioResponse>> Get()
         {
             return await _mediator.Send(new GetAllUsuariosQuery());
         }
         [HttpPost("CreateUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<UsuarioResponse>> CreateUsuario([FromBody] CreateUsuarioCommand command)
+        public async Task<ActionResult<bool>> CreateUsuario([FromBody] CreateUsuarioCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

@@ -13,7 +13,7 @@ namespace Employee.API.Controllers
 
         [HttpGet("GetAllEmployee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<List<Core.Entities.Employee>> Get()
+        public async Task<IEnumerable<EmployeeResponse>> Get()
         {
             return await _mediator.Send(new GetAllEmployeeQuery());
         }
@@ -22,7 +22,7 @@ namespace Employee.API.Controllers
         public async Task<ActionResult<EmployeeResponse>> CreateEmployee([FromBody] CreateEmployeeCommand command)
         {
             var result = await _mediator.Send(command);
-            return Ok(result);
+            return Ok(result.Completion());
         }
 
         [HttpDelete("DeleteEmployee")]

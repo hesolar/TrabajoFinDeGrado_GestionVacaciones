@@ -1,15 +1,14 @@
 ﻿namespace Application.Handlers.QueryHandlers;
 
-public class GetAllEmployeeHandler : IRequestHandler<GetAllEmployeeQuery, List<Core.Entities.Employee>>
+public class GetAllEmployeeHandler : IRequestHandler<GetAllEmployeeQuery, IEnumerable<EmployeeResponse>>
 {
-    private readonly IEmployeeRepository _employeeRepo;
+    private readonly IEmployeeRepository _repository;
 
-    public GetAllEmployeeHandler(IEmployeeRepository employeeRepository)
-    {
-        _employeeRepo = employeeRepository;
+    public GetAllEmployeeHandler(IEmployeeRepository employeeRepository){
+        _repository = employeeRepository;
     }
-    public async Task<List<Core.Entities.Employee>> Handle(GetAllEmployeeQuery request, CancellationToken cancellationToken)
-    {
-        return (List<Core.Entities.Employee>)await _employeeRepo.GetAllAsync();
+    public async Task<IEnumerable<EmployeeResponse>> Handle(GetAllEmployeeQuery request, CancellationToken cancellationToken){
+        IReadOnlyList<Core.Entities.Employee> employees = await _repository.GetAllAsync();
+        return  MapperBase<EmployeeMappingProfile, EmployeeResponse>.MappIEnumerable(employees);
     }
 }

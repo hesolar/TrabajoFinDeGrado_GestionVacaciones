@@ -1,9 +1,6 @@
-﻿
+﻿namespace Application.Operations.Queries;
 
-
-namespace Application.Operations.Queries;
-
-public class GetAllEmployeeQuery : IRequest<List<Core.Entities.Employee>> {
+public class GetAllEmployeeQuery : IRequest<IEnumerable<EmployeeResponse>> {
 
 }
 

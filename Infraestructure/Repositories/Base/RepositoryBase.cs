@@ -6,10 +6,9 @@ public class RepositoryBase<T, TKey, DB> where T : class where DB : DbContext {
     public RepositoryBase(DB context) 
         => _context = context;
     
-    public async Task<T> AddAsync(T entity) {
+    public async Task<bool> AddAsync(T entity) {
         await _context.Set<T>().AddAsync(entity);
-        await _context.SaveChangesAsync();
-        return entity;
+        return await _context.SaveChangesAsync() > 0 ;
     }
 
     public async Task<bool> DeleteAsync(T entity) {

@@ -10,7 +10,7 @@ public class CalendarioVacacionesRepository : ICalendarioVacacionesRepository {
 
     }
 
-    public Task<CalendarioVacaciones> AddAsync(CalendarioVacaciones entity) {
+    public Task<bool> AddAsync(CalendarioVacaciones entity) {
         return baseOperations.AddAsync(entity);
     }
 

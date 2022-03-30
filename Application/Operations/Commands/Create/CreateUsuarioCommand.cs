@@ -1,6 +1,6 @@
 ﻿namespace Application.Operations.Commands;
 
-public class CreateUsuarioCommand : IRequest<UsuarioResponse> 
+public class CreateUsuarioCommand : IRequest<bool> 
 {
     public int IdTecnico { get; set; }
     public string? Nombre { get; set; }

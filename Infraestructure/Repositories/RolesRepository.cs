@@ -8,7 +8,7 @@ public class RolesRepository : IRolesRepository {
         baseOperations = new(_context);
     }
 
-    public Task<Roles> AddAsync(Roles entity) 
+    public Task<bool> AddAsync(Roles entity) 
         => baseOperations.AddAsync(entity);
     
 

@@ -2,7 +2,7 @@
 namespace Application.Operations.Queries;
 
 
-public class GetAllUsuariosQuery : IRequest<List<Core.Entities.Usuario>> {
+public class GetAllUsuariosQuery : IRequest<IEnumerable<UsuarioResponse>> {
 }
    
 

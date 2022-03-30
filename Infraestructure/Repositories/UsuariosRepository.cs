@@ -9,7 +9,7 @@ public class UsuarioRepository :  IUsuarioRepository {
         baseOperations = new(_context);
     }
 
-    public Task<Usuario> AddAsync(Usuario entity) 
+    public Task<bool> AddAsync(Usuario entity) 
         => baseOperations.AddAsync(entity);
     
     public int GenerateKey() 

@@ -8,7 +8,8 @@ public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployeeCommand, bool
     }
 
     public async Task<bool> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken) {
-        Core.Entities.Employee employeeEntitiy = EmployeeMapper.Mapper.Map<Core.Entities.Employee>(request);
+        
+        Core.Entities.Employee employeeEntitiy = MapperBase<EmployeeMappingProfile,Core.Entities.Employee>.MappEntity(request);
         return await _repostory.UpdateAsync(employeeEntitiy);
          
     }

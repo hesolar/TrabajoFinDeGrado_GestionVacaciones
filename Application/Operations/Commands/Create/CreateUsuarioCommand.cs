@@ -2,7 +2,6 @@
 
 public class CreateUsuarioCommand : IRequest<bool> 
 {
-    public int IdTecnico { get; set; }
     public string? Nombre { get; set; }
     public string? Apellido1 { get; set; }
     public string? Apellido2 { get; set; }

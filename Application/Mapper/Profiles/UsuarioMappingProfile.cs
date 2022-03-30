@@ -7,4 +7,4 @@ public class UsuarioMappingProfile : Profile {
         CreateMap<Core.Entities.Usuario, DeleteUsuarioCommand>().ReverseMap();
         CreateMap<Core.Entities.Usuario, UpdateUsuarioCommand>().ReverseMap();
     }
-}
+} 

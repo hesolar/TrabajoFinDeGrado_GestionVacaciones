@@ -8,7 +8,7 @@ public class UpdateUsuarioHandler : IRequestHandler<UpdateUsuarioCommand, bool> 
     }
 
     public async Task<bool> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken) {
-        Core.Entities.Usuario entity = MapperBase<EmployeeMappingProfile,Core.Entities.Usuario>.MappEntity(request);
+        Core.Entities.Usuario entity = MapperBase<UsuarioMappingProfile,Core.Entities.Usuario>.MappEntity(request);
         return await _repostory.UpdateAsync(entity);
     }
 

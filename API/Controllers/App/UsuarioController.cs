@@ -22,7 +22,7 @@ namespace Employee.API.Controllers
         public async Task<ActionResult<bool>> CreateUsuario([FromBody] CreateUsuarioCommand command)
         {
             var result = await _mediator.Send(command);
-            return Ok(result);
+            return Ok(result.Completion());
         }
 
         [HttpDelete("DeleteUsuario")]

@@ -19,8 +19,8 @@ public class RolesRepository : IRolesRepository {
     public Task<Roles> GetByIdAsync(int id) 
         => baseOperations.GetByIdAsync(id);
 
-    public async Task<bool> DeleteAsync(Roles entity)
-        => await baseOperations.DeleteAsync(entity);
+    public async Task<bool> DeleteAsync(int entity)
+        => await baseOperations.DeleteAsync(_context.Roles.First(x=>x.Id==entity));
 
     public Task<bool> UpdateAsync(Roles entity)
       => baseOperations.UpdateAsync(_context.Roles.First(x => entity.Id == x.Id), entity);

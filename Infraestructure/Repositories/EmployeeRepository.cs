@@ -10,20 +10,14 @@ public class EmployeeRepository : IEmployeeRepository {
     
     }
 
-    public Task<bool> AddAsync(Employee entity) {
-        return baseOperations.AddAsync(entity);
-    }
-    public int GenerateKey() {
-        var context = _context.Employees;
-        int max = context.Count();
-        List<int> ExpectedKeys = Enumerable.Range(0, max).ToList();
-        List<int> DBKeys = context.Select(i => i.EmployeeId).ToList();
-        return ExpectedKeys.Except(DBKeys).First();
-    }
+    public Task<bool> AddAsync(Employee entity) 
+        => baseOperations.AddAsync(entity);
     
 
-    public Task<bool> DeleteAsync(Employee entity)
-        => baseOperations.DeleteAsync(entity);
+    
+
+    public Task<bool> DeleteAsync(int entity)
+        => baseOperations.DeleteAsync(_context.Employees.First(x=>x.EmployeeId==entity));
 
     public Task<IReadOnlyList<Employee>> GetAllAsync() => baseOperations.GetAllAsync();
 

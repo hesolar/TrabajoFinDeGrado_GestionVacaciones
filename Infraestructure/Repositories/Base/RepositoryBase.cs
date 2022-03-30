@@ -12,7 +12,6 @@ public class RepositoryBase<T, TKey, DB> where T : class where DB : DbContext {
     }
 
     public async Task<bool> DeleteAsync(T entity) {
-
         _context.Set<T>().Remove(entity);
        int results= await _context.SaveChangesAsync();
         return results >0;

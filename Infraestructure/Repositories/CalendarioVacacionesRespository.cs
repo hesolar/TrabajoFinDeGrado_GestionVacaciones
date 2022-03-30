@@ -16,8 +16,8 @@ public class CalendarioVacacionesRepository : ICalendarioVacacionesRepository {
 
 
 
-    public Task<bool> DeleteAsync(CalendarioVacaciones entity)
-        => baseOperations.DeleteAsync(entity);
+    public Task<bool> DeleteAsync(Tuple<int, DateTime> entity)
+        => baseOperations.DeleteAsync(_context.CalendarioVacaciones.First(x=>x.IdTecnico==entity.Item1&& x.FechaCalendario==entity.Item2));
 
     public Task<IReadOnlyList<CalendarioVacaciones>> GetAllAsync() => baseOperations.GetAllAsync();
 

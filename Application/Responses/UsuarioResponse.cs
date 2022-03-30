@@ -3,16 +3,16 @@
 
 public class UsuarioResponse {
     public int IdTecnico { get; set; }
-    public string Nombre { get; set; }
-    public string Apellido1 { get; set; }
-    public string Apellido2 { get; set; }
-    public string NIF { get; set; }
-    public string EmailPersonal { get; set; }
-    public string EmailCorporativo { get; set; }
-    public string Direccion { get; set; }
-    public string Telefono1 { get; set; }
-    public string Telefono2 { get; set; }
-    public DateTime FechaRegistro { get; set; }
+    public string? Nombre { get; set; }
+    public string? Apellido1 { get; set; }
+    public string? Apellido2 { get; set; }
+    public string? NIF { get; set; }
+    public string? EmailPersonal { get; set; }
+    public string? EmailCorporativo { get; set; }
+    public string? Direccion { get; set; }
+    public string? Telefono1 { get; set; }
+    public string? Telefono2 { get; set; }
+    public DateTime? FechaRegistro { get; set; }
     public DateTime? FechaAltaEmpresa { get; set; }
     public DateTime? FechaBajaEmpresa { get; set; }
 

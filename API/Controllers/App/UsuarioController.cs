@@ -37,7 +37,11 @@ namespace Employee.API.Controllers
             var result = await _mediator.Send(command);
             return Ok(result.Completion());
         }
-
+        [HttpGet("GetById/{idUsuario}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<UsuarioResponse> GetById(int idUsuario) {
+            return await _mediator.Send(new GetUsuarioByIdQuery() { UsuarioID=idUsuario});
+        }
 
 
     }

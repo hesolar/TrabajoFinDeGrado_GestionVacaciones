@@ -33,9 +33,9 @@ public class EmployeeController : ControllerBase {
         return Ok(result.Completion());
     }
 
-    [HttpGet("GetById/{idUsuario}")]
+    [HttpGet("GetById/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<EmployeeResponse> GetById(int idUsuario) {
-        return await _mediator.Send(new GetEmployeeByIdQuery() { Id = idUsuario });
+    public async Task<EmployeeResponse> GetById(int id) {
+        return await _mediator.Send(new GetEmployeeByIdQuery() { Id = id });
     }
 }

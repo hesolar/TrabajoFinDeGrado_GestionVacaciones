@@ -16,9 +16,11 @@ public class RolesController : ControllerBase {
     }
 
     // GET api/<RolesController>/5
-    [HttpGet("{id}")]
-    public string Get(int id) {
-        return "value";
+    [HttpGet("GetById/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+
+    public async Task<RolesResponse> GetById(int id) {
+        return await _mediator.Send(new GetRolesByIdQuery() {  ID = id });
     }
 
     // POST api/<RolesController>

@@ -13,10 +13,10 @@ public class TecnicoProyectosController : ControllerBase {
         return await _mediator.Send(new GetAllTecnicoProyectosQuery());
     }
 
-    // GET api/<TecnicoProyectosController>/5
-    [HttpGet("{id}")]
-    public string Get(int id) {
-        return "value";
+    [HttpGet("GetById/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<TecnicoProyectosResponse> GetById(int id) {
+        return await _mediator.Send(new GetTecnicoProyectosByIdQuery() { IdProyecto = id });
     }
 
     // POST api/<TecnicoProyectosController>

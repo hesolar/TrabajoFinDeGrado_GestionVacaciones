@@ -20,9 +20,11 @@ public class ProyectoController : ControllerBase {
     }
 
     // GET api/<ValuesController>/5
-    [HttpGet("{id}")]
-    public string Get(int id) {
-        return "value";
+    [HttpGet("GetById/{idProyecto}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+
+    public async Task<ProyectoResponse> GetById(int idProyecto) {
+        return await _mediator.Send(new GetProyectoByIdQuery() { IdProyecto = idProyecto });
     }
 
     // POST api/<ValuesController>

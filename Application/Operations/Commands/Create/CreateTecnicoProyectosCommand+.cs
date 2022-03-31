@@ -1,7 +1,6 @@
 ﻿namespace Application.Operations.Commands;
 
 public class CreateTecnicoProyectosCommand : IRequest<bool> {
-    public int IdTecnicoProyecto { get; set; }
     public int IdTecnico { get; set; }
     public int Proyecto { get; set; }
     public string Observaciones { get; set; }

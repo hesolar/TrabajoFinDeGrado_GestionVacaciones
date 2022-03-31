@@ -12,25 +12,27 @@ public class ProyectoController : ControllerBase {
     }
 
 
-    // GET: api/<ValuesController>
     [HttpGet("GetAllProyectos")]
     public async Task<IEnumerable<ProyectoResponse>> GetAll() {
         return await _mediator.Send(new GetAllProyectosQuery());
 
     }
 
-    // GET api/<ValuesController>/5
     [HttpGet("GetById/{idProyecto}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-
     public async Task<ProyectoResponse> GetById(int idProyecto) {
         return await _mediator.Send(new GetProyectoByIdQuery() { IdProyecto = idProyecto });
     }
 
-    // POST api/<ValuesController>
-    [HttpPost]
-    public void Post([FromBody] string value) {
+    [HttpPost("Create")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<String>> Create([FromBody] CreateProyectoCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
+
+
+
     [HttpPut("Update")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> Update(UpdateProyectoCommand command) {

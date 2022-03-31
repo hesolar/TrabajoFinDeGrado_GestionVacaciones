@@ -23,10 +23,13 @@ public class RolesController : ControllerBase {
         return await _mediator.Send(new GetRolesByIdQuery() {  ID = id });
     }
 
-    // POST api/<RolesController>
-    [HttpPost]
-    public void Post([FromBody] string value) {
+    [HttpPost("Create")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<String>> Create([FromBody] CreateRolesCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
+
 
     [HttpPut("Update")]
     public async Task<ActionResult<String>> Update(UpdateRolesCommand command) {

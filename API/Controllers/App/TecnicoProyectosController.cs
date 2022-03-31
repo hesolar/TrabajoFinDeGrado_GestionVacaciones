@@ -19,10 +19,13 @@ public class TecnicoProyectosController : ControllerBase {
         return await _mediator.Send(new GetTecnicoProyectosByIdQuery() { IdProyecto = id });
     }
 
-    // POST api/<TecnicoProyectosController>
-    [HttpPost]
-    public void Post([FromBody] string value) {
+    [HttpPost("Create")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<String>> Create([FromBody] CreateTecnicoProyectosCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
+
 
 
     [HttpPut("Update")]

@@ -13,7 +13,7 @@ public class EmployeeController : ControllerBase {
     public async Task<IEnumerable<EmployeeResponse>> Get() {
         return await _mediator.Send(new GetAllEmployeeQuery());
     }
-    [HttpPost("CreateEmployee")]
+    [HttpPost("Create")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> CreateEmployee([FromBody] CreateEmployeeCommand command) {
         var result = await _mediator.Send(command);

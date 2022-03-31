@@ -21,9 +21,9 @@ public class CalendarioVacacionesRepository : ICalendarioVacacionesRepository {
 
     public Task<IReadOnlyList<CalendarioVacaciones>> GetAllAsync() => baseOperations.GetAllAsync();
 
-    public  Task<CalendarioVacaciones> GetByIdAsync(Tuple<int, DateTime> id) {
-        return baseOperations.GetByIdAsync(id);
-      
+    public async Task<CalendarioVacaciones> GetByIdAsync(Tuple<int, DateTime> id) {
+        return await _context.Set<CalendarioVacaciones>().FindAsync(id.Item1,id.Item2);
+
     }
 
     public Task<bool> UpdateAsync(CalendarioVacaciones entity) {

@@ -10,33 +10,38 @@ namespace Employee.API.Controllers {
 
         [HttpGet("GetAllCalendarioVacaciones")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<CalendarioVacacionesResponse>> Get() {
+        public async Task<IEnumerable<CalendarioVacacionesResponse>> GetAll() {
             return await _mediator.Send(new GetAllCalendarioVacacionesQuery());
           
         }
 
         [HttpPost("CreateCalendarioVacaciones")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<CalendarioVacacionesResponse>> CreateEmployee([FromBody] CreateCalendarioVacacionesCommand command) {
+        public async Task<ActionResult<CalendarioVacacionesResponse>> Create([FromBody] CreateCalendarioVacacionesCommand command) {
             var result = await _mediator.Send(command);
             return Ok(result.Completion());
         }
 
-        //[HttpDelete("DeleteCalendarioVacaciones")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<String>> DeleteEmployee(DeleteCalendarioVacaciones command) {
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result.Completion());
-        //}
+        [HttpDelete("DeleteCalendarioVacaciones")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<String>> Delete(DeleteCalendarioVacacionesCommand command) {
+            var result = await _mediator.Send(command);
+            return Ok(result.Completion());
+        }
 
-        //[HttpPut("ReplaceEmployee")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<String>> UpdateEmployee(UpdateCalendarioVacacionesCommand command) {
-        //    var result = await _mediator.Send(command);
-        //    return Ok(result.Completion());
-        //}
+        [HttpPut("UpdateCalendarioVacaciones")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<String>> Update(UpdateCalendarioVacacionesCommand command) {
+            var result = await _mediator.Send(command);
+            return Ok(result.Completion());
+        }
 
+        [HttpGet("GetCalendarioVacacionesById/{idTecnico}/{Fecha}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<CalendarioVacacionesResponse> GetById(int idTecnico,DateTime Fecha) {
+            return await _mediator.Send(new GetCalendarioVacacionesByIdQuery() { IdTecnico=idTecnico, Fecha= Fecha });
 
+        }
 
     }
 }

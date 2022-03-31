@@ -5,5 +5,6 @@ public class CalendarioVacacionesResponse {
     public DateTime FechaCalendario { get; set; }
     public int TipoDiaCalendario { get; set; }
 
+    public override string ToString() => $"IdTecnico:{IdTecnico} FechaCalendario:{FechaCalendario} TipoDiaCalendario:{TipoDiaCalendario}";
 }
 

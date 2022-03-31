@@ -5,6 +5,237 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/CalendarioVacaciones/GetAllCalendarioVacaciones": {
+      "get": {
+        "tags": [
+          "CalendarioVacaciones"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CalendarioVacaciones/CreateCalendarioVacaciones": {
+      "post": {
+        "tags": [
+          "CalendarioVacaciones"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCalendarioVacacionesCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCalendarioVacacionesCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCalendarioVacacionesCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CalendarioVacaciones/DeleteCalendarioVacaciones": {
+      "delete": {
+        "tags": [
+          "CalendarioVacaciones"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteCalendarioVacacionesCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteCalendarioVacacionesCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteCalendarioVacacionesCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CalendarioVacaciones/UpdateCalendarioVacaciones": {
+      "put": {
+        "tags": [
+          "CalendarioVacaciones"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCalendarioVacacionesCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCalendarioVacacionesCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCalendarioVacacionesCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CalendarioVacaciones/GetCalendarioVacacionesById/{idTecnico}/{Fecha}": {
+      "get": {
+        "tags": [
+          "CalendarioVacaciones"
+        ],
+        "parameters": [
+          {
+            "name": "idTecnico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Fecha",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Employee/GetAllEmployee": {
       "get": {
         "tags": [
@@ -18,7 +249,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Employee"
+                    "$ref": "#/components/schemas/EmployeeResponse"
                   }
                 }
               },
@@ -26,7 +257,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Employee"
+                    "$ref": "#/components/schemas/EmployeeResponse"
                   }
                 }
               },
@@ -34,7 +265,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Employee"
+                    "$ref": "#/components/schemas/EmployeeResponse"
                   }
                 }
               }
@@ -91,6 +322,142 @@
         }
       }
     },
+    "/api/Employee/DeleteEmployee": {
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteEmployeeCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteEmployeeCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteEmployeeCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Employee/ReplaceEmployee": {
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmployeeCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmployeeCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmployeeCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Employee/GetById/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Usuario/GetAllUsers": {
       "get": {
         "tags": [
@@ -104,7 +471,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Usuario"
+                    "$ref": "#/components/schemas/UsuarioResponse"
                   }
                 }
               },
@@ -112,7 +479,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Usuario"
+                    "$ref": "#/components/schemas/UsuarioResponse"
                   }
                 }
               },
@@ -120,7 +487,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Usuario"
+                    "$ref": "#/components/schemas/UsuarioResponse"
                   }
                 }
               }
@@ -159,6 +526,142 @@
             "content": {
               "text/plain": {
                 "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/DeleteUsuario": {
+      "delete": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUsuarioCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUsuarioCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUsuarioCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/ReplaceUsuario": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsuarioCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsuarioCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsuarioCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario/GetById/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
                   "$ref": "#/components/schemas/UsuarioResponse"
                 }
               },
@@ -180,6 +683,42 @@
   },
   "components": {
     "schemas": {
+      "CalendarioVacacionesResponse": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCalendario": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tipoDiaCalendario": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateCalendarioVacacionesCommand": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCalendario": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tipoDiaCalendario": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateEmployeeCommand": {
         "type": "object",
         "properties": {
@@ -196,22 +735,146 @@
       },
       "CreateUsuarioCommand": {
         "type": "object",
-        "additionalProperties": false
-      },
-      "Employee": {
-        "type": "object",
         "properties": {
-          "employeeId": {
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "apellido1": {
+            "type": "string",
+            "nullable": true
+          },
+          "apellido2": {
+            "type": "string",
+            "nullable": true
+          },
+          "nif": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailPersonal": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailCorporativo": {
+            "type": "string",
+            "nullable": true
+          },
+          "direccion": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono1": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefono2": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaAltaEmpresa": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fechaBajaEmpresa": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "webContrasena": {
+            "type": "string",
+            "nullable": true
+          },
+          "webRol": {
             "type": "integer",
             "format": "int32"
           },
-          "firstName": {
+          "seguimientNotificacion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seguimientoFecha": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "seguimientoIntervalo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "empresaTarifa": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "empresaCategoria": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clienteCuenta": {
             "type": "string",
             "nullable": true
           },
-          "lastName": {
+          "clienteCategoria": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "clienteNivel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "redmineAPIKey": {
             "type": "string",
             "nullable": true
+          },
+          "redmineIdProyecto": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteCalendarioVacacionesCommand": {
+        "type": "object",
+        "properties": {
+          "usuarioID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteEmployeeCommand": {
+        "type": "object",
+        "properties": {
+          "employeeID": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeleteUsuarioCommand": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -234,7 +897,43 @@
         },
         "additionalProperties": false
       },
-      "Usuario": {
+      "UpdateCalendarioVacacionesCommand": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCalendario": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tipoDiaCalendario": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateEmployeeCommand": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUsuarioCommand": {
         "type": "object",
         "properties": {
           "idTecnico": {
@@ -395,7 +1094,8 @@
           },
           "fechaRegistro": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "fechaAltaEmpresa": {
             "type": "string",

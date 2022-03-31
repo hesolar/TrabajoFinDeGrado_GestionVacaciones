@@ -1,5 +1,5 @@
 ﻿namespace Core.Repositories;
 
-public interface ITenicoProyectosRepository : IRepository<Core.Entities.CalendarioVacaciones,int> {
+public interface ITecnicoProyectosRepository : IRepository<Core.Entities.TecnicoProyectos,int> {
     //can be new custom operations
 }

@@ -15,7 +15,7 @@ public class EmployeeController : ControllerBase {
     }
     [HttpPost("CreateEmployee")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<EmployeeResponse>> CreateEmployee([FromBody] CreateEmployeeCommand command) {
+    public async Task<ActionResult<String>> CreateEmployee([FromBody] CreateEmployeeCommand command) {
         var result = await _mediator.Send(command);
         return Ok(result.Completion());
     }

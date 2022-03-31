@@ -2,25 +2,31 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Lectura de datos desde la API!</h1>
 
-Welcome to your new app.
 
-<button @onclick="go"></button>
-@if(empleados is null){
+
+<button @onclick="go">Click me !</button><br />
+@if(usuarios is null){
     <p> no data </p>
+    <br />
 }
 
 else{
-    @foreach(var e in empleados) {
-        <p>@e.ToString()</p>
-
+    @foreach(var e in usuarios.Take(5).ToList()) {
+        <p> @($@"IdTecnico:{e.IdTecnico} 
+            Nombre:{e.Nombre} 
+            Apellido1:{e.Apellido1} 
+            Apellido2:{e.Apellido2} 
+            EmailCorporativo:{e.EmailCorporativo} 
+            FechaAltaEmpresa:{ e.FechaAltaEmpresa}");
+</p>
     }
 
 }
 
 @code{
-    ICollection<Employee> empleados = null;
+    ICollection<UsuarioResponse> usuarios = null;
     swaggerClient ApiClient=null;
     protected override void OnAfterRender(bool firstRender) {
         base.OnAfterRender(firstRender);
@@ -29,8 +35,9 @@ else{
         StateHasChanged();
     }
     public void go() {
-       empleados= ApiClient.GetAllEmployeeAsync().Result;
+        usuarios= ApiClient.GetAllUsersAsync().Result;
 
+        var usuario = usuarios.First().ToString();
     }
 
 }

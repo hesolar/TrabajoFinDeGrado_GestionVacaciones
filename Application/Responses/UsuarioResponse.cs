@@ -30,4 +30,9 @@ public class UsuarioResponse {
     public int? ClienteNivel { get; set; }
     public string RedmineAPIKey { get; set; }
     public int? RedmineIdProyecto { get; set; }
+
+
+
+    public override string ToString() =>$"IdTecnico:{IdTecnico} Nombre:{Nombre} Apellido1:{Apellido1} Apellido2:{Apellido2} EmailCorporativo:{EmailCorporativo} FechaAltaEmpresa:{ FechaAltaEmpresa} ";
 }
+

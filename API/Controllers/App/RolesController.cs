@@ -26,9 +26,10 @@ public class RolesController : ControllerBase {
     public void Post([FromBody] string value) {
     }
 
-    // PUT api/<RolesController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value) {
+    [HttpPut("Update")]
+    public async Task<ActionResult<String>> Update(UpdateRolesCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
 
     // DELETE api/<RolesController>/5

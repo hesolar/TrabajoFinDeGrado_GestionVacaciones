@@ -24,9 +24,11 @@ public class TecnicoProyectosController : ControllerBase {
     public void Post([FromBody] string value) {
     }
 
-    // PUT api/<TecnicoProyectosController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value) {
+
+    [HttpPut("Update")]
+    public async Task<ActionResult<String>> Update(UpdateTecnicoProyectosCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
 
     // DELETE api/<TecnicoProyectosController>/5

@@ -8,25 +8,25 @@ public class UsuarioController : ControllerBase {
         _mediator = mediator;
     }
 
-    [HttpGet("GetAllUsers")]
+    [HttpGet("GetAll")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<UsuarioResponse>> Get() {
         return await _mediator.Send(new GetAllUsuariosQuery());
     }
-    [HttpPost("CreateUser")]
+    [HttpPost("Create")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<bool>> CreateUsuario([FromBody] CreateUsuarioCommand command) {
         var result = await _mediator.Send(command);
         return Ok(result.Completion());
     }
 
-    [HttpDelete("DeleteUsuario")]
+    [HttpDelete("Delete")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> DeleteUsuario(DeleteUsuarioCommand command) {
         var result = await _mediator.Send(command);
         return Ok(result.Completion());
     }
-    [HttpPut("ReplaceUsuario")]
+    [HttpPut("Update")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> UpdateUsuario(UpdateUsuarioCommand command) {
         var result = await _mediator.Send(command);

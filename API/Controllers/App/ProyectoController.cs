@@ -29,10 +29,11 @@ public class ProyectoController : ControllerBase {
     [HttpPost]
     public void Post([FromBody] string value) {
     }
-
-    // PUT api/<ValuesController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value) {
+    [HttpPut("Update")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<String>> Update(UpdateProyectoCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
 
     // DELETE api/<ValuesController>/5

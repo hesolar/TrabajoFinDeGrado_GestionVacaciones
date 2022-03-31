@@ -1,9 +1,8 @@
 ﻿
 namespace Infrastructure.Repositories;
 public class ProyectoRepository : IProyectoRepository {
-
-    ProyectosContext _context;
-    RepositoryBase<Core.Entities.Proyecto, Tuple<int, DateTime>, ProyectosContext> baseOperations;
+    readonly ProyectosContext _context;
+    readonly RepositoryBase<Core.Entities.Proyecto, Tuple<int, DateTime>, ProyectosContext> baseOperations;
     public ProyectoRepository(ProyectosContext context) {
         _context = context;
         baseOperations = new(_context);

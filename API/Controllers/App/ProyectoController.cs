@@ -40,9 +40,11 @@ public class ProyectoController : ControllerBase {
         return Ok(result.Completion());
     }
 
-    // DELETE api/<ValuesController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id) {
+    [HttpDelete("Delete")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<String>> Delete(DeleteProyectoCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
 }
 

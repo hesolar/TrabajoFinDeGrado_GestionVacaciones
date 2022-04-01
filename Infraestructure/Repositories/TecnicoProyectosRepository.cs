@@ -21,7 +21,7 @@ public class TecnicoProyectosRepository : ITecnicoProyectosRepository {
         => baseOperations.GetByIdAsync(id);
 
     public async Task<bool> DeleteAsync(int id)
-        => await baseOperations.DeleteAsync(_context.TecnicoProyectos.First(x => x.IdTecnico == id));
+        => await baseOperations.DeleteAsync(_context.TecnicoProyectos.First(x => x.IdTecnicoProyecto == id));
 
     public Task<bool> UpdateAsync(TecnicoProyectos entity)
       => baseOperations.UpdateAsync(_context.TecnicoProyectos.First(x => x.IdTecnico == entity.IdTecnico),entity);

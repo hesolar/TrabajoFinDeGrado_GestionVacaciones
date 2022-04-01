@@ -38,8 +38,10 @@ public class RolesController : ControllerBase {
     }
 
     // DELETE api/<RolesController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id) {
+    [HttpDelete("Delete")]
+    public async Task<ActionResult<String>> Delete([FromBody] DeleteRolesCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
 
 }

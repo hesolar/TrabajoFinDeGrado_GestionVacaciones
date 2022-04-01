@@ -34,9 +34,11 @@ public class TecnicoProyectosController : ControllerBase {
         return Ok(result.Completion());
     }
 
-    // DELETE api/<TecnicoProyectosController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id) {
+    // DELETE api/<RolesController>/5
+    [HttpDelete("Delete")]
+    public async Task<ActionResult<String>> Delete([FromBody] DeleteTecnicoProyectosCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result.Completion());
     }
 }
 

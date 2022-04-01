@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-namespace Employee.API.Controllers;
+namespace API.Controllers;
 
     [Route("api/[controller]")]
 [ApiController]
@@ -18,13 +18,13 @@ public class ProyectoController : ControllerBase {
 
     }
 
-    [HttpGet("GetById/{idProyecto}")]
+    [HttpGet("GetProyectoById/{idProyecto}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ProyectoResponse> GetById(int idProyecto) {
         return await _mediator.Send(new GetProyectoByIdQuery() { IdProyecto = idProyecto });
     }
 
-    [HttpPost("Create")]
+    [HttpPost("CreateProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> Create([FromBody] CreateProyectoCommand command) {
         var result = await _mediator.Send(command);
@@ -33,14 +33,14 @@ public class ProyectoController : ControllerBase {
 
 
 
-    [HttpPut("Update")]
+    [HttpPut("UpdateProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> Update(UpdateProyectoCommand command) {
         var result = await _mediator.Send(command);
         return Ok(result.Completion());
     }
 
-    [HttpDelete("Delete")]
+    [HttpDelete("DeleteProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> Delete(DeleteProyectoCommand command) {
         var result = await _mediator.Send(command);

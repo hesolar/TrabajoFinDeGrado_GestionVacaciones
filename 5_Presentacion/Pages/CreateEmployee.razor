@@ -1,7 +1,7 @@
 ﻿@page "/CreateEmployee"
 
 
-
+@*
 @if(!Done){
 
 
@@ -17,7 +17,7 @@ else{
 
     <p>Operation Completed</p>
 }
-
+*@
 
 
 @code {
@@ -28,8 +28,8 @@ else{
 
     private void SaveData()
     {
-        swaggerClient ApiClient=new("https://localhost:7140/", new());;
-        ApiClient.CreateEmployeeAsync(new CreateEmployeeCommand() { FirstName = FirstName, LastName = LastName });
-        Done = true;
+        //swaggerClient ApiClient=new("https://localhost:7140/", new());;
+        //ApiClient.CreateEmployeeAsync(new CreateEmployeeCommand() { FirstName = FirstName, LastName = LastName });
+        //Done = true;
     }
 }

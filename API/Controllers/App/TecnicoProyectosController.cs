@@ -7,19 +7,19 @@ public class TecnicoProyectosController : ControllerBase {
         _mediator = mediator;
     }
 
-    [HttpGet("GetAll")]
+    [HttpGet("GetAllTecnicoProyectos")]
     // GET: api/<TecnicoProyectosController>
     public async Task<IEnumerable<TecnicoProyectosResponse>> GetAll() {
         return await _mediator.Send(new GetAllTecnicoProyectosQuery());
     }
 
-    [HttpGet("GetById/{id}")]
+    [HttpGet("GetTecnicoProyectosById/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<TecnicoProyectosResponse> GetById(int id) {
         return await _mediator.Send(new GetTecnicoProyectosByIdQuery() { IdProyecto = id });
     }
 
-    [HttpPost("Create")]
+    [HttpPost("CreateTecnicoProyectos")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> Create([FromBody] CreateTecnicoProyectosCommand command) {
         var result = await _mediator.Send(command);
@@ -28,14 +28,14 @@ public class TecnicoProyectosController : ControllerBase {
 
 
 
-    [HttpPut("Update")]
+    [HttpPut("UpdateTecnicoProyectos")]
     public async Task<ActionResult<String>> Update(UpdateTecnicoProyectosCommand command) {
         var result = await _mediator.Send(command);
         return Ok(result.Completion());
     }
 
     // DELETE api/<RolesController>/5
-    [HttpDelete("Delete")]
+    [HttpDelete("DeleteTecnicoProyectos")]
     public async Task<ActionResult<String>> Delete([FromBody] DeleteTecnicoProyectosCommand command) {
         var result = await _mediator.Send(command);
         return Ok(result.Completion());

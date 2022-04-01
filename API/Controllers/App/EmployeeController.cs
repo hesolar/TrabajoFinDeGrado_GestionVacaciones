@@ -13,7 +13,7 @@ public class EmployeeController : ControllerBase {
     public async Task<IEnumerable<EmployeeResponse>> Get() {
         return await _mediator.Send(new GetAllEmployeeQuery());
     }
-    [HttpPost("Create")]
+    [HttpPost("CreateEmployee")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<String>> CreateEmployee([FromBody] CreateEmployeeCommand command) {
         var result = await _mediator.Send(command);
@@ -33,7 +33,7 @@ public class EmployeeController : ControllerBase {
         return Ok(result.Completion());
     }
 
-    [HttpGet("GetById/{id}")]
+    [HttpGet("GetEmployeeById/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<EmployeeResponse> GetById(int id) {
         return await _mediator.Send(new GetEmployeeByIdQuery() { Id = id });

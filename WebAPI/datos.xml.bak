@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xml:base="https://hiberus.sharepoint.com/sites/IntranetHiberus/_api/" xmlns="http://www.w3.org/2005/Atom" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml">
+	<id>57asdf8AAd9-3edasdfd-4edddf0f-944asdfasd5-9dac74b2</id>
+	<title/>
+	<updated>2022-03-02T12:19:59Z</updated>
+	<entry m:etag="&quot;2&quot;">
+		<id>dedfa2-b3da6f-43aad-a9a3-35</id>
+		<category term="SP.Data.VacacionesListItem" scheme="http://schemas.microsoft.com/ado/3327/535/dataservices/scheme"/>
+		<link rel="edit" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FirstUniqueAncestorSecurableObject" type="application/atom+xml;type=entry" title="FirstUniqueAncestorSecurableObject" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/FirstUniqueAncestorSecurableObject"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/RoleAssignments" type="application/atom+xml;type=feed" title="RoleAssignments" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/RoleAssignments"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/AttachmentFiles" type="application/atom+xml;type=feed" title="AttachmentFiles" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/AttachmentFiles"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/ContentType" type="application/atom+xml;type=entry" title="ContentType" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/ContentType"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/GetDlpPolicyTip" type="application/atom+xml;type=entry" title="GetDlpPolicyTip" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/GetDlpPolicyTip"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesAsHtml" type="application/atom+xml;type=entry" title="FieldValuesAsHtml" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/FieldValuesAsHtml"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesAsText" type="application/atom+xml;type=entry" title="FieldValuesAsText" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/FieldValuesAsText"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesForEdit" type="application/atom+xml;type=entry" title="FieldValuesForEdit" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/FieldValuesForEdit"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/File" type="application/atom+xml;type=entry" title="File" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/File"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Folder" type="application/atom+xml;type=entry" title="Folder" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/Folder"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/LikedByInformation" type="application/atom+xml;type=entry" title="LikedByInformation" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/LikedByInformation"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/ParentList" type="application/atom+xml;type=entry" title="ParentList" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/ParentList"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Properties" type="application/atom+xml;type=entry" title="Properties" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/Properties"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Versions" type="application/atom+xml;type=feed" title="Versions" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5776)/Versions"/>
+		<title/>
+		<updated>2015-03-02T12:19:59Z</updated>
+		<author>
+			<name/>
+		</author>
+		<content type="application/xml">
+			<m:properties>
+				<d:FileSystemObjectType m:type="Edm.Int32">0</d:FileSystemObjectType>
+				<d:Id m:type="Edm.Int32">5776</d:Id>
+				<d:ServerRedirectedEmbedUri m:null="true"/>
+				<d:ServerRedirectedEmbedUrl/>
+				<d:ContentTypeId>0xty99tyFDA0</d:ContentTypeId>
+				<d:Title>hsolar@hiberus.com</d:Title>
+				<d:ComplianceAssetId m:null="true"/>
+				<d:FechaInicio m:type="Edm.DateTime">2021-01-11T00:00:00Z</d:FechaInicio>
+				<d:FechaFin m:type="Edm.DateTime">2021-01-13T00:00:00Z</d:FechaFin>
+				<d:NumDias m:type="Edm.Double">3</d:NumDias>
+				<d:Responsable>aortiz@hiberus.com</d:Responsable>
+				<d:Estado>Aprobada</d:Estado>
+				<d:Created m:type="Edm.DateTime">2020-12-11T10:51:17Z</d:Created>
+				<d:ID m:type="Edm.Int32">5776</d:ID>
+				<d:Modified m:type="Edm.DateTime">2020-12-11T11:07:30Z</d:Modified>
+				<d:AuthorId m:type="Edm.Int32">1073741822</d:AuthorId>
+				<d:EditorId m:type="Edm.Int32">16</d:EditorId>
+				<d:OData__UIVersionString>1.0</d:OData__UIVersionString>
+				<d:Attachments m:type="Edm.Boolean">false</d:Attachments>
+				<d:GUID m:type="Edm.Guid">a9c8f47a-e39d-46c3-8cfb-ca0ed638f149</d:GUID>
+			</m:properties>
+		</content>
+	</entry>
+	<entry m:etag="&quot;2&quot;">
+		<id>9cb0c847-3906-4023-b749-9a785e898d85</id>
+		<category term="SP.Data.VacacionesListItem" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/>
+		<link rel="edit" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FirstUniqueAncestorSecurableObject" type="application/atom+xml;type=entry" title="FirstUniqueAncestorSecurableObject" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FirstUniqueAncestorSecurableObject"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/RoleAssignments" type="application/atom+xml;type=feed" title="RoleAssignments" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/RoleAssignments"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/AttachmentFiles" type="application/atom+xml;type=feed" title="AttachmentFiles" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/AttachmentFiles"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/ContentType" type="application/atom+xml;type=entry" title="ContentType" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/ContentType"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/GetDlpPolicyTip" type="application/atom+xml;type=entry" title="GetDlpPolicyTip" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/GetDlpPolicyTip"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesAsHtml" type="application/atom+xml;type=entry" title="FieldValuesAsHtml" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FieldValuesAsHtml"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesAsText" type="application/atom+xml;type=entry" title="FieldValuesAsText" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FieldValuesAsText"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesForEdit" type="application/atom+xml;type=entry" title="FieldValuesForEdit" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FieldValuesForEdit"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/File" type="application/atom+xml;type=entry" title="File" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/File"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Folder" type="application/atom+xml;type=entry" title="Folder" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/Folder"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/LikedByInformation" type="application/atom+xml;type=entry" title="LikedByInformation" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/LikedByInformation"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/ParentList" type="application/atom+xml;type=entry" title="ParentList" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/ParentList"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Properties" type="application/atom+xml;type=entry" title="Properties" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/Properties"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Versions" type="application/atom+xml;type=feed" title="Versions" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/Versions"/>
+		<title/>
+		<updated>2022-03-02T12:19:59Z</updated>
+		<author>
+			<name/>
+		</author>
+		<content type="application/xml">
+			<m:properties>
+				<d:FileSystemObjectType m:type="Edm.Int32">0</d:FileSystemObjectType>
+				<d:Id m:type="Edm.Int32">5777</d:Id>
+				<d:ServerRedirectedEmbedUri m:null="true"/>
+				<d:ServerRedirectedEmbedUrl/>
+				<d:ContentTypeId>0x01003B8BC6364276A649B5CE0584A199FDA0</d:ContentTypeId>
+				<d:Title>jcarrera@hiberus.com</d:Title>
+				<d:ComplianceAssetId m:null="true"/>
+				<d:FechaInicio m:type="Edm.DateTime">2020-12-14T00:00:00Z</d:FechaInicio>
+				<d:FechaFin m:type="Edm.DateTime">2020-12-24T00:00:00Z</d:FechaFin>
+				<d:NumDias m:type="Edm.Double">9</d:NumDias>
+				<d:Responsable>hsolar@hiberus.com</d:Responsable>
+				<d:Estado>Aprobada</d:Estado>
+				<d:Created m:type="Edm.DateTime">2020-12-11T12:17:11Z</d:Created>
+				<d:ID m:type="Edm.Int32">5777</d:ID>
+				<d:Modified m:type="Edm.DateTime">2020-12-11T14:52:28Z</d:Modified>
+				<d:AuthorId m:type="Edm.Int32">1073741822</d:AuthorId>
+				<d:EditorId m:type="Edm.Int32">16</d:EditorId>
+				<d:OData__UIVersionString>1.0</d:OData__UIVersionString>
+				<d:Attachments m:type="Edm.Boolean">false</d:Attachments>
+				<d:GUID m:type="Edm.Guid">01563d9f-6ceb-49bd-a220-24ce33b68974</d:GUID>
+			</m:properties>
+		</content>
+	</entry>
+
+	<entry m:etag="&quot;2&quot;">
+		<id>9cb0c847-3906-4023-b749-9a785e898d85</id>
+		<category term="SP.Data.VacacionesListItem" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/>
+		<link rel="edit" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FirstUniqueAncestorSecurableObject" type="application/atom+xml;type=entry" title="FirstUniqueAncestorSecurableObject" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FirstUniqueAncestorSecurableObject"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/RoleAssignments" type="application/atom+xml;type=feed" title="RoleAssignments" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/RoleAssignments"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/AttachmentFiles" type="application/atom+xml;type=feed" title="AttachmentFiles" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/AttachmentFiles"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/ContentType" type="application/atom+xml;type=entry" title="ContentType" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/ContentType"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/GetDlpPolicyTip" type="application/atom+xml;type=entry" title="GetDlpPolicyTip" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/GetDlpPolicyTip"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesAsHtml" type="application/atom+xml;type=entry" title="FieldValuesAsHtml" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FieldValuesAsHtml"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesAsText" type="application/atom+xml;type=entry" title="FieldValuesAsText" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FieldValuesAsText"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/FieldValuesForEdit" type="application/atom+xml;type=entry" title="FieldValuesForEdit" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/FieldValuesForEdit"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/File" type="application/atom+xml;type=entry" title="File" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/File"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Folder" type="application/atom+xml;type=entry" title="Folder" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/Folder"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/LikedByInformation" type="application/atom+xml;type=entry" title="LikedByInformation" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/LikedByInformation"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/ParentList" type="application/atom+xml;type=entry" title="ParentList" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/ParentList"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Properties" type="application/atom+xml;type=entry" title="Properties" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/Properties"/>
+		<link rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Versions" type="application/atom+xml;type=feed" title="Versions" href="Web/Lists(guid'3bde47ae-67e3-4529-9099-884e14ec002a')/Items(5777)/Versions"/>
+		<title/>
+		<updated>2022-03-02T12:19:59Z</updated>
+		<author>
+			<name/>
+		</author>
+		<content type="application/xml">
+			<m:properties>
+				<d:FileSystemObjectType m:type="Edm.Int32">0</d:FileSystemObjectType>
+				<d:Id m:type="Edm.Int32">5777</d:Id>
+				<d:ServerRedirectedEmbedUri m:null="true"/>
+				<d:ServerRedirectedEmbedUrl/>
+				<d:ContentTypeId>0x01003B8BC6364276A649B5CE0584A199FDA0</d:ContentTypeId>
+				<d:Title>jcarrera@hiberus.com</d:Title>
+				<d:ComplianceAssetId m:null="true"/>
+				<d:FechaInicio m:type="Edm.DateTime">2018-12-14T00:00:00Z</d:FechaInicio>
+				<d:FechaFin m:type="Edm.DateTime">2020-12-24T00:00:00Z</d:FechaFin>
+				<d:NumDias m:type="Edm.Double">9</d:NumDias>
+				<d:Responsable>hsolar@hiberus.com</d:Responsable>
+				<d:Estado>Aprobada</d:Estado>
+				<d:Created m:type="Edm.DateTime">2020-12-11T12:17:11Z</d:Created>
+				<d:ID m:type="Edm.Int32">5777</d:ID>
+				<d:Modified m:type="Edm.DateTime">2020-12-11T14:52:28Z</d:Modified>
+				<d:AuthorId m:type="Edm.Int32">1073741822</d:AuthorId>
+				<d:EditorId m:type="Edm.Int32">16</d:EditorId>
+				<d:OData__UIVersionString>1.0</d:OData__UIVersionString>
+				<d:Attachments m:type="Edm.Boolean">false</d:Attachments>
+				<d:GUID m:type="Edm.Guid">01563d9f-6ceb-49bd-a220-24ce33b68974</d:GUID>
+			</m:properties>
+		</content>
+	</entry>
+	
+	<link rel="next" href="https://hiberus.sharepoint.com/sites/IntranetHiberus/_api/web/lists/getbytitle(%27Vacaciones%27)/Items?%24skiptoken=Paged%3dTRUE%26p_ID%3d11144&amp;%24top=5000"/>
+</feed>

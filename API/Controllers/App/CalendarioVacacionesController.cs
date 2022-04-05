@@ -43,6 +43,21 @@ public class CalendarioVacacionesController : ControllerBase {
 
     }
 
+
+    [HttpGet("GetUsuarioCalendarioVacaciones/{idTecnico}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IEnumerable<CalendarioVacacionesResponse>> GetCalendarioVacaciones(int idTecnico) {
+        return await _mediator.Send(new GetCalendarioVacacionesUsuarioQuery() { Id = idTecnico } );
+
+    }
+
+    [HttpPut("AddCalendarioVacacionesNoSaved")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IEnumerable<CalendarioVacacionesResponse>> addNuevosCalendariosVacaciones(IEnumerable<CalendarioVacacionesResponse> nuevos ) {
+        return await _mediator.Send(new AddNonSavedCalendarioVacacionesCommand() { nuevosDias= nuevos });
+
+    }
+
 }
 
 

@@ -26,5 +26,16 @@ public class RepositoryBase<T, TKey, DB> where T : class where DB : DbContext {
 
     public async Task<T> GetByIdAsync(TKey id) => await _context.Set<T>().FindAsync(id);
 
+
+    public async Task AddManyAsync(IEnumerable<T> entities) {
+
+
+        Parallel.ForEach(entities, entity => {
+            _context.Set<T>().AddAsync(entity);
+        });
+
+        
+        await _context.SaveChangesAsync();
+    }
 }
 

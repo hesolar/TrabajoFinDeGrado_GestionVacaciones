@@ -15,14 +15,10 @@ public class UsuarioResponse {
     public DateTime? FechaRegistro { get; set; }
     public DateTime? FechaAltaEmpresa { get; set; }
     public DateTime? FechaBajaEmpresa { get; set; }
-
-    public string WebContrasena { get; set; }
     public int WebRol { get; set; }
-
     public int SeguimientNotificacion { get; set; }
     public DateTime? SeguimientoFecha { get; set; }
     public int? SeguimientoIntervalo { get; set; }
-
     public decimal? EmpresaTarifa { get; set; }
     public int? EmpresaCategoria { get; set; }
     public string ClienteCuenta { get; set; }
@@ -30,9 +26,6 @@ public class UsuarioResponse {
     public int? ClienteNivel { get; set; }
     public string RedmineAPIKey { get; set; }
     public int? RedmineIdProyecto { get; set; }
-
-
-
-    public override string ToString() =>$"IdTecnico:{IdTecnico} Nombre:{Nombre} Apellido1:{Apellido1} Apellido2:{Apellido2} EmailCorporativo:{EmailCorporativo} FechaAltaEmpresa:{ FechaAltaEmpresa} ";
+    public override string ToString() => $"IdTecnico:{IdTecnico} Nombre:{Nombre} Apellido1:{Apellido1} Apellido2:{Apellido2} EmailCorporativo:{EmailCorporativo} FechaAltaEmpresa:{ FechaAltaEmpresa} ";
 }
 

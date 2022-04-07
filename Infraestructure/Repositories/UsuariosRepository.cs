@@ -23,5 +23,13 @@ public class UsuarioRepository :  IUsuarioRepository {
 
     public Task<bool> UpdateAsync(Usuario entity)
         => baseOperations.UpdateAsync(_context.Usuarios.First(x=> entity.IdTecnico==x.IdTecnico),entity);
+
+    public Task<Usuario> GetUsuarioByCorreo(string correo) {
+
+
+            return Task.FromResult(_context.Usuarios.FirstOrDefault(X => X.EmailCorporativo == correo));
+
+    }
+    
 }
 

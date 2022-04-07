@@ -1,3 +1,5 @@
+using API_Sharepoint;
+using BlazorApp2;
 using BlazorApp2.Areas.Identity;
 using BlazorApp2.Data;
 using Microsoft.AspNetCore.Components;
@@ -19,7 +21,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddSingleton<WeatherForecastService>();
+
+//APIS
+builder.Services.AddSingleton<SharePointAPI>(new SharePointAPI ("https://localhost:44347//", new HttpClient()));
+builder.Services.AddSingleton<API>(new API("https://localhost:7140//", new HttpClient()));
 
 var app = builder.Build();
 

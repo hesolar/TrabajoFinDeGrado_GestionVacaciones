@@ -37,7 +37,11 @@ public class UsuarioController : ControllerBase {
     public async Task<UsuarioResponse> GetById(int idUsuario) {
         return await _mediator.Send(new GetUsuarioByIdQuery() { UsuarioID = idUsuario });
     }
-
+    [HttpGet("GetUsuarioByCorreoEmpresa/{correoEmpresa}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<UsuarioResponse> GetByCorreoEmpresa(String correoEmpresa ) {
+        return await _mediator.Send(new GetUsuarioByCorreoEmpresaQuery() { CorreoEmpresa = correoEmpresa });
+    }
 
 }
 

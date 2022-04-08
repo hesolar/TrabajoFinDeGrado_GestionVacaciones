@@ -67,6 +67,12 @@ public class CalendarioVacacionesController : ControllerBase {
 
     }
 
+    [HttpPut("ReplaceCalendarioVacaciones")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<bool>> ReplaceCalendarioVacaciones(ReplaceCalendarioVacacionesCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
 
 
 }

@@ -1,13 +1,150 @@
 ﻿@page "/Peticiones"
 @inherits PeticionesVacacionesBase
-<h3>PeticionesVacaciones</h3>
+
+
+
+<RadzenCard Class="mt-4">
+    Peticiones Propias:
+    <RadzenButton Text="CargarPeticiones" Click="@LoadData" Style="margin-bottom:20px" IsLoading=@isLoading />
+
+    <RadzenButton ButtonStyle="ButtonStyle.Primary" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Añadir nueva Solicitud" Click="@InsertRow"  />
+
+
+    <RadzenDataGrid AllowColumnReorder="true" @ref="grid"
+                    AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="2" AllowPaging="true" AllowSorting="true" Data="@CalendarioVacacionesUsuario" 
+                   
+                    TItem="CalendarioVacacionesResponse" ColumnWidth="160px" LogicalFilterOperator="LogicalFilterOperator.Or">
+
+
+        <Columns>
+
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" Title="IdTecnico" />
+
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" Title="Fecha Dia">
+                <Template Context="order">
+                    @String.Format("{0:d}", order.FechaCalendario)
+                </Template>
+                <EditTemplate Context="order">
+                    <RadzenDatePicker @bind-Value="order.FechaCalendario" Style="width:100%" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="TipoDiaCalendario" Title="Estado Solicitud" />
+
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Context="sampleBlazorModelsSampleOrder" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                <Template Context="order">
+                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(order))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+                <EditTemplate Context="order">
+                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(order))">
+                    </RadzenButton>
+                    <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(order))">
+                    </RadzenButton>
+                </EditTemplate>
+            </RadzenDataGridColumn>
+
+
+
+        </Columns>
+
+
+
+    </RadzenDataGrid>
+</RadzenCard>
+
+
+
+
+<RadzenCard Class="mt-4">
+    Peticiones Para atender
+</RadzenCard>
+
+
 
 @code {
+    public async Task SaveRow(CalendarioVacacionesResponse order) {
+
+        if (!order.Equals(oldOrder)) {
 
 
-    protected UsuarioResponse _self{ get; set; }
+
+            var d = new ReplaceCalendarioVacacionesCommand() {
+                FechaCalendarioNew = order.FechaCalendario,
+                FechaCalendarioOld = oldOrder.FechaCalendario,
+                IdTecnico = order.IdTecnico,
+                TipoDiaCalendarioNew = order.TipoDiaCalendario,
+                TipoDiaCalendarioOld = oldOrder.TipoDiaCalendario
+            };
+
+
+
+            var xd = await api.ReplaceCalendarioVacacionesAsync(d);
+
+
+        }
+        oldOrder = null;
+
+
+        await LoadData ();
+
+        //});
+        //api.calendario
+        //await grid.UpdateRow(order);
+        //await LoadData();
+
+    }
+    public async Task EditRow(CalendarioVacacionesResponse order) {
+        oldOrder = new CalendarioVacacionesResponse() {
+                FechaCalendario = order.FechaCalendario,
+                IdTecnico = order.IdTecnico,
+                TipoDiaCalendario = order.TipoDiaCalendario
+        };
+        await grid.EditRow(order);
+
+    }
+    public void CancelEdit(CalendarioVacacionesResponse order) {
+
+    } 
+    public void InsertRow() {
+        
+
+        //if (CalendarioVacacionesUsuario.Any()) IdTecnico = this.CalendarioVacacionesUsuario.First().IdTecnico;
+        //else api.getById
+
+        //CalendarioVacacionesResponse nuevo = new (){IdTecnico= };
+        //await ordersGrid.InsertRow(orderToInsert);
+    }
+
+    int count = 0;
+    public bool isLoading = false;
+    RadzenDataGrid<CalendarioVacacionesResponse> grid;
+    CalendarioVacacionesResponse oldOrder;
+
+    public void DeleteRow() {
+
+
+    }
+
+
     protected override async Task OnParametersSetAsync() {
-        _self =await  api.GetUsuarioByCorreoEmpresaAsync("");
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userIdentity = authState.User.Identity.Name;
+        _selfEmployee = await api.GetUsuarioByCorreoEmpresaAsync(userIdentity);
+    }
+
+    async Task LoadData() {
+        isLoading = true;
+        grid.Reset(true);
+        await grid.FirstPage(true);
+        StateHasChanged();
+
+
+        CalendarioVacacionesUsuario = await api.GetUsuarioCalendarioVacacionesAsync(_selfEmployee.IdTecnico);
+        count = this.CalendarioVacacionesUsuario.Count();
+        // Perform paging via Skip and Take.
+        isLoading = false;
+        StateHasChanged();
     }
 
 }

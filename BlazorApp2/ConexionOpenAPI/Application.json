@@ -351,6 +351,142 @@
         }
       }
     },
+    "/api/CalendarioVacaciones/CalendarioVacaciones/{Proyecto}/{WebRol}": {
+      "get": {
+        "tags": [
+          "CalendarioVacaciones"
+        ],
+        "parameters": [
+          {
+            "name": "WebRol",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Proyecto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioVacacionesResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/CalendarioVacaciones/ReplaceCalendarioVacaciones": {
+      "put": {
+        "tags": [
+          "CalendarioVacaciones"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceCalendarioVacacionesCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceCalendarioVacacionesCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplaceCalendarioVacacionesCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Employee/GetAllEmployee": {
       "get": {
         "tags": [
@@ -1499,6 +1635,244 @@
           }
         }
       }
+    },
+    "/api/UsuarioProyecto/GetAllUsuarioProyecto": {
+      "get": {
+        "tags": [
+          "UsuarioProyecto"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioProyectoResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioProyectoResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioProyectoResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UsuarioProyecto/CreateUsuarioProyecto": {
+      "post": {
+        "tags": [
+          "UsuarioProyecto"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioProyectoCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioProyectoCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUsuarioProyectoCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UsuarioProyecto/DeleteUsuarioProyecto": {
+      "delete": {
+        "tags": [
+          "UsuarioProyecto"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUsuarioProyectoCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUsuarioProyectoCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUsuarioProyectoCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UsuarioProyecto/GetProyectosUsuario/{idTecnico}": {
+      "get": {
+        "tags": [
+          "UsuarioProyecto"
+        ],
+        "parameters": [
+          {
+            "name": "idTecnico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UsuarioProyecto/GetUsuariosProyecto/{Proyecto}": {
+      "get": {
+        "tags": [
+          "UsuarioProyecto"
+        ],
+        "parameters": [
+          {
+            "name": "Proyecto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1754,6 +2128,28 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "proyectos": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateUsuarioProyectoCommand": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "proyecto": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1822,6 +2218,20 @@
         },
         "additionalProperties": false
       },
+      "DeleteUsuarioProyectoCommand": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "proyecto": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "EmployeeResponse": {
         "type": "object",
         "properties": {
@@ -1865,6 +2275,32 @@
             "nullable": true
           },
           "idManager": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReplaceCalendarioVacacionesCommand": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCalendarioOld": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaCalendarioNew": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tipoDiaCalendarioOld": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipoDiaCalendarioNew": {
             "type": "integer",
             "format": "int32"
           }
@@ -2144,6 +2580,20 @@
         },
         "additionalProperties": false
       },
+      "UsuarioProyectoResponse": {
+        "type": "object",
+        "properties": {
+          "idTecnico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "proyecto": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "UsuarioResponse": {
         "type": "object",
         "properties": {
@@ -2200,10 +2650,6 @@
           "fechaBajaEmpresa": {
             "type": "string",
             "format": "date-time",
-            "nullable": true
-          },
-          "webContrasena": {
-            "type": "string",
             "nullable": true
           },
           "webRol": {

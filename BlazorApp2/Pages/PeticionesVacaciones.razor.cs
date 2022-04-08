@@ -6,5 +6,9 @@ public class PeticionesVacacionesBase : ComponentBase {
     [Inject]
     protected API api { get; set; }
 
+    protected IEnumerable<CalendarioVacacionesResponse> CalendarioVacacionesUsuario { get; set; } = new List<CalendarioVacacionesResponse>();
+    protected UsuarioResponse _selfEmployee { get; set; }
+
+
 
 }

@@ -25,6 +25,7 @@ builder.Services.AddDbContext<CalendarioVacacionesContext>( m => m.UseSqlServer(
 builder.Services.AddDbContext<ProyectosContext>( m => m.UseSqlServer(connectionString));
 builder.Services.AddDbContext<RolesContext>( m => m.UseSqlServer(connectionString));
 builder.Services.AddDbContext<TecnicoProyectosContext>( m => m.UseSqlServer(connectionString));
+builder.Services.AddDbContext<UsuarioProyectoContext>( m => m.UseSqlServer(connectionString));
 
 //stuff automapper and mediatr
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -35,6 +36,7 @@ builder.Services.AddMediatR(typeof(CreateCalendarioVacacionesHandler).GetTypeInf
 builder.Services.AddMediatR(typeof(CreateRolesHandler).GetTypeInfo().Assembly);
 builder.Services.AddMediatR(typeof(CreateProyectoHandler).GetTypeInfo().Assembly);
 builder.Services.AddMediatR(typeof(CreateTecnicoProyectosHandler).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(CreateUsuarioProyectoHandler).GetTypeInfo().Assembly);
 
 
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
@@ -43,6 +45,7 @@ builder.Services.AddTransient<IProyectoRepository, ProyectoRepository>();
 builder.Services.AddTransient<IRolesRepository, RolesRepository>();
 builder.Services.AddTransient<ITecnicoProyectosRepository, TecnicoProyectosRepository>();
 builder.Services.AddTransient<ICalendarioVacacionesRepository, CalendarioVacacionesRepository>();
+builder.Services.AddTransient<IUsuarioProyectoRepository, UsuarioProyectoRepository>();
 
 
 

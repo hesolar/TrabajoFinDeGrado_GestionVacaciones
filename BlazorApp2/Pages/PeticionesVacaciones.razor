@@ -1,0 +1,13 @@
+﻿@page "/Peticiones"
+@inherits PeticionesVacacionesBase
+<h3>PeticionesVacaciones</h3>
+
+@code {
+
+
+    protected UsuarioResponse _self{ get; set; }
+    protected override async Task OnParametersSetAsync() {
+        _self =await  api.GetUsuarioByCorreoEmpresaAsync("");
+    }
+
+}

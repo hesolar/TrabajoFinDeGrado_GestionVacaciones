@@ -58,6 +58,17 @@ public class CalendarioVacacionesController : ControllerBase {
 
     }
 
+
+    [HttpGet("CalendarioVacaciones/{Proyecto}/{WebRol}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IEnumerable<CalendarioVacacionesResponse>> GetCalendarioVacacionesSubordinados(IEnumerable<int> Proyectos, int WebRol) {
+        return  await _mediator.Send(new GetSubordinadosQuery() { Proyectos=Proyectos, WebRol=WebRol});
+
+
+    }
+
+
+
 }
 
 

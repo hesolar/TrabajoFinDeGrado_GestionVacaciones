@@ -30,6 +30,16 @@ public class UsuarioRepository :  IUsuarioRepository {
             return Task.FromResult(_context.Usuarios.FirstOrDefault(X => X.EmailCorporativo == correo));
 
     }
-    
+
+    public async Task<IEnumerable<Usuario>> GetSubordinados(IEnumerable<int> proyectos, int webRol) {
+        HashSet<Usuario> subordinados = new();
+
+        return await _context.Usuarios.Where(u => EsRolSubordinado(webRol, u) && EstaEnProyecto(proyectos, u)).ToListAsync();
+        
+    }
+
+    private bool EstaEnProyecto(IEnumerable<int> proyectos, Usuario u) => proyectos.Any(p => u.RedmineIdProyecto.HasValue && p == u.RedmineIdProyecto.Value);
+
+    bool EsRolSubordinado(int WebRol, Usuario u)  => u.WebRol < WebRol;
 }
 

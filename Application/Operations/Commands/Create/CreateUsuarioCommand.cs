@@ -27,5 +27,6 @@ public class CreateUsuarioCommand : IRequest<bool>
     public string? RedmineAPIKey { get; set; }
     public int? RedmineIdProyecto { get; set; }
 
+    public IEnumerable<int> Proyectos { get; set; }
 
 }

@@ -1,6 +1,6 @@
 ﻿namespace Application.Handlers.CommandHandlers;
 
-internal class DeleteRolesHandler : IRequestHandler<DeleteRolesCommand, bool> {
+public class DeleteRolesHandler : IRequestHandler<DeleteRolesCommand, bool> {
 
     private IRolesRepository _context;
     public DeleteRolesHandler(IRolesRepository context) 

@@ -42,7 +42,7 @@
 				<d:Estado>Aprobada</d:Estado>
 				<d:Created m:type="Edm.DateTime">2020-12-11T10:51:17Z</d:Created>
 				<d:ID m:type="Edm.Int32">5776</d:ID>
-				<d:Modified m:type="Edm.DateTime">2020-12-11T11:07:30Z</d:Modified>
+				<d:Modified m:type="Edm.DateTime">2020-12-22T11:07:30Z</d:Modified>
 				<d:AuthorId m:type="Edm.Int32">1073741822</d:AuthorId>
 				<d:EditorId m:type="Edm.Int32">16</d:EditorId>
 				<d:OData__UIVersionString>1.0</d:OData__UIVersionString>

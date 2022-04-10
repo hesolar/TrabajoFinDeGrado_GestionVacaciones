@@ -17,16 +17,16 @@ public class CalendarioVacacionesController : ControllerBase {
 
     [HttpPost("CreateCalendarioVacaciones")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<CalendarioVacacionesResponse>> Create([FromBody] CreateCalendarioVacacionesCommand command) {
+    public async Task<ActionResult<bool>> Create([FromBody] CreateCalendarioVacacionesCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpDelete("DeleteCalendarioVacaciones")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> Delete(DeleteCalendarioVacacionesCommand command) {
+    public async Task<ActionResult<bool>> Delete(DeleteCalendarioVacacionesCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpPut("UpdateCalendarioVacaciones")]

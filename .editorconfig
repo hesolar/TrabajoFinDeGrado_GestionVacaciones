@@ -2,3 +2,9 @@
 
 # CS8618: Un campo que no acepta valores NULL debe contener un valor distinto de NULL al salir del constructor. Considere la posibilidad de declararlo como que admite un valor NULL.
 dotnet_diagnostic.CS8618.severity = none
+
+# BL0005: Component parameter should not be set outside of its component.
+dotnet_diagnostic.BL0005.severity = none
+
+# IDE1006: Estilos de nombres
+dotnet_diagnostic.IDE1006.severity = none

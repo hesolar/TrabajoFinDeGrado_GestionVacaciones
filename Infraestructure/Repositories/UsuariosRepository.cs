@@ -21,17 +21,18 @@ public class UsuarioRepository :  IUsuarioRepository {
     public async Task<bool> DeleteAsync(int entity) 
         => await baseOperations.DeleteAsync(_context.Usuarios.First(x=>x.IdTecnico==entity));
 
-    public Task<bool> UpdateAsync(Usuario entity)
-        => baseOperations.UpdateAsync(_context.Usuarios.First(x=> entity.IdTecnico==x.IdTecnico),entity);
+    public async Task<bool> UpdateAsync(Usuario entity)
+        =>await baseOperations.UpdateAsync(_context.Usuarios.First(x=> entity.IdTecnico==x.IdTecnico),entity);
 
-    public Task<Usuario> GetUsuarioByCorreo(string correo) {
+    public async Task<Usuario> GetUsuarioByCorreo(string correo) {
 
 
-            return Task.FromResult(_context.Usuarios.FirstOrDefault(X => X.EmailCorporativo == correo));
+            return await Task.FromResult(_context.Usuarios.FirstOrDefault(X => X.EmailCorporativo == correo));
 
     }
 
     public async Task<IEnumerable<Usuario>> GetSubordinados(IEnumerable<int> proyectos, int webRol) {
+        throw new NotImplementedException();
         HashSet<Usuario> subordinados = new();
 
         return await _context.Usuarios.Where(u => EsRolSubordinado(webRol, u) && EstaEnProyecto(proyectos, u)).ToListAsync();

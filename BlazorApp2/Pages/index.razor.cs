@@ -5,7 +5,7 @@ public class IndexBase : ComponentBase {
     [Inject]
     protected AuthenticationStateProvider AuthenticationStateProvider { get; set; }
     [Inject]
-    protected API api { get; set; }
+    protected API Api { get; set; }
 
 
     public string UserDisplayedName { get; set; }
@@ -18,10 +18,10 @@ public class IndexBase : ComponentBase {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var userIdentity = authState.User.Identity;
         UserDisplayedName = userIdentity.Name;
-        var usuario = await api.GetUsuarioByCorreoEmpresaAsync(UserDisplayedName);
+        var usuario = await Api.GetUsuarioByCorreoEmpresaAsync(UserDisplayedName);
         if (usuario == null) {
             String apellido = UserDisplayedName.Split('@')[0][1..];
-            api.CreateUsuarioAsync(new CreateUsuarioCommand() {
+            Api.CreateUsuarioAsync(new CreateUsuarioCommand() {
                 Nombre = UserDisplayedName,
                 Apellido1 = apellido,
                 Apellido2 = null,

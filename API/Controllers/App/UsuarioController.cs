@@ -40,7 +40,8 @@ public class UsuarioController : ControllerBase {
     [HttpGet("GetUsuarioByCorreoEmpresa/{correoEmpresa}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<UsuarioResponse> GetByCorreoEmpresa(String correoEmpresa ) {
-        return await _mediator.Send(new GetUsuarioByCorreoEmpresaQuery() { CorreoEmpresa = correoEmpresa });
+        var xd= await _mediator.Send(new GetUsuarioByCorreoEmpresaQuery() { CorreoEmpresa = correoEmpresa });
+        return xd;
     }
 
 }

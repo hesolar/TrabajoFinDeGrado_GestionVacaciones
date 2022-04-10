@@ -1,6 +1,6 @@
 ﻿@inherits PeticionesVacacionesPropiasBase
 
-<h1>Componente de Peticiones Propias </h1>
+<h1>Peticiones: @InfoUsuario?.Nombre @InfoUsuario?.Apellido1 @InfoUsuario?.Apellido2 </h1>
 
 <RadzenButton Icon="refresh" 
               Click="@LoadData" 
@@ -15,7 +15,6 @@
 
 <RadzenDataGrid AllowColumnReorder="true" 
                 @ref="ComponentePrincipal" 
-                
                 AllowColumnPicking="true"
                 AllowFiltering="true" 
                 AllowColumnResize="true" 

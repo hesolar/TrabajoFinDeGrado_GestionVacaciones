@@ -27,7 +27,8 @@ public class PeticionesVacacionesPropiasBase : ComponentBase {
     /// Obtiene información del usuario actual
     /// </summary>
     /// <returns></returns>
-    protected override async Task OnParametersSetAsync() {
+
+    protected override async Task OnInitializedAsync() {
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         var userIdentity = authState.User.Identity.Name;
         InfoUsuario = await _api.GetUsuarioByCorreoEmpresaAsync(userIdentity);
@@ -39,15 +40,28 @@ public class PeticionesVacacionesPropiasBase : ComponentBase {
     /// <param name="order"></param>
     /// <returns></returns>
     public async Task SaveRow(CalendarioVacacionesResponse order) {
-        //Si ha cambiado guardo
-        if (order.FechaCalendario != ValorAuxiliarEdicion?.FechaCalendario) {
+        //Comprobamos si ha cambiado el valor de edicion
+        if (ValorAuxiliarEdicion!=null) {
+            //Si tienen distinto valor actualizamos
+            if (order.FechaCalendario != ValorAuxiliarEdicion?.FechaCalendario) {
+                await _api.ReplaceCalendarioVacacionesAsync(new ReplaceCalendarioVacacionesCommand() {
+                    FechaCalendarioNew = order.FechaCalendario,
+                    TipoDiaCalendarioNew = order.TipoDiaCalendario,
+                    FechaCalendarioOld = ValorAuxiliarEdicion.FechaCalendario,
+                    IdTecnico = order.IdTecnico,
+                    TipoDiaCalendarioOld = order.TipoDiaCalendario
+                }) ;
+            }
+            //Sino lo insertamos a la bd
+            else { 
+                await _api.CreateCalendarioVacacionesAsync(new CreateCalendarioVacacionesCommand() {
+                    FechaCalendario = order.FechaCalendario,
+                    IdTecnico = order.IdTecnico,
+                    TipoDiaCalendario = order.TipoDiaCalendario
+                });
+            }
 
-
-            await _api.CreateCalendarioVacacionesAsync(new CreateCalendarioVacacionesCommand() {
-                FechaCalendario = order.FechaCalendario,
-                IdTecnico = order.IdTecnico,
-                TipoDiaCalendario = order.TipoDiaCalendario
-            });
+            
             await LoadData();
         }
         //Sino cancelo la edicion
@@ -73,11 +87,13 @@ public class PeticionesVacacionesPropiasBase : ComponentBase {
     /// <param name="calendarioAEliminar"></param>
     /// <returns></returns>
     public async Task DeleteRow(CalendarioVacacionesResponse calendarioAEliminar) {
-        bool OperacionCorrecta = await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
+        await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
             Fecha = calendarioAEliminar.FechaCalendario,
             UsuarioID = calendarioAEliminar.IdTecnico
         });
-        if (OperacionCorrecta) await LoadData();
+        this.CalendarioVacacionesUsuario.ToList().Remove(calendarioAEliminar);
+        await ComponentePrincipal.Reload();
+
     }
 
     /// <summary>
@@ -102,7 +118,7 @@ public class PeticionesVacacionesPropiasBase : ComponentBase {
             IdTecnico = InfoUsuario.IdTecnico,
             FechaCalendario = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
         };
-
+        this.ValorAuxiliarEdicion = calendarioNuevo;
         await ComponentePrincipal.InsertRow(calendarioNuevo);
         StateHasChanged();
     }

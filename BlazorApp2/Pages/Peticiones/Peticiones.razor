@@ -2,17 +2,41 @@
 <h3>Pagina Principal</h3>
 
 <RadzenCard Class="mt-4" Visible>
-    <RadzenButton Click="()=>PeticionesPropias.Visible=!PeticionesPropias.Visible" 
-                  Text="@(PeticionesPropias.Visible? "Ocultar" : "Mostrar")" 
+    <RadzenButton Click="()=>PeticionesPropias.Visible=!PeticionesPropias.Visible"
+                  Text="@(PeticionesPropias.Visible? "Ocultar" : "Mostrar")"
                   ButtonStyle="@(PeticionesPropias.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />
 
     <RadzenCard Class="mt-4" @ref="PeticionesPropias">
-        <PeticionesVacacionesPropias/>
+        <PeticionesVacacionesPropias />
     </RadzenCard>
+
+
+
+
 </RadzenCard>
+
+
+
+
+<RadzenCard Class="mt-4" Visible>
+    
+    <RadzenButton Click="()=>InteractiveCalendar.Visible=!InteractiveCalendar.Visible"
+                  Text="@(InteractiveCalendar.Visible? "Ocultar" : "Mostrar")"
+                  ButtonStyle="@(InteractiveCalendar.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />
+    
+       
+    <RadzenCard Class="mt-4" @ref="InteractiveCalendar">
+       <InteractiveCalendar/>
+    </RadzenCard>
+
+       
+ 
+
+</RadzenCard>
+
 
 
 @code {
     protected RadzenCard PeticionesPropias = new();
-
+    protected RadzenCard InteractiveCalendar = new();
 }

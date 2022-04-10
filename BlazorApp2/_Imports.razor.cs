@@ -2,3 +2,11 @@
 global using Microsoft.AspNetCore.Components.Authorization;
 global using Radzen.Blazor;
 global using BlazorApp2.Shared;
+global using API_Sharepoint;
+global using BlazorApp2;
+global using BlazorApp2.Areas.Identity;
+global using BlazorApp2.Data;
+global using Microsoft.AspNetCore.Components.Web;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
+global using MudBlazor.Services;

@@ -1,14 +1,3 @@
-using API_Sharepoint;
-using BlazorApp2;
-using BlazorApp2.Areas.Identity;
-using BlazorApp2.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,6 +14,10 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 //APIS
 builder.Services.AddSingleton<SharePointAPI>(new SharePointAPI ("https://localhost:44347//", new HttpClient()));
 builder.Services.AddSingleton<API>(new API("https://localhost:7140//", new HttpClient()));
+
+//MudBlazor
+builder.Services.AddMudServices();
+
 
 var app = builder.Build();
 

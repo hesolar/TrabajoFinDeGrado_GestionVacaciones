@@ -105,7 +105,7 @@ public class PeticionesVacacionesPropiasBase : ComponentBase {
         if (ValorAuxiliarEdicion != null) CalendarioEditado.FechaCalendario = ValorAuxiliarEdicion.FechaCalendario;
         ValorAuxiliarEdicion = null;
         ComponentePrincipal.CancelEditRow(CalendarioEditado);
-        if (this.CalendarioVacacionesUsuario.Any()) await LoadData();
+        //if (this.CalendarioVacacionesUsuario.Any()) await LoadData();
     }
 
     /// <summary>

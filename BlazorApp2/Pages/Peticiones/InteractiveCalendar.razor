@@ -1,11 +1,11 @@
-﻿<h3>InteractiveCalendar</h3>
+﻿<h3>Resumen Mensual</h3>
 
   <div class="col-lg-6 col-xl-4 p-3">
                 <RadzenCard>
                     <h4 class="mb-4">DatePicker with special dates</h4>
                     <RadzenDatePicker  TValue="DateTime?" DateRender=@DateRenderSpecial  Change="@OnChange" Class="w-100" />
                 </RadzenCard>
-            </div>
+  </div>
 
 
 @code{
@@ -42,9 +42,9 @@
         
 
         var resultadoSharePoint= await _SharePointApi.GetHolidaysUserTillNowAsync(InfoUsuario.EmailCorporativo,new DateTime(DateTime.Now.Year-10,DateTime.Now.Month,DateTime.Now.Day));
-
+        //todo actualizar estado dia que es sharepoint 
         resultadoSharePoint.ToList().ForEach(X => {
-            var nuevosDias = ObtenerDias(X.FechaInicio.Date, X.FechaFin.Date, InfoUsuario.IdTecnico, X.EstadoDia);
+            var nuevosDias = ObtenerDias(X.FechaInicio.Date, X.FechaFin.Date, InfoUsuario.IdTecnico, 0);
             nuevosDias.ToList().ForEach(X=> resultado.Add(X));
         });
 

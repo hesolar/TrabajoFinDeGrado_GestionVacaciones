@@ -22,7 +22,10 @@ public class RepositoryBase<T, TKey, DB> where T : class where DB : DbContext {
         return await _context.SaveChangesAsync()>0;
     }
 
-    public async Task<IReadOnlyList<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
+    public async Task<IReadOnlyList<T>> GetAllAsync() {
+        var Listado = await _context.Set<T>().ToListAsync();
+        return Listado;
+    }
 
     public async Task<T> GetByIdAsync(TKey id) => await _context.Set<T>().FindAsync(id);
 

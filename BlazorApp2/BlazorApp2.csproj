@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\Peticiones\InteractiveCalendar\Calendar.razor" />
+    <None Include="Pages\Peticiones\InteractiveCalendar\Month.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <OpenApiReference Include="ConexionOpenAPI\Application.json">
       <CodeGenerator>NSwagCSharp</CodeGenerator>
       <ClassName>API</ClassName>

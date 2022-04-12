@@ -93,6 +93,7 @@ public class PeticionesVacacionesPropiasBase : ComponentBase {
         });
         this.CalendarioVacacionesUsuario.ToList().Remove(calendarioAEliminar);
         await ComponentePrincipal.Reload();
+        await LoadData();
 
     }
 
@@ -129,6 +130,7 @@ public class PeticionesVacacionesPropiasBase : ComponentBase {
     /// <returns></returns>
     protected async Task LoadData() {
         ComponentePrincipal.IsLoading = true;
+        await Task.Delay(600);
         ComponentePrincipal.Reset(true);
         await ComponentePrincipal.FirstPage(true);
         CalendarioVacacionesUsuario = await _api.GetUsuarioCalendarioVacacionesAsync(InfoUsuario.IdTecnico);

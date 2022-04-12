@@ -1,0 +1,84 @@
+﻿@using Cal
+    <table style="overflow-x: auto;">
+    @*Dias de la semana*@
+    <tr>
+        @foreach(var diaSemana in PublicVariables.WeekDays.Values)
+        { 
+        <th class="weekdays"> @(diaSemana)  </th>
+        }
+    </tr>
+
+
+    @*primera semana*@
+    <tr>
+        @{
+            int desplazamientoPrimeraSemana= PublicVariables.WeekDays.First(X => datosMes.First().Date.DayOfWeek == X.Value).Key-1;
+            int i = 0;
+            int totalDias = 0;
+            while (i < desplazamientoPrimeraSemana)
+            {
+                <th></th>
+                i++;
+            }
+
+            while (i < 7)
+            {
+                DatoDia variable = datosMes.ElementAt(totalDias);
+                <th>
+                
+                <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion"
+                @onclick="@(() => OnClickCallback.InvokeAsync(variable))" @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button></th>         
+                i++;
+                totalDias++;
+            }
+        }
+    </tr>
+    @*resto semanas*@
+        @{
+            while(totalDias < datosMes.Count){
+               <tr>
+                    @{
+                        int semana = 0;
+                
+                        while (semana < 7)
+                        {
+                            semana++;
+                    
+                            if (totalDias < datosMes.Count)
+                            {
+                                DatoDia variable = datosMes.ElementAt(totalDias);
+                          <th>
+                
+                          <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion"
+                          
+                          @onclick="@(() => OnClickCallback.InvokeAsync(variable))" @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button></th>
+                            }  
+                            totalDias++;
+                        } 
+                    }
+               </tr>
+            }
+        }
+</table>
+
+
+
+
+
+
+
+
+
+@code {
+
+    [Parameter]
+    public DatosDias datosMes { get; set; }
+    [Parameter]
+    public int Mes { get; set; }
+    [Parameter]
+    public EventCallback<DatoDia> OnClickCallback { get; set; }
+    [Parameter]
+    public EventCallback<DatoDia> OnHover { get; set; }
+
+
+}

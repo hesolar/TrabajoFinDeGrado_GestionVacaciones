@@ -1,0 +1,55 @@
+﻿
+tr, th {
+    border: 1px solid black;
+    margin: 0;
+    padding-top: 0;
+    padding-top: 0;
+    padding: 0;
+
+   
+}
+
+.weekdays {
+     font-size: 8px;
+}
+
+
+
+/*Tipos Dias*/
+.Work {
+    border: 1px solid #228bd9;
+    background-color: #228bd9;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    justify-content:left;
+    /*padding: 4px 12px;*/
+}
+
+.FreeHoliday {
+    border: 1px solid #4cff00;
+    background-color: #4ad70e;
+    /*padding: 4px 12px;*/
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.Worked {
+    border: 1px solid #ffd800;
+    background-color: #f19413;
+    /*   padding: 4px 12px;*/
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.Holiday {
+    border: 1px solid #228bd9;
+    background-color: #28b4a7;
+    /*padding: 4px 12px;*/
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+

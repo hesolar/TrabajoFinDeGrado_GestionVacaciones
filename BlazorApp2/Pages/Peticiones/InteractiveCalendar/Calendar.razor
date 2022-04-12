@@ -1,0 +1,188 @@
+﻿@using Cal
+
+
+@inherits CalendarCs
+
+<PageTitle>Shop Homepage - Start Bootstrap Template</PageTitle>
+
+<body>
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Calendar @this.CalendarioUsuario.AñoCalendario</h1>
+                <p class="lead fw-normal text-white-50 mb-0">
+                    Calendario para permitir a los usuarios escoger sus dias de vacaciones.
+                    Los siguientes botones te permiten marcar tu calendario en función de tu planificación personal:
+                </p>
+            </div>
+        </div>
+    </header>
+    <!-- Botones -->
+    <section class="py-5">
+        <div class="container px-4 px-lg-1 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                <div class="col mb-5">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <button class='@(this.EstadoDiaSeleccion==EstadoDia.Holiday?"Holiday":"")' @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.Holiday">Elegir Vacaciones</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col mb-5">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <button class='@(this.EstadoDiaSeleccion==EstadoDia.Worked?"Worked":"")' @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.Worked">Marcar"Trabajado"</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-5">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <button class='@(this.EstadoDiaSeleccion==EstadoDia.Work?"Work":"")' @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.Work">Planificar trabajo</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-5">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <button class="@(this.EstadoDiaSeleccion==EstadoDia.FreeHoliday?"FreeHoliday":"")" @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.FreeHoliday">Fiestas Generales</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+                @foreach(var mes in Core_Calendario.DividirYearEnMeses(this.diasCalendario)) {
+                    <div class="col mb-3">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            @*<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="MESSSSSSSSS" />*@
+                            <!-- Product details-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+
+                                    <h5 class="fw-bolder">@PublicVariables.Meses[mes.Key]</h5>
+                                </div>
+                            </div>
+                            <div class="card-body p-4 " style="background-color:#c3c3c3; width: 290px;">
+                                <div class="mes">
+                                    <!-- Product name-->
+                                <Month Mes=mes.Key datosMes=mes.Value OnClickCallback="@SelectDay" OnHover="@OverButtonListener"></Month>
+
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <Button style="width:100%" Color="Color.Warning" Clicked="()=>SelectAllMonthButtonListener(mes.Value)">Todo el mes</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
+            <Button Color="Color.Danger" Clicked="ExitButtonListener">Salir sin guardar</Button>
+            <Button Color="Color.Success" Clicked="SaveCalendarButtonListener">Guardar Seleccion</Button>
+
+        </div>
+
+        @*<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>*@
+    </footer>
+</body>
+
+
+@code {
+    #region Event Listeners
+
+    //todo revisar cuando tenga las especificaciones
+    /// <summary>
+    /// Dado un mes selecciona todos los dias(Laborables) de ese mes y los marca como el estado de dia seleccionado.
+    /// Los dias de vacaciones pactados por la empresa no se podrán cambiar.
+    /// </summary>
+    /// <param name="dias"></param>
+    /// <returns></returns>
+    public bool SelectAllMonthButtonListener(DatosDias dias) {
+        return SelectMultipleDays(new DatosDias(dias.Where(X => X.Estado != EstadoDia.FreeHoliday).ToList()));
+    }
+
+    public void SelectDay(DatoDia d) => DaySelectorEventListener(d);
+
+    //Gestion de la seleccion de dias
+    public bool DaySelectorEventListener(DatoDia dia) {
+        return this.DayMultiseletionMode ?
+            MultiSelectionDay(dia)
+            : SingleSelectionDay(dia);
+    }
+
+
+    public bool MultiSelectionDay(DatoDia dia) {
+
+
+        //Establece el primer dia para la multiseleccion si no hay ningún boton ya seleccionado
+        if(Core_Calendario.TodosDiasFiltro(this.diasCalendario , new Func<DatoDia , bool>(dia => dia.ColorSeleccion == colorInicial))) {
+            dia.ColorSeleccion = colorInicioMultiseleccion;
+            return true;
+        }
+
+        //Si ya existe un primer dia de multiseleecion, este click marca el final de la multiseleccion
+        if(Core_Calendario.NumeroDiasFiltro(this.diasCalendario , new Func<DatoDia , bool>(dia => dia.ColorSeleccion == colorInicioMultiseleccion)) > 0) {
+            this.DayMultiseletionMode = false;
+
+            //Devuelve el resultado de hacer multiseleccion en los dias
+            return SelectMultipleDays(
+                new DatosDias(Core_Calendario.FiltroDia(this.diasCalendario , new(dia => dia.ColorSeleccion != colorInicial))
+            ));
+        }
+        //si no ha devuelto nada es que ha habido algun tipo de error
+        return false;
+
+    }
+
+
+
+
+
+
+    /// <summary>
+    /// Este metodo colorea el dia en el calendario si no estaba seleccionado, si estaba seleccionado lo deselecciona.
+    /// Hay que tener en cuenta que no se podrá colorear el boton de inicio de la multiseleccion y que el modo de multiseleccion deberá estar activo
+    /// </summary>
+    /// <param name="dia"></param>
+    public void OverButtonListener(DatoDia dia) {
+        if(this.DayMultiseletionMode
+            && !Core_Calendario.TodosDiasFiltro(this.diasCalendario , new(dia => dia.ColorSeleccion == colorInicial))
+            && dia.ColorSeleccion != colorInicioMultiseleccion)
+            dia.ColorSeleccion = dia.ColorSeleccion == colorOver ? colorInicial : colorOver;
+    }
+
+    //todo if(validarDatosCalendario(this.diasCalendario))//  CalendarioUsuario.DiasCalendario = this.diasCalendario;
+    /// <summary>
+    /// Boton de guardar datos del calendario
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    public void SaveCalendarButtonListener() => throw new NotImplementedException();
+
+
+    //todo
+    /// <summary>
+    /// Boton de salir sin guardar
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    public void ExitButtonListener() => throw new NotImplementedException("al salir del calendario");
+
+    #endregion
+}

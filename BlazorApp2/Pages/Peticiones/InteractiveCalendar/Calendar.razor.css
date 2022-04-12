@@ -1,0 +1,34 @@
+
+element.style {
+}
+
+.h-100 {
+    width: 290px;
+}
+
+.Work {
+    border: 1px solid #228bd9;
+    width: 100%;
+    background-color: #228bd9;
+}
+
+.FreeHoliday {
+    border: 1px solid #4cff00;
+    width: 100%;
+    background-color: #4ad70e;
+}
+
+.Worked {
+    border: 1px solid #ffd800;
+    width: 100%;
+    background-color: #f19413;
+}
+
+.Holiday {
+    border: 1px solid #228bd9;
+    width: 100%;
+    background-color: #28b4a7;
+}
+
+
+

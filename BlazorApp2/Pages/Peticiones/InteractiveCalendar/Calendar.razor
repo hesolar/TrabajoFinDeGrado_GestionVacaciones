@@ -11,7 +11,6 @@
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Calendar @this.CalendarioUsuario.AñoCalendario</h1>
                 <p class="lead fw-normal text-white-50 mb-0">
-                    Calendario para permitir a los usuarios escoger sus dias de vacaciones.
                     Los siguientes botones te permiten marcar tu calendario en función de tu planificación personal:
                 </p>
             </div>
@@ -82,7 +81,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
-                                    <button style="width:100%" @onclick="()=>SelectAllMonthButtonListener(mes.Value)">Seleccionar mes</button>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Secondary"  Icon="add_circle_outline" Click="()=>SelectAllMonthButtonListener(mes.Value)" Text="Seleccionar mes"/>
                                 </div>
                             </div>
                         </div>
@@ -95,8 +94,8 @@
     <footer class="py-5 bg-dark">
 
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
-            <Button Color="Color.Danger" Clicked="ExitButtonListener">Salir sin guardar</Button>
-            <Button Color="Color.Success" Clicked="SaveCalendarButtonListener">Guardar Seleccion</Button>
+            <RadzenButton Icon="warning_amber" ButtonStyle="ButtonStyle.Danger" Text="Salir Sin Guardar" Click="SaveCalendarButtonListener"/>
+            <RadzenButton Icon="check_circle" ButtonStyle="ButtonStyle.Success" Text="Guardar Seleccion" Click="ExitButtonListener"/>
 
         </div>
 
@@ -166,7 +165,8 @@
         if(this.DayMultiseletionMode
             && !Core_Calendario.TodosDiasFiltro(this.diasCalendario , new(dia => dia.ColorSeleccion == colorInicial))
             && dia.ColorSeleccion != colorInicioMultiseleccion)
-            dia.ColorSeleccion = dia.ColorSeleccion == colorOver ? colorInicial : colorOver;
+            //dia.ColorSeleccion = dia.ColorSeleccion == colorOver ? colorInicial : colorOver;            
+            dia.ColorSeleccion =colorOver;
     }
 
     //todo if(validarDatosCalendario(this.diasCalendario))//  CalendarioUsuario.DiasCalendario = this.diasCalendario;

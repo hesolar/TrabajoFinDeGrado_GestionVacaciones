@@ -15,10 +15,11 @@ public class CalendarCs : ComponentBase {
 
     public EstadoDia EstadoDiaSeleccion;
 
-    [CascadingParameter]
     //Modo multiseleccion de dias
+    [CascadingParameter]
     public bool DayMultiseletionMode {get;set;}
-    public static readonly String colorInicioMultiseleccion = "red";
+
+    public static readonly String colorInicioMultiseleccion = "white";
     public static readonly String colorInicial = "none";
     public static readonly String colorOver = "blue";
 

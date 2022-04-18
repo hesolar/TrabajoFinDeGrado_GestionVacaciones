@@ -28,18 +28,18 @@ public static class Core_Calendario {
     /// <returns></returns>
     public static bool CanUpdateDay(DatosDias dias, DatoDia dia, EstadoDia nuevoEstado) {
         //todo actualizar cuando tenga requerimientos
-        switch (nuevoEstado) {
-            case EstadoDia.Holiday:
-                Func<DatoDia, bool> filtroHoliday = dia => dia.Estado == EstadoDia.Holiday;
-                if (Calendario.TotalHolidayDays <= Core_Calendario.NumeroDiasFiltro(dias, filtroHoliday))
-                    return false;
-                break;
-            case EstadoDia.Worked:
-                Func<DatoDia, bool> filtroWork = trabajo => dia.Estado == EstadoDia.Worked;
-                if (Core_Calendario.NumeroDiasFiltro(dias, filtroWork) > Calendario.DaysMaxToWork)
-                    return false;
-                break;
-        }
+        //switch (nuevoEstado) {
+        //    case EstadoDia.Holiday:
+        //        Func<DatoDia, bool> filtroHoliday = dia => dia.Estado == EstadoDia.Holiday;
+        //        if (Calendario.TotalHolidayDays <= Core_Calendario.NumeroDiasFiltro(dias, filtroHoliday))
+        //            return false;
+        //        break;
+        //    case EstadoDia.Worked:
+        //        Func<DatoDia, bool> filtroWork = trabajo => dia.Estado == EstadoDia.Worked;
+        //        if (Core_Calendario.NumeroDiasFiltro(dias, filtroWork) > Calendario.DaysMaxToWork)
+        //            return false;
+        //        break;
+        //}
         return true;
     }
 

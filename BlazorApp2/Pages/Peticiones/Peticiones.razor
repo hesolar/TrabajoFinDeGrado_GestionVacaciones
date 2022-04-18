@@ -17,7 +17,7 @@
                   Text="@(InteractiveCalendar.Visible? "Ocultar" : "Mostrar")"
                   ButtonStyle="@(InteractiveCalendar.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />      
     <RadzenCard Class="mt-4" @ref="InteractiveCalendar">
-       <BotonesTiposDias Multiseleccion=Multiseleccion/>
+       <BotonesTiposDias />
        @*<ResumenMensual/>*@
     </RadzenCard>
 </RadzenCard>
@@ -28,7 +28,6 @@
 
 
 @code {
-    public bool Multiseleccion = false;
 
 
     protected RadzenCard PeticionesPropias = new();

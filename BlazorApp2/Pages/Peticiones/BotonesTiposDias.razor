@@ -12,7 +12,7 @@
         </RadzenRadioButtonList>
         <br />
         <p>Multiseleccion</p>
-        <RadzenSwitch Change=@(args => OnChange()) @ref="Switch" />
+        <RadzenSwitch @bind-Value=@Multiseleccion />
 
     </RadzenCard>
 
@@ -21,25 +21,23 @@
 
 
  <RadzenCard>
-    <BlazorApp2.Pages.Peticiones.InteractiveCalendar.Calendar DayMultiseletionMode=Multiseleccion/>
+     <CascadingValue Value="@Multiseleccion">
+    <BlazorApp2.Pages.Peticiones.InteractiveCalendar.Calendar />
+    </CascadingValue>
 </RadzenCard>
 
 
 
 @code {
-    RadzenSwitch Switch;
     public IEnumerable<TipoDiaCalendarioResponse> data { get; set; } = new List<TipoDiaCalendarioResponse>();
 
     protected override async Task OnInitializedAsync() {
         data = await _api.GetAllTipoDiaCalendarioAsync();
     }
-    public void OnChange() {
-        this.Multiseleccion = !Multiseleccion;
-        Switch.Value = Multiseleccion;
-    }
+
 
 
     public int valor;
-    [Parameter]
-    public bool Multiseleccion { get; set; }
+
+    public bool Multiseleccion { get; set; } 
 }

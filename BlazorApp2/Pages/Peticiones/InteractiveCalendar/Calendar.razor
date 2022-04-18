@@ -82,7 +82,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
-                                    <Button style="width:100%" Color="Color.Warning" Clicked="()=>SelectAllMonthButtonListener(mes.Value)">Todo el mes</Button>
+                                    <button style="width:100%" @onclick="()=>SelectAllMonthButtonListener(mes.Value)">Seleccionar mes</button>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
     /// <param name="dias"></param>
     /// <returns></returns>
     public bool SelectAllMonthButtonListener(DatosDias dias) {
-        return SelectMultipleDays(new DatosDias(dias.Where(X => X.Estado != EstadoDia.FreeHoliday).ToList()));
+        return SelectMultipleDays(new DatosDias(dias));
     }
 
     public void SelectDay(DatoDia d) => DaySelectorEventListener(d);
@@ -140,7 +140,7 @@
 
         //Si ya existe un primer dia de multiseleecion, este click marca el final de la multiseleccion
         if(Core_Calendario.NumeroDiasFiltro(this.diasCalendario , new Func<DatoDia , bool>(dia => dia.ColorSeleccion == colorInicioMultiseleccion)) > 0) {
-            this.DayMultiseletionMode = false;
+            //this.DayMultiseletionMode = false;
 
             //Devuelve el resultado de hacer multiseleccion en los dias
             return SelectMultipleDays(

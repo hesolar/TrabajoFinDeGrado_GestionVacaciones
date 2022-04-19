@@ -3,7 +3,7 @@
 
 
     <RadzenCard>
-        <RadzenRadioButtonList @bind-Value=@valor TValue="string" >
+        <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
             <Items>
                 @foreach (var dataItem in data) {
                     <RadzenRadioButtonListItem Style=@($"background-color:{dataItem.ColorRepresentacion}") Text="@dataItem.Descripcion" Value="@dataItem.Descripcion"  />
@@ -34,13 +34,12 @@
     public IEnumerable<TipoDiaCalendarioResponse> data { get; set; } = new List<TipoDiaCalendarioResponse>();
     protected override async Task OnInitializedAsync() {
         data = await _api.GetAllTipoDiaCalendarioAsync();
-        this.valor = data.First().ColorRepresentacion;
+        this.valor = data.First().Descripcion;
+        this.radiobutton.Value = valor;
         StateHasChanged();
     }
 
-    public void cambio() {
-        
-    }
+    RadzenRadioButtonList<string> radiobutton;
 
     public string valor;
 

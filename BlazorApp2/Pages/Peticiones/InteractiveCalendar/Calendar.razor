@@ -3,58 +3,20 @@
 
 @inherits CalendarCs
 
-<PageTitle>Shop Homepage - Start Bootstrap Template</PageTitle>
+<PageTitle>Peticiones Propias Vacaciones</PageTitle>
 
 <body>
     <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Calendar @this.CalendarioUsuario.AñoCalendario</h1>
+                <h1 class="display-4 fw-bolder">Calendario @this.CalendarioUsuario.AñoCalendario</h1>
                 <p class="lead fw-normal text-white-50 mb-0">
                     Los siguientes botones te permiten marcar tu calendario en función de tu planificación personal:
                 </p>
             </div>
-        </div>
     </header>
-    <!-- Botones -->
+
     <section class="py-5">
-      @*  <div class="container px-4 px-lg-1 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
-                <div class="col mb-5">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <button class='@(this.EstadoDiaSeleccion=="Holiday"?"Holiday":"")' @onclick='()=>this.EstadoDiaSeleccion="Holiday"'>Elegir Vacaciones</button>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-5">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <button class='@(this.EstadoDiaSeleccion=="Worked"?"Worked":"")' @onclick='()=>this.EstadoDiaSeleccion="Worked"'>Marcar"Trabajado"</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <button class='@(this.EstadoDiaSeleccion=="Work"?"Work":"")' @onclick='()=>this.EstadoDiaSeleccion="Work"'>Planificar trabajo</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <button class="@(this.EstadoDiaSeleccion=="FreeHoliday"?"FreeHoliday":"")" @onclick='()=>this.EstadoDiaSeleccion="FreeHoliday"'>Fiestas Generales</button>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>*@
+        
 
 
         <div class="container px-4 px-lg-5 mt-5">
@@ -144,7 +106,7 @@
 
 
         //Establece el primer dia para la multiseleccion si no hay ningún boton ya seleccionado
-        if(Core_Calendario.TodosDiasFiltro(this.diasCalendario , new Func<DatoDia , bool>(dia => dia.ColorSeleccion == colorInicial))) {
+        if(Core_Calendario.NingunDiaFiltro(this.diasCalendario , new Func<DatoDia , bool>(dia => dia.ColorSeleccion == colorInicioMultiseleccion))) {
             dia.ColorSeleccion = colorInicioMultiseleccion;
             return true;
         }
@@ -174,7 +136,7 @@
     /// </summary>
     /// <param name="dia"></param>
     public void OverButtonListener(DatoDia dia) {
-        if(this.DayMultiseletionMode
+        if(this.DayMultiseletionMode && !Core_Calendario.NingunDiaFiltro(this.diasCalendario,new(dia => dia.ColorSeleccion ==colorInicioMultiseleccion))
             && !Core_Calendario.TodosDiasFiltro(this.diasCalendario , new(dia => dia.ColorSeleccion == colorInicial))
             && dia.ColorSeleccion != colorInicioMultiseleccion)
             //dia.ColorSeleccion = dia.ColorSeleccion == colorOver ? colorInicial : colorOver;            

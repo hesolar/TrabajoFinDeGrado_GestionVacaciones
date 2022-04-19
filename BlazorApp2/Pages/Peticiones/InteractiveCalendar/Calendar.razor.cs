@@ -60,7 +60,7 @@ public class CalendarCs : ComponentBase {
                     diasEnMultiseleccion,
                     new Func<DatoDia, bool>(day => Core_Calendario.CanUpdateDay(this.diasCalendario, day, this.EstadoDiaSeleccion)))) {
                 Core_Calendario.AplyFilterToDays(diasEnMultiseleccion, new Action<DatoDia>(dia => SingleSelectionDay(dia)));
-                Core_Calendario.AplyFilterToDays(diasEnMultiseleccion, new Action<DatoDia>(dia => dia.ColorSeleccion = colorInicial));
+                //Core_Calendario.AplyFilterToDays(diasEnMultiseleccion, new Action<DatoDia>(dia => dia.ColorSeleccion = colorInicial));
                 return true;
             }
         }

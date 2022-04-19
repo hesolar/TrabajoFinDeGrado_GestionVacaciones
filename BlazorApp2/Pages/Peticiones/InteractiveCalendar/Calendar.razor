@@ -3,7 +3,6 @@
 
 @inherits CalendarCs
 
-<PageTitle>Peticiones Propias Vacaciones</PageTitle>
 
 <body>
     <header class="bg-dark py-5">
@@ -33,13 +32,15 @@
                                     <h5 class="fw-bolder">@PublicVariables.Meses[mes.Key]</h5>
                                 </div>
                             </div>
-                            <div class="card-body p-4 " style="background-color:#c3c3c3; width: 290px;">
-                                <div class="mes">
+                           
+                            <RadzenCard>
                                     <!-- Product name-->
-                                <Month Mes=mes.Key datosMes=mes.Value OnClickCallback="@SelectDay" OnHover="@OverButtonListener"></Month>
 
-                                </div>
-                            </div>
+                                <Month Mes=mes.Key datosMes=mes.Value OnClickCallback="@SelectDay" OnHover="@OverButtonListener"></Month>
+                            </RadzenCard>
+
+                               
+
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
@@ -56,8 +57,8 @@
     <footer class="py-5 bg-dark">
 
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
-            <RadzenButton Icon="warning_amber" ButtonStyle="ButtonStyle.Danger" Text="Salir Sin Guardar" Click="SaveCalendarButtonListener"/>
-            <RadzenButton Icon="check_circle" ButtonStyle="ButtonStyle.Success" Text="Guardar Seleccion" Click="ExitButtonListener"/>
+            <RadzenButton Icon="warning_amber" ButtonStyle="ButtonStyle.Danger" Text="Cancelar Cambios" Click="ExitButtonListener"/>
+            <RadzenButton Icon="check_circle" ButtonStyle="ButtonStyle.Success" Text="Guardar Seleccion" Click="SaveCalendarButtonListener"/>
 
         </div>
 
@@ -69,14 +70,33 @@
 @code {
 
 
-
     protected override async Task OnAfterRenderAsync(bool firstRender) {
-        var tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
-        this.EstadoDiaSelecciones = tiposDias.ToDictionary(keySelector: m => m.Descripcion, elementSelector: m => m.ColorRepresentacion);
+
+        if (firstRender) {
+
+            var tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
+            this.EstadoDiaSelecciones = tiposDias.ToDictionary(keySelector: m => m.Descripcion, elementSelector: m => m.ColorRepresentacion);
+
+            var vacaciones = await _api.GetAllCalendarioVacacionesAsync();
+            vacaciones.ToList().ForEach(x => {
+
+
+                var dia =  this.CalendarioUsuario.DiasCalendario.FirstOrDefault(y => x.FechaCalendario == y.Date);
+                if (dia != null) {
+                    var tipoDia = tiposDias.First(y => y.Id == x.TipoDiaCalendario);
+                    dia.ColorSeleccion =tipoDia.ColorRepresentacion;
+                    dia.Estado = tipoDia.Descripcion;
+
+                }
+
+            });
+            StateHasChanged();
+        }
+
     }
 
 
-    
+
 
 
     #region Event Listeners
@@ -103,8 +123,6 @@
 
 
     public bool MultiSelectionDay(DatoDia dia) {
-
-
         //Establece el primer dia para la multiseleccion si no hay ningún boton ya seleccionado
         if(Core_Calendario.NingunDiaFiltro(this.diasCalendario , new Func<DatoDia , bool>(dia => dia.ColorSeleccion == colorInicioMultiseleccion))) {
             dia.ColorSeleccion = colorInicioMultiseleccion;
@@ -117,12 +135,11 @@
 
             //Devuelve el resultado de hacer multiseleccion en los dias
             return SelectMultipleDays(
-                new DatosDias(Core_Calendario.FiltroDia(this.diasCalendario , new(dia => dia.ColorSeleccion != colorInicial))
+                new DatosDias(Core_Calendario.FiltroDia(this.diasCalendario , new(dia => dia.ColorSeleccion == colorInicioMultiseleccion || dia.ColorSeleccion==colorOver))
             ));
         }
         //si no ha devuelto nada es que ha habido algun tipo de error
         return false;
-
     }
 
 
@@ -148,7 +165,40 @@
     /// Boton de guardar datos del calendario
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
-    public void SaveCalendarButtonListener() => throw new NotImplementedException();
+    public async Task SaveCalendarButtonListener() {
+        var tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
+        this.EstadoDiaSelecciones = tiposDias.ToDictionary(keySelector: m => m.Descripcion, elementSelector: m => m.ColorRepresentacion);
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        var userIdentity = authState.User.Identity.Name;
+        var usuario = await _api.GetUsuarioByCorreoEmpresaAsync(userIdentity);
+
+        //cambiar
+        var vacaciones = await _api.GetAllCalendarioVacacionesAsync();
+        //var vacaciones = await _api.GetCalendarioVacacionesByIdAsync(usuario.IdTecnico, this.diasCalendario.First().Date.AddYears(-5));
+
+        var diasBorrar = this.diasCalendario.Where(x => vacaciones.Any(X => X.FechaCalendario == x.Date) && x.Estado == "Laborable");
+        var listadoEnBDYTrabajados = diasCalendario.Where(X=> vacaciones.Any(y=> X.Date==y.FechaCalendario) || X.Estado=="Laborable");
+        var nuevosDias = this.diasCalendario.Except(listadoEnBDYTrabajados);
+
+
+
+
+        foreach (var dia in nuevosDias) {
+            var tipoDia = tiposDias.First(x => x.ColorRepresentacion == dia.ColorSeleccion).Id;
+            await _api.CreateCalendarioVacacionesAsync(new CreateCalendarioVacacionesCommand() { FechaCalendario=dia.Date,IdTecnico=usuario.IdTecnico,TipoDiaCalendario=tipoDia});
+        }
+
+
+        foreach(var diaBorrar in diasBorrar) {
+            
+        await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
+                    Fecha = diaBorrar.Date,
+                    UsuarioID = usuario.IdTecnico });
+        }
+    
+        await OnAfterRenderAsync(true);
+
+    } 
 
 
     //todo
@@ -156,7 +206,9 @@
     /// Boton de salir sin guardar
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
-    public void ExitButtonListener() => throw new NotImplementedException("al salir del calendario");
+    public async Task ExitButtonListener() {
+       await OnAfterRenderAsync(true);
+    } 
 
     #endregion
 }

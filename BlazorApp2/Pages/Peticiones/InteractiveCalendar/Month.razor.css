@@ -1,5 +1,5 @@
 ﻿
-tr, th {
+/*tr, th {
     border: 1px solid black;
     margin: 0;
     padding-top: 0;
@@ -7,7 +7,7 @@ tr, th {
     padding: 0;
 
    
-}
+}*/
 
 .weekdays {
      font-size: 8px;
@@ -15,37 +15,12 @@ tr, th {
 
 
 
-/*Tipos Dias*/
-.Work {
+.Laborable {
     background-color: #228bd9;
     display: inline-block;
-    width: 100%;
-    height: 100%;
-    justify-content:left;
-    /*padding: 4px 12px;*/
+    padding: 4px 12px;
 }
 
-.FreeHoliday {
-    background-color: #4ad70e;
-    /*padding: 4px 12px;*/
-    display: inline-block;
+button {
     width: 100%;
-    height: 100%;
 }
-
-.Worked {
-    background-color: #f19413;
-    /*   padding: 4px 12px;*/
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-}
-
-.Holiday {
-    background-color: #28b4a7;
-    /*padding: 4px 12px;*/
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-}
-

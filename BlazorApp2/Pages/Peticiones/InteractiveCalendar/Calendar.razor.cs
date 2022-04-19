@@ -6,7 +6,7 @@ namespace Cal;
 public class CalendarCs : ComponentBase {
     #region variables principales
 
-    public Calendario CalendarioUsuario;
+    public Calendario CalendarioUsuario = new();
     public DatosDias diasCalendario;
     public Calendario CalendarioEmpresa;
     #endregion
@@ -27,6 +27,11 @@ public class CalendarCs : ComponentBase {
     [Inject]
     protected API _api { get; set; }
 
+    [Inject]
+    protected AuthenticationStateProvider _authenticationStateProvider { get; set; }
+    
+
+
     public Dictionary<string, string> EstadoDiaSelecciones;
 
     public static readonly String colorInicioMultiseleccion = "white";
@@ -39,9 +44,7 @@ public class CalendarCs : ComponentBase {
    
 
     public  CalendarCs() {
-        OnParametersSetAsync();
         //todo actualizar los dias del calendario de la empresa q sean public holiday
-        this.CalendarioUsuario = new();
         this.CalendarioUsuario.DiasCalendario = Core_Calendario.GenerarDiasCalendario(this.CalendarioUsuario.AñoCalendario);
         this.diasCalendario = this.CalendarioUsuario.DiasCalendario;
         //throw new NotImplementedException();
@@ -88,10 +91,11 @@ public class CalendarCs : ComponentBase {
             if (!multiseleccion) {
                 dia.Estado = this.EstadoDiaSeleccion;
                 dia.ColorSeleccion = this.EstadoDiaSelecciones[this.EstadoDiaSeleccion];
+                return true;
                 //Core_Calendario.AplyFilterToDays(this.diasCalendario, new(dia => dia.Estado = this.EstadoDiaSeleccion));
             }
             //Actualizar el calendario , si es posible retorno true
-            return Core_Calendario.ActualizarCalendario(this.diasCalendario, dia, EstadoDiaSeleccion);
+            //return Core_Calendario.ActualizarCalendario(this.diasCalendario, dia, EstadoDiaSeleccion);
         }
         //no se puede seleccioanr el dia con ese estado
         return false;

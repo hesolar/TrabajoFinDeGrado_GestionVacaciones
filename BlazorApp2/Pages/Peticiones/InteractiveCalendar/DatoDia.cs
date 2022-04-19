@@ -7,7 +7,7 @@ public class DatoDia {
     public DatoDia(DateTime d) {
         //todo pasar a enum
         //this.Estado = (d.DayOfWeek.ToString().ToLower() is "saturday" or "sunday") ? "FreeHoliday" : "Work";
-        this.Estado = "Work";
+        this.Estado = "Laborable";
         this.Date = d;
     }
 

@@ -3,10 +3,10 @@
 
 
     <RadzenCard>
-        <RadzenRadioButtonList  @bind-Value=@valor TValue="int" >
+        <RadzenRadioButtonList @bind-Value=@valor TValue="string" >
             <Items>
                 @foreach (var dataItem in data) {
-                    <RadzenRadioButtonListItem Style=@($"background-color:{dataItem.ColorRepresentacion}") Text="@dataItem.Descripcion" Value="@dataItem.Id"  />
+                    <RadzenRadioButtonListItem Style=@($"background-color:{dataItem.ColorRepresentacion}") Text="@dataItem.Descripcion" Value="@dataItem.Descripcion"  />
                 }
             </Items>
         </RadzenRadioButtonList>
@@ -21,8 +21,10 @@
 
 
  <RadzenCard>
-     <CascadingValue Value="@Multiseleccion">
+     <CascadingValue Value="@Multiseleccion" Name="Multiseleccion">
+     <CascadingValue Value="@valor" Name="EstadoDiaSeleccion">
     <BlazorApp2.Pages.Peticiones.InteractiveCalendar.Calendar />
+    </CascadingValue>
     </CascadingValue>
 </RadzenCard>
 
@@ -30,14 +32,17 @@
 
 @code {
     public IEnumerable<TipoDiaCalendarioResponse> data { get; set; } = new List<TipoDiaCalendarioResponse>();
-
     protected override async Task OnInitializedAsync() {
         data = await _api.GetAllTipoDiaCalendarioAsync();
+        this.valor = data.First().ColorRepresentacion;
+        StateHasChanged();
     }
 
+    public void cambio() {
+        
+    }
 
-
-    public int valor;
+    public string valor;
 
     public bool Multiseleccion { get; set; } 
 }

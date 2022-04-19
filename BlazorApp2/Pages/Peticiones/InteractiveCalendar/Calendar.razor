@@ -18,13 +18,13 @@
     </header>
     <!-- Botones -->
     <section class="py-5">
-        <div class="container px-4 px-lg-1 mt-5">
+      @*  <div class="container px-4 px-lg-1 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
                 <div class="col mb-5">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <button class='@(this.EstadoDiaSeleccion==EstadoDia.Holiday?"Holiday":"")' @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.Holiday">Elegir Vacaciones</button>
+                            <button class='@(this.EstadoDiaSeleccion=="Holiday"?"Holiday":"")' @onclick='()=>this.EstadoDiaSeleccion="Holiday"'>Elegir Vacaciones</button>
 
                         </div>
                     </div>
@@ -33,28 +33,28 @@
                 <div class="col mb-5">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <button class='@(this.EstadoDiaSeleccion==EstadoDia.Worked?"Worked":"")' @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.Worked">Marcar"Trabajado"</button>
+                            <button class='@(this.EstadoDiaSeleccion=="Worked"?"Worked":"")' @onclick='()=>this.EstadoDiaSeleccion="Worked"'>Marcar"Trabajado"</button>
                         </div>
                     </div>
                 </div>
                 <div class="col mb-5">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <button class='@(this.EstadoDiaSeleccion==EstadoDia.Work?"Work":"")' @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.Work">Planificar trabajo</button>
+                            <button class='@(this.EstadoDiaSeleccion=="Work"?"Work":"")' @onclick='()=>this.EstadoDiaSeleccion="Work"'>Planificar trabajo</button>
                         </div>
                     </div>
                 </div>
                 <div class="col mb-5">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <button class="@(this.EstadoDiaSeleccion==EstadoDia.FreeHoliday?"FreeHoliday":"")" @onclick="()=>this.EstadoDiaSeleccion=EstadoDia.FreeHoliday">Fiestas Generales</button>
+                            <button class="@(this.EstadoDiaSeleccion=="FreeHoliday"?"FreeHoliday":"")" @onclick='()=>this.EstadoDiaSeleccion="FreeHoliday"'>Fiestas Generales</button>
 
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
+        </div>*@
 
 
         <div class="container px-4 px-lg-5 mt-5">
@@ -105,6 +105,18 @@
 
 
 @code {
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        var tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
+        this.EstadoDiaSelecciones = tiposDias.ToDictionary(keySelector: m => m.Descripcion, elementSelector: m => m.ColorRepresentacion);
+    }
+
+
+    
+
+
     #region Event Listeners
 
     //todo revisar cuando tenga las especificaciones

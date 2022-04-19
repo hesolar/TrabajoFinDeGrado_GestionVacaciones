@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorApp2;
+using Microsoft.AspNetCore.Components;
 
 
 namespace Cal;
@@ -13,11 +14,20 @@ public class CalendarCs : ComponentBase {
     #region Variables utilizadas con fines "estéticos"
     //Estado de la seleccion
 
-    public EstadoDia EstadoDiaSeleccion;
+    [CascadingParameter(Name = "EstadoDiaSeleccion")]
+
+
+    public String EstadoDiaSeleccion { get; set; }
+
 
     //Modo multiseleccion de dias
-    [CascadingParameter]
+    [CascadingParameter(Name = "Multiseleccion")]
     public bool DayMultiseletionMode {get;set;}
+
+    [Inject]
+    protected API _api { get; set; }
+
+    public Dictionary<string, string> EstadoDiaSelecciones;
 
     public static readonly String colorInicioMultiseleccion = "white";
     public static readonly String colorInicial = "none";
@@ -26,7 +36,10 @@ public class CalendarCs : ComponentBase {
 
     #endregion
 
-    public CalendarCs() {
+   
+
+    public  CalendarCs() {
+        OnParametersSetAsync();
         //todo actualizar los dias del calendario de la empresa q sean public holiday
         this.CalendarioUsuario = new();
         this.CalendarioUsuario.DiasCalendario = Core_Calendario.GenerarDiasCalendario(this.CalendarioUsuario.AñoCalendario);
@@ -72,7 +85,11 @@ public class CalendarCs : ComponentBase {
     public bool SingleSelectionDay(DatoDia dia, bool multiseleccion = false) {
         if (Core_Calendario.CanUpdateDay(this.diasCalendario, dia, this.EstadoDiaSeleccion)) {
             //Primero limpiar la seleccion anterior(si es que estamos en multiseleccion)
-            if (!multiseleccion) Core_Calendario.AplyFilterToDays(this.diasCalendario, new(dia => dia.ColorSeleccion = colorInicial));
+            if (!multiseleccion) {
+                dia.Estado = this.EstadoDiaSeleccion;
+                dia.ColorSeleccion = this.EstadoDiaSelecciones[this.EstadoDiaSeleccion];
+                //Core_Calendario.AplyFilterToDays(this.diasCalendario, new(dia => dia.Estado = this.EstadoDiaSeleccion));
+            }
             //Actualizar el calendario , si es posible retorno true
             return Core_Calendario.ActualizarCalendario(this.diasCalendario, dia, EstadoDiaSeleccion);
         }

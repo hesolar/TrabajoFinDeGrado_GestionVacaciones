@@ -11,7 +11,8 @@ public static class Core_Calendario {
     /// <param name="dia">Dia a actualizar</param>
     /// <param name="tipoDia">Tipo dia que se quiere actualizar</param>
     /// <returns>el calendario actualizado</returns>
-    public static bool ActualizarCalendario(DatosDias dias, DatoDia dia, EstadoDia CambioTipoDia) {
+    public static bool ActualizarCalendario(DatosDias dias, DatoDia dia, String CambioTipoDia) {
+
         if (CanUpdateDay(dias, dia, CambioTipoDia)) {
             dia.Estado = CambioTipoDia;
             return true;
@@ -26,7 +27,7 @@ public static class Core_Calendario {
     /// <param name="dia"></param>
     /// <param name="nuevoEstado"></param>
     /// <returns></returns>
-    public static bool CanUpdateDay(DatosDias dias, DatoDia dia, EstadoDia nuevoEstado) {
+    public static bool CanUpdateDay(DatosDias dias, DatoDia dia, String nuevoEstado) {
         //todo actualizar cuando tenga requerimientos
         //switch (nuevoEstado) {
         //    case EstadoDia.Holiday:

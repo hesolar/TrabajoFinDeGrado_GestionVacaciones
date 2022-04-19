@@ -6,7 +6,8 @@ public class DatoDia {
     #region constructor
     public DatoDia(DateTime d) {
         //todo pasar a enum
-        this.Estado = (d.DayOfWeek.ToString().ToLower() is "saturday" or "sunday") ? EstadoDia.FreeHoliday : EstadoDia.Work;
+        //this.Estado = (d.DayOfWeek.ToString().ToLower() is "saturday" or "sunday") ? "FreeHoliday" : "Work";
+        this.Estado = "Work";
         this.Date = d;
     }
 
@@ -14,7 +15,7 @@ public class DatoDia {
     public DateTime Date { get; set; }
     #endregion
     #region properties
-    public EstadoDia Estado { get; set; }
+    public String Estado { get; set; }
     //Permite ver si el boton está siendo seleccionado en una multiseleccion
     public String ColorSeleccion { get; set; } = "none";
     #endregion

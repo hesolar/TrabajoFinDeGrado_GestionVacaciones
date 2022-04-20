@@ -361,4 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
+/Application/Operations/Commands/Delete/DeleteProyectoCommand.cs
+/Application/Operations/Commands/Delete/DeleteRolesCommand.cs

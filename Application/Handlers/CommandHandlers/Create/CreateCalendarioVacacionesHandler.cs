@@ -6,6 +6,8 @@ public class CreateCalendarioVacacionesHandler : IRequestHandler<CreateCalendari
     }
     public async Task<bool> Handle(CreateCalendarioVacacionesCommand request, CancellationToken cancellationToken) {
         Core.Entities.CalendarioVacaciones calendarioVacacionesEntity = MapperBase<CalendarioVacacionesMappingProfile,Core.Entities.CalendarioVacaciones>.MappEntity(request);
+        //Al crear una entidad esta siempre tendra que ser pendiente de revisión
+        calendarioVacacionesEntity.Estado = 0;
         if (calendarioVacacionesEntity is null) {
             throw new ApplicationException("Issue with mapper");
         }

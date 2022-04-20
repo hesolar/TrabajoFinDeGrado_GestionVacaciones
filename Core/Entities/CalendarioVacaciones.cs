@@ -5,6 +5,7 @@ public class CalendarioVacaciones {
 
     public DateTime FechaCalendario{get; set;}
     public int TipoDiaCalendario { get; set; } = 0;
+    public int Estado { get; set; }
 
 }
 

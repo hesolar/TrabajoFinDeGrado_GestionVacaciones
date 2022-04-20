@@ -27,6 +27,7 @@ builder.Services.AddDbContext<RolesContext>( m => m.UseSqlServer(connectionStrin
 builder.Services.AddDbContext<TecnicoProyectosContext>( m => m.UseSqlServer(connectionString));
 builder.Services.AddDbContext<UsuarioProyectoContext>( m => m.UseSqlServer(connectionString));
 builder.Services.AddDbContext<TipoDiaCalendarioContext>( m => m.UseSqlServer(connectionString));
+builder.Services.AddDbContext<EstadoCalendarioVacacionesContext>(m => m.UseSqlServer(connectionString));
 
 //stuff automapper and mediatr
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -47,6 +48,7 @@ builder.Services.AddTransient<IProyectoRepository, ProyectoRepository>();
 builder.Services.AddTransient<IRolesRepository, RolesRepository>();
 builder.Services.AddTransient<ITecnicoProyectosRepository, TecnicoProyectosRepository>();
 builder.Services.AddTransient<ICalendarioVacacionesRepository, CalendarioVacacionesRepository>();
+builder.Services.AddTransient<IEstadoCalendarioVacacionesRepository, EstadoCalendarioVacacionesRepository>();
 builder.Services.AddTransient<IUsuarioProyectoRepository, UsuarioProyectoRepository>();
 builder.Services.AddTransient<ITipoDiaCalendarioRepository, TipoDiaCalendarioRepository>();
 

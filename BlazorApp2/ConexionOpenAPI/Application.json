@@ -2017,6 +2017,10 @@
           "tipoDiaCalendario": {
             "type": "integer",
             "format": "int32"
+          },
+          "estado": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

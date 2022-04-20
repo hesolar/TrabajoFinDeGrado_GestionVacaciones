@@ -1,7 +1,10 @@
 ﻿
                 <RadzenCard>
-                    <h4 class="mb-4">DatePicker with special dates</h4>
-                    <RadzenDatePicker  TValue="DateTime?" DateRender=@DateRenderSpecial  Change="@OnChange" Class="w-100" />
+                    <h4 class="mb-4">Resumen Mensual Vacaciones</h4>
+
+                    <RadzenDatePicker TValue="DateTime?" Inline="true" DateRender=@DateRenderSpecial />
+
+
                 </RadzenCard>
 
 
@@ -49,11 +52,7 @@
         await  _api.AddCalendarioVacacionesNoSavedAsync(resultado);
         this.SelectedDates = resultado.Select(x => x.FechaCalendario.Date).ToList();
     }
-    public void OnChange(DateTime? d) {
-
-
-
-    }
+  
     public  IEnumerable<CalendarioVacacionesResponse> ObtenerDias(DateTime inicio, DateTime final, int idUsuario,int tipoDia) {
         List<CalendarioVacacionesResponse> results = new();
         CalendarioVacacionesResponse calendario;

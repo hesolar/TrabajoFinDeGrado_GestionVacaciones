@@ -1,8 +1,9 @@
 ﻿@inject API _api;
-<h3>BotonesTiposDias</h3>
 
 
-    <RadzenCard>
+    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
+    <RadzenCard Style="border:none;background-color:azure">
+
         <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
             <Items>
                 @foreach (var dataItem in data) {
@@ -13,24 +14,23 @@
         <br />
         <p>Multiseleccion</p>
         <RadzenSwitch @bind-Value=@Multiseleccion />
-
     </RadzenCard>
 
    
 
 
 
- <RadzenCard>
+ <RadzenCard Style="border:none;background-color:transparent">
      <CascadingValue Value="@Multiseleccion" Name="Multiseleccion">
-     <CascadingValue Value="@valor" Name="EstadoDiaSeleccion">
-    <BlazorApp2.Pages.Peticiones.InteractiveCalendar.Calendar />
-    </CascadingValue>
+        <CascadingValue Value="@valor" Name="EstadoDiaSeleccion">
+            <BlazorApp2.Pages.Peticiones.InteractiveCalendar.Calendar />
+        </CascadingValue>
     </CascadingValue>
 </RadzenCard>
 
 
 
-@code {
+@code{
     public IEnumerable<TipoDiaCalendarioResponse> data { get; set; } = new List<TipoDiaCalendarioResponse>();
     protected override async Task OnInitializedAsync() {
         data = await _api.GetAllTipoDiaCalendarioAsync();

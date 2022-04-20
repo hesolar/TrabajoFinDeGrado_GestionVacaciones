@@ -1,10 +1,10 @@
-﻿@inherits PeticionesVacacionesPropiasBase
+﻿@inherits SolicitudesPropiasBase
 
-<h1>Peticiones: @InfoUsuario?.Nombre @InfoUsuario?.Apellido1 @InfoUsuario?.Apellido2 </h1>
+<h1>Solicitudes: @InfoUsuario?.Nombre @InfoUsuario?.Apellido1 @InfoUsuario?.Apellido2 </h1>
 
 <RadzenButton Icon="refresh" 
               Click="@LoadData" 
-              Text="CargarPeticiones" 
+              Text="Cargar Solicitudes" 
               ButtonStyle="ButtonStyle.Primary" style="margin-bottom: 10px" />
 
 <RadzenButton Icon="add_circle_outline" 
@@ -22,14 +22,14 @@
                 PageSize="5" AllowPaging="true" 
                 AllowSorting="true" 
                 Data=@CalendarioVacacionesUsuario
-                TItem="CalendarioVacacionesResponse" 
+                TItem="CalendarioVacacionesCompleto" 
                 ColumnWidth="160px" 
                 LogicalFilterOperator="LogicalFilterOperator.Or">
     <Columns>
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" Title="IdUsuario" />
+        <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="IdTecnico" Title="IdUsuario" />
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" Title="Fecha Dia">
+        <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="FechaCalendario" Title="Fecha Dia">
             <Template Context="order">
                 @order.FechaCalendario.ToString("dd-MM-yyyyy")
             </Template>
@@ -38,10 +38,10 @@
             </EditTemplate>
         </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="TipoDiaCalendario" Title="Tipo Día" />
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="Estado" Title="Estado Petición" />
+        <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="TipoDiaCalendario" Title="Tipo Día"  />
+        <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="Estado" Title="Estado Petición" />
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Pickable="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+        <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Pickable="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
             <Template Context="NuevoCalendarioVacaciones">
                 
                 <ErrorBoundary @ref="ErrorBoundaryBorradosModificaciones">

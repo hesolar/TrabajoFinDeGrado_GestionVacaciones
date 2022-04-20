@@ -1,5 +1,6 @@
-﻿@using Cal
-    <table style="overflow-x: auto;">
+﻿@using BlazorApp2.Pages.Peticiones.InteractiveCalendar;
+
+    <table>
     @*Dias de la semana*@
     <tr>
         @foreach(var diaSemana in PublicVariables.WeekDays.Values)
@@ -15,19 +16,19 @@
             int desplazamientoPrimeraSemana= PublicVariables.WeekDays.First(X => datosMes.First().Date.DayOfWeek == X.Value).Key-1;
             int i = 0;
             int totalDias = 0;
-            while (i < desplazamientoPrimeraSemana)
-            {
+            //Desplazamiento en celdas vacias
+            while (i < desplazamientoPrimeraSemana){
                 <th></th>
                 i++;
             }
-
-            while (i < 7)
-            {
+            //Resto de dias
+            while (i < 7){
                 DatoDia variable = datosMes.ElementAt(totalDias);
-                <th>
-                
+                <th> 
                 <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion"
-                @onclick="@(() => OnClickCallback.InvokeAsync(variable))" @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button></th>         
+                @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
+                @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
+                </th>         
                 i++;
                 totalDias++;
             }
@@ -40,18 +41,17 @@
                     @{
                         int semana = 0;
                 
-                        while (semana < 7)
-                        {
+                        while (semana < 7){
                             semana++;
                     
-                            if (totalDias < datosMes.Count)
-                            {
+                            if (totalDias < datosMes.Count){
                                 DatoDia variable = datosMes.ElementAt(totalDias);
                           <th>
-                
-                          <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion"
-                          
-                          @onclick="@(() => OnClickCallback.InvokeAsync(variable))" @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button></th>
+                              <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion"
+                              @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
+                              @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day 
+                              </button>
+                          </th>
                             }  
                             totalDias++;
                         } 
@@ -62,15 +62,7 @@
 </table>
 
 
-
-
-
-
-
-
-
 @code {
-
     [Parameter]
     public DatosDias datosMes { get; set; }
     [Parameter]
@@ -79,6 +71,4 @@
     public EventCallback<DatoDia> OnClickCallback { get; set; }
     [Parameter]
     public EventCallback<DatoDia> OnHover { get; set; }
-
-
 }

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Peticiones\InteractiveCalendar\Calendar.razor" />
+    <None Include="Pages\Peticiones\InteractiveCalendar\InteractiveCalendar.razor" />
     <None Include="Pages\Peticiones\InteractiveCalendar\Month.razor" />
   </ItemGroup>
 

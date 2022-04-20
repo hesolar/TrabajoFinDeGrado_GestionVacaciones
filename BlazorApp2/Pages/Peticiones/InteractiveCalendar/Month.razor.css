@@ -24,3 +24,9 @@
 button {
     width: 100%;
 }
+
+.Festividad {
+    background-color: grey;
+    display: inline-block;
+    /*padding: 4px 12px;*/
+}

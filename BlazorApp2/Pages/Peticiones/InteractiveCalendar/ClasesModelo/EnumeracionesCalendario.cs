@@ -1,4 +1,5 @@
-﻿namespace Cal;
+﻿namespace  BlazorApp2.Pages.Peticiones.InteractiveCalendar;
+
 public static class PublicVariables {
     public static readonly Dictionary<int, String> Meses = new() {
         [1] = "Enero",

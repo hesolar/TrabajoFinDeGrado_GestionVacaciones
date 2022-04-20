@@ -1,29 +1,29 @@
 ﻿@inject API _api;
 
+@*Botones de seleccion*@
+<RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
+<RadzenCard Style="border:none;background-color:azure">
 
-    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
-    <RadzenCard Style="border:none;background-color:azure">
-
-        <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
-            <Items>
-                @foreach (var dataItem in data) {
-                    <RadzenRadioButtonListItem Style=@($"background-color:{dataItem.ColorRepresentacion}") Text="@dataItem.Descripcion" Value="@dataItem.Descripcion"  />
-                }
-            </Items>
-        </RadzenRadioButtonList>
-        <br />
-        <p>Multiseleccion</p>
-        <RadzenSwitch @bind-Value=@Multiseleccion />
-    </RadzenCard>
+    <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
+        <Items>
+            @foreach (var dataItem in data) {
+                <RadzenRadioButtonListItem Style=@($"background-color:{dataItem.ColorRepresentacion}") Text="@dataItem.Descripcion" Value="@dataItem.Descripcion"  />
+            }
+        </Items>
+    </RadzenRadioButtonList>
+    <br />
+    <p>Multiseleccion</p>
+    <RadzenSwitch @bind-Value=@Multiseleccion />
+</RadzenCard>
 
    
 
 
-
+@*Calendario*@
  <RadzenCard Style="border:none;background-color:transparent">
      <CascadingValue Value="@Multiseleccion" Name="Multiseleccion">
         <CascadingValue Value="@valor" Name="EstadoDiaSeleccion">
-            <BlazorApp2.Pages.Peticiones.InteractiveCalendar.Calendar />
+            <InteractiveCalendar/>
         </CascadingValue>
     </CascadingValue>
 </RadzenCard>

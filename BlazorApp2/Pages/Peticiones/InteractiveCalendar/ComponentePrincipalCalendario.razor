@@ -4,6 +4,10 @@
 <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
 <RadzenCard Style="border:none;background-color:azure">
 
+    <HeadCalendario/>
+    <PieCalendario CancelarCambiosButtonListener=calendario.CancelarCambiosButtonListener SaveCalendarButtonListener=calendario.SaveCalendarButtonListener/>
+    <br />
+    <br />
     <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
         <Items>
             @foreach (var dataItem in data) {
@@ -12,18 +16,12 @@
         </Items>
     </RadzenRadioButtonList>
     <br />
-    <p>Multiseleccion</p>
-    <RadzenSwitch @bind-Value=@Multiseleccion />
-</RadzenCard>
+   <p> Multiseleccion</p> 
+   <RadzenSwitch @bind-Value=@Multiseleccion  />
 
-   
-
-
-@*Calendario*@
- <RadzenCard Style="border:none;background-color:transparent">
      <CascadingValue Value="@Multiseleccion" Name="Multiseleccion">
         <CascadingValue Value="@valor" Name="EstadoDiaSeleccion">
-            <InteractiveCalendar/>
+            <InteractiveCalendar @ref="calendario"/>
         </CascadingValue>
     </CascadingValue>
 </RadzenCard>
@@ -43,5 +41,7 @@
 
     public string valor;
 
-    public bool Multiseleccion { get; set; } 
+    public bool Multiseleccion { get; set; }
+    InteractiveCalendar calendario=new();
+
 }

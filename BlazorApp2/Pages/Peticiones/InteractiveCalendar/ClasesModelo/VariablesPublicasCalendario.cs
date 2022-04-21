@@ -26,5 +26,9 @@ public static class PublicVariables {
         [7] = DayOfWeek.Sunday
     };
 
+    public static readonly String colorInicioMultiseleccion = "white";
+    public static readonly String colorInicial = "none";
+    public static readonly String colorOver = "blue";
+
 }
 

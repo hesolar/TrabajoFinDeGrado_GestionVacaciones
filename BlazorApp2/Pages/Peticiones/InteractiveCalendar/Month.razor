@@ -24,11 +24,18 @@
             //Resto de dias
             while (i < 7){
                 DatoDia variable = datosMes.ElementAt(totalDias);
+                
+                    
                 <th> 
-                <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion"
+
+                
+
+                <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion" disabled=@(variable.Estado=="Disabled")
                 @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
                 @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
                 </th>         
+
+                
                 i++;
                 totalDias++;
             }
@@ -46,14 +53,13 @@
                     
                             if (totalDias < datosMes.Count){
                                 DatoDia variable = datosMes.ElementAt(totalDias);
-                          <th>
-                              <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion"
-                              @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
-                              @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day 
-                              </button>
-                          </th>
-                            }  
-                            totalDias++;
+                                <th>
+                                <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion" disabled=@(variable.Estado=="Disabled")
+                                @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
+                                @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
+                                </th>
+                             }  
+                          totalDias++;
                         } 
                     }
                </tr>

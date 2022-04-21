@@ -5,61 +5,36 @@
 @inherits InteractiveCalendarBase
 
 
-<body>
-    <header class="bg-dark py-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Calendario @this.CalendarioUsuario.AñoCalendario</h1>
-                <p class="lead fw-normal text-white-50 mb-0">
-                    Los siguientes botones te permiten marcar tu calendario en función de tu planificación personal:
-                </p>
-            </div>
-    </header>
-
-    <section class="py-5">
-        
 
 
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
-                @foreach(var mes in OperacionesCalendario.DividirYearEnMeses(this.diasCalendario)) {
-                    <div class="col mb-3">
-                        <div class="card h-100">
-                            
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center">
-                                    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="@PublicVariables.Meses[mes.Key]" />
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+            @foreach (var mes in OperacionesCalendario.DividirYearEnMeses(this.diasCalendario)) {
+                <div class="col mb-3">
+                    <div class="card h-100">
 
-                                </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="@PublicVariables.Meses[mes.Key]" />
+
                             </div>
-                           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center">
-                                    <RadzenButton ButtonStyle="ButtonStyle.Light"  Icon="add_circle_outline" Click="()=>SelectAllMonthButtonListener(mes.Value)" Text="Seleccionar mes"/>
-                                </div>
-                            </div>
-                            <RadzenCard>
-                                <Month Mes=mes.Key datosMes=mes.Value OnClickCallback="@SelectDay" OnHover="@OverButtonListener"></Month>
-                            </RadzenCard>
-
-                               
-
-                            
                         </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="add_circle_outline" Click="()=>SelectAllMonthButtonListener(mes.Value)" Text="Seleccionar mes" />
+                            </div>
+                        </div>
+                        <RadzenCard>
+                            <Month Mes=mes.Key datosMes=mes.Value OnClickCallback="@DaySelectorEventListener" OnHover="@HoverButtonListener"></Month>
+                        </RadzenCard>
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
-    </section>
-    <!-- Footer-->
-    <footer class="py-5 bg-dark">
+    </div>
+</section>
 
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
-            <RadzenButton Icon="warning_amber" ButtonStyle="ButtonStyle.Danger" Text="Cancelar Cambios" Click="ExitButtonListener"/>
-            <RadzenButton Icon="check_circle" ButtonStyle="ButtonStyle.Success" Text="Guardar Seleccion" Click="SaveCalendarButtonListener"/>
 
-        </div>
-
-        @*<div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>*@
-    </footer>
-</body>
 
 

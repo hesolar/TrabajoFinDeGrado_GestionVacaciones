@@ -1,0 +1,19 @@
+﻿<footer class="py-5 bg-dark">
+
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
+        <RadzenButton Icon="warning_amber" ButtonStyle="ButtonStyle.Danger" Text="Cancelar Cambios" Click="CancelarCambiosButtonListener" />
+        <RadzenButton Icon="check_circle" ButtonStyle="ButtonStyle.Success" Text="Guardar Seleccion" Click="SaveCalendarButtonListener" />
+
+    </div>
+
+</footer>
+
+
+@code {
+    [Parameter]
+    public EventCallback CancelarCambiosButtonListener { get; set; }
+    [Parameter]
+    public EventCallback SaveCalendarButtonListener { get; set; }
+}
+
+

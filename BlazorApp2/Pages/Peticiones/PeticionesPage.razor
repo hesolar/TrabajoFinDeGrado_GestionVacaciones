@@ -10,19 +10,24 @@
     <RadzenCard Class="mt-4" @ref="TarjetaPeticionesPropias"  Style="border:none;background-color:white">
         <BlazorApp2.Pages.Peticiones.Solicitudes.PeticionesVacacionesPropias />
         <br />
-        <BlazorApp2.Pages.Peticiones.Solicitudes.ResumenMensual/>
+        @*<BlazorApp2.Pages.Peticiones.Solicitudes.ResumenMensual/>*@
     </RadzenCard>
 </RadzenCard>
 
 <br/>
 
+
 <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text="Calendario Anual de Vacaciones" /><br/><br/>
 <RadzenCard  Style="background-color:lightblue; border:none">
    <RadzenButton Click="()=>TarjetaCalendario.Visible=!TarjetaCalendario.Visible"
                   Text="@(TarjetaCalendario.Visible? "Ocultar" : "Mostrar")"
-                  ButtonStyle="@(TarjetaCalendario.Visible? ButtonStyle.Light :  ButtonStyle.Secondary)" style="margin-bottom: 10px" />      
+                  ButtonStyle="@(TarjetaCalendario.Visible? ButtonStyle.Light :  ButtonStyle.Secondary)" style="margin-bottom: 10px" /> 
+    
     <RadzenCard Class="mt-4" @ref="TarjetaCalendario"  Style="border:none;background-color:transparent">
-       <BlazorApp2.Pages.Peticiones.InteractiveCalendar.ComponentePrincipalCalendario/>
+        <div disabled>
+
+            <BlazorApp2.Pages.Peticiones.InteractiveCalendar.InteractiveCalendar></BlazorApp2.Pages.Peticiones.InteractiveCalendar.InteractiveCalendar>
+        </div>
     </RadzenCard>
 </RadzenCard>
 

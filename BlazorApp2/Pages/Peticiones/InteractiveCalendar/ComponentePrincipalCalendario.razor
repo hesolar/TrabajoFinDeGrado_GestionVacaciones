@@ -30,7 +30,8 @@
 
 @code{
     public IEnumerable<TipoDiaCalendarioResponse> data { get; set; } = new List<TipoDiaCalendarioResponse>();
-    protected override async Task OnInitializedAsync() {
+
+    protected override async Task OnParametersSetAsync() {
         data = await _api.GetAllTipoDiaCalendarioAsync();
         this.valor = data.First().Descripcion;
         this.radiobutton.Value = valor;

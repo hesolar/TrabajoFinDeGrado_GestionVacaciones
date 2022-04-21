@@ -1,0 +1,77 @@
+﻿@page "/Peticiones"
+@inject API _api;
+
+<PageTitle>Gestión Personal Vacaciones</PageTitle>
+
+
+<RadzenBadge BadgeStyle="BadgeStyle.Primary" Text="Solicitudes" />
+<RadzenCard Class="mt-4" Style="background-color:steelblue">
+    <RadzenButton Click="()=>TarjetaPeticionesPropias.Visible=!TarjetaPeticionesPropias.Visible"
+                  Text="@(TarjetaPeticionesPropias.Visible? "Ocultar" : "Mostrar")"
+                  ButtonStyle="@(TarjetaPeticionesPropias.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />
+    <RadzenCard Class="mt-4" @ref="TarjetaPeticionesPropias" Style="border:none;background-color:white">
+        <BlazorApp2.Pages.Peticiones.Solicitudes.PeticionesVacacionesPropias ChangeBackwardsCallback=@RefreshCalendar />
+        <br />
+        @*<BlazorApp2.Pages.Peticiones.Solicitudes.ResumenMensual/>*@
+    </RadzenCard>
+</RadzenCard>
+
+<br />
+
+
+<RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text="Calendario Anual de Vacaciones" />
+<br />
+<br />
+
+
+
+<RadzenCard Style="background-color:lightblue; border:none">
+
+
+        
+
+
+        
+    <RadzenButton Click="()=>TarjetaCalendario.Visible=!TarjetaCalendario.Visible"
+                  Text="@(TarjetaCalendario.Visible? "Ocultar" : "Mostrar")"
+                  ButtonStyle="@(TarjetaCalendario.Visible? ButtonStyle.Light :  ButtonStyle.Secondary)" style="margin-bottom: 10px" />
+
+    <RadzenCard Class="mt-4" @ref="TarjetaCalendario" Style="border:none;background-color:transparent">
+        <h4 class="mb-4"> Este calendario es informativo, si deseas editarlo consulta <a href="/Calendario" style="color:steelblue;">Aquí</a></h4>
+
+        <div style="pointer-events:none">
+
+            <div class="col-md-6 p-3">
+                @foreach (var dataItem in ColoresBotones) {
+                <RadzenBadge Style=@($"background-color:{dataItem.ColorRepresentacion}; color:black;") Text="@dataItem.Descripcion" IsPill="true" />
+                }
+            </div>
+            <BlazorApp2.Pages.Peticiones.InteractiveCalendar.InteractiveCalendar></BlazorApp2.Pages.Peticiones.InteractiveCalendar.InteractiveCalendar>
+        
+        
+        </div>
+    </RadzenCard>
+</RadzenCard>
+
+
+
+
+
+@code {
+    public IEnumerable<TipoDiaCalendarioResponse> ColoresBotones { get; set; } = new List<TipoDiaCalendarioResponse>();
+    protected RadzenCard TarjetaPeticionesPropias = new();
+    protected RadzenCard TarjetaCalendario = new();
+
+    protected override async Task OnInitializedAsync() {
+        ColoresBotones = await _api.GetAllTipoDiaCalendarioAsync();
+        StateHasChanged();
+    }
+
+    public async Task RefreshCalendar() {
+        this.TarjetaCalendario.Visible = false;
+        StateHasChanged();
+        this.TarjetaCalendario.Visible = true;
+        StateHasChanged();
+
+    }
+}

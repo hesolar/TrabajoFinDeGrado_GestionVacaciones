@@ -10,6 +10,11 @@ public class SolicitudesPropiasBase : ComponentBase {
     [Inject]
     protected API _api { get; set; }
 
+    [Parameter]
+    public EventCallback ChangeBackwardsCallback { get; set; }
+
+
+
     protected UsuarioResponse InfoUsuario { get; set; }
 
     protected IEnumerable<CalendarioVacacionesCompleto> CalendarioVacacionesUsuario { get; set; } = new List<CalendarioVacacionesCompleto>();
@@ -19,7 +24,6 @@ public class SolicitudesPropiasBase : ComponentBase {
 
     public  IEnumerable<TipoDiaCalendarioResponse> TipoDiaCalendarioVaciones;
     public  IEnumerable<EstadoCalendarioVacacionesResponse> EstadosCalendario;
-
 
     //Gestor Errores
     protected ErrorBoundary ErrorBoundaryBorradosModificaciones;
@@ -36,7 +40,6 @@ public class SolicitudesPropiasBase : ComponentBase {
     protected override async Task OnInitializedAsync() {
         EstadosCalendario=await _api.GetAllEstadoCalendarioVacacionesAsync();
         TipoDiaCalendarioVaciones=await _api.GetAllTipoDiaCalendarioAsync();
-
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         var userIdentity = authState.User.Identity.Name;
         InfoUsuario = await _api.GetUsuarioByCorreoEmpresaAsync(userIdentity);
@@ -51,7 +54,8 @@ public class SolicitudesPropiasBase : ComponentBase {
         //Comprobamos si ha cambiado el valor de edicion
         if (ValorAuxiliarEdicion!=null) {
             //Si tienen distinto valor actualizamos
-            if (order.FechaCalendario != ValorAuxiliarEdicion?.FechaCalendario) {
+            if (order.FechaCalendario != ValorAuxiliarEdicion.FechaCalendario ||
+                order.TipoDiaCalendario != ValorAuxiliarEdicion.TipoDiaCalendario) {
                 await _api.ReplaceCalendarioVacacionesAsync(new ReplaceCalendarioVacacionesCommand() {
                     FechaCalendarioNew = order.FechaCalendario,
                     TipoDiaCalendarioNew = this.TipoDiaCalendarioVaciones.First(x=> x.Descripcion==order.TipoDiaCalendario).Id,
@@ -62,6 +66,8 @@ public class SolicitudesPropiasBase : ComponentBase {
             }
             //Sino lo insertamos a la bd
             else {
+
+
                 await _api.CreateCalendarioVacacionesAsync(new CreateCalendarioVacacionesCommand() {
                     FechaCalendario = order.FechaCalendario,
                     IdTecnico = order.IdTecnico,
@@ -144,6 +150,7 @@ public class SolicitudesPropiasBase : ComponentBase {
         IEnumerable<CalendarioVacacionesResponse> c= await _api.GetUsuarioCalendarioVacacionesAsync(InfoUsuario.IdTecnico);
          CalendarioVacacionesUsuario= c.ConvertirListado(this.EstadosCalendario,this.TipoDiaCalendarioVaciones);
         ComponentePrincipal.IsLoading = false;
+        await ChangeBackwardsCallback.InvokeAsync();
         StateHasChanged();
     }
 

@@ -17,7 +17,8 @@ builder.Services.AddSingleton<API>(new API("https://localhost:7140//", new HttpC
 
 //MudBlazor
 builder.Services.AddMudServices();
-
+//Radzen
+builder.Services.AddScoped<Radzen.DialogService>();
 
 var app = builder.Build();
 

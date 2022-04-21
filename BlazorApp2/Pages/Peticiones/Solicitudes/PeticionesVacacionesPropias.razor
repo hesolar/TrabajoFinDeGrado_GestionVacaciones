@@ -31,14 +31,22 @@
 
         <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="FechaCalendario" Title="Fecha Dia">
             <Template Context="order">
-                @order.FechaCalendario.ToString("dd-MM-yyyyy")
+                @order.FechaCalendario.ToString("dd-MM-yyyy")
             </Template>
             <EditTemplate Context="order">
                 <RadzenDatePicker @bind-Value="order.FechaCalendario" Style="width:100%" MouseEnter="RecoverAppState"/>
             </EditTemplate>
         </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="TipoDiaCalendario" Title="Tipo Día"  />
+        <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="TipoDiaCalendario" Title="Tipo Día">
+               <EditTemplate Context="order">
+                    <RadzenDropDown @bind-Value="order.TipoDiaCalendario" Data="@TipoDiaCalendarioVaciones.Where(X=>X.Descripcion!="Laborable").Select(X=> X.Descripcion)" TextProperty="TipoDiaCalendario" ValueProperty="TipoDiaCalendario" Style="width:100%; display: block;" />
+                </EditTemplate>
+         </RadzenDataGridColumn>
+
+
+
+
         <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Property="Estado" Title="Estado Petición" />
 
         <RadzenDataGridColumn TItem="CalendarioVacacionesCompleto" Pickable="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">

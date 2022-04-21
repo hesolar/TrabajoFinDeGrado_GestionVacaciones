@@ -1,4 +1,7 @@
-﻿<footer class="py-5 bg-dark">
+﻿@inject Radzen.DialogService _dialogService
+
+
+<footer class="py-5 bg-dark">
 
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
         <RadzenButton Icon="warning_amber" ButtonStyle="ButtonStyle.Danger" Text="Cancelar Cambios" Click="CancelarCambiosButtonListener" />
@@ -7,7 +10,13 @@
     </div>
 
 </footer>
+@*
+<RadzenButton Text="Confirm dialog" Style="width: 140px;" 
+ButtonStyle="ButtonStyle.Secondary" 
+Click=@(args => _dialogService.Confirm("Are you sure?", "MyTitle", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) 
+/>
 
+*@
 
 @code {
     [Parameter]

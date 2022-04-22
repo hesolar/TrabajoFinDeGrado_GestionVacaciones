@@ -6,7 +6,7 @@ public class DatoDia {
     #region constructor
     public DatoDia(DateTime d) {
         //todo
-        this.Estado = (d.DayOfWeek.ToString().ToLower() is "saturday" or "sunday") ? "Disabled" : "Laborable";
+        this.TipoDia = (d.DayOfWeek.ToString().ToLower() is "saturday" or "sunday") ? "Disabled" : "Laborable";
         //this.Estado = "Laborable";
         this.Date = d;
     }
@@ -15,7 +15,7 @@ public class DatoDia {
     #region properties
     [Key]
     public DateTime Date { get; set; }
-    public String Estado { get; set; }
+    public String TipoDia { get; set; }
     public String ColorSeleccion { get; set; } = "none";
     #endregion
 }

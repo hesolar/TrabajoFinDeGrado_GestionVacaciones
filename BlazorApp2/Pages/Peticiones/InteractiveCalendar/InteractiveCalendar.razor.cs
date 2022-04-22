@@ -1,5 +1,6 @@
 ﻿
 
+
 namespace BlazorApp2.Pages.Peticiones.InteractiveCalendar;
 
 public class InteractiveCalendarBase : ComponentBase {
@@ -14,7 +15,7 @@ public class InteractiveCalendarBase : ComponentBase {
 
     //Modo multiseleccion de dias
     [CascadingParameter(Name = "Multiseleccion")]
-    public bool DayMultiseletionMode {get;set;}
+    public bool DayMultiseletionMode { get; set; }
 
     //Api proyecto
     [Inject]
@@ -27,12 +28,12 @@ public class InteractiveCalendarBase : ComponentBase {
 
     //Estados de las selecciones, representa un estado de dia y su color => Laboral, azul
     public Dictionary<string, string> TipoDiaColor = new();
-    
+
 
 
     #endregion
 
-   
+
     //Generar todos los dias del calendario
     public InteractiveCalendarBase() {
         this.diasCalendario = OperacionesCalendario.GenerarDiasCalendario(DateTime.Now.Year);
@@ -45,9 +46,9 @@ public class InteractiveCalendarBase : ComponentBase {
     /// </summary>
     /// <param name="diasEnMultiseleccion">Conjunto de dias</param>
     /// <returns></returns>
-    public void SelectMultipleDays(DatosDias diasEnMultiseleccion) {
-       OperacionesCalendario.AplyFilterToDays(diasEnMultiseleccion, new Action<DatoDia>(dia => SingleSelectionDay(dia)));
-    }
+    public void SelectMultipleDays(DatosDias diasEnMultiseleccion)
+       => OperacionesCalendario.AplyFilterToDays(diasEnMultiseleccion, new Action<DatoDia>(dia => SingleSelectionDay(dia)));
+
 
 
 
@@ -58,13 +59,13 @@ public class InteractiveCalendarBase : ComponentBase {
     /// <param name="multiseleccion">Indica si el modo multiseleccion está activo</param>
     /// <returns></returns>
     public bool SingleSelectionDay(DatoDia dia, bool multiseleccion = false) {
-            if (!multiseleccion) {
-                dia.Estado = this.EstadoDiaSeleccion;
-                dia.ColorSeleccion = this.TipoDiaColor[this.EstadoDiaSeleccion];
-                return true;
-                //Core_Calendario.AplyFilterToDays(this.diasCalendario, new(dia => dia.Estado = this.EstadoDiaSeleccion));
-            }
-            //Actualizar el calendario , si es posible retorno true
+        if (!multiseleccion) {
+            dia.TipoDia = this.EstadoDiaSeleccion;
+            dia.ColorSeleccion = this.TipoDiaColor[this.EstadoDiaSeleccion];
+            return true;
+            //Core_Calendario.AplyFilterToDays(this.diasCalendario, new(dia => dia.Estado = this.EstadoDiaSeleccion));
+        }
+        //Actualizar el calendario , si es posible retorno true
         //no se puede seleccioanr el dia con ese estado
         return false;
     }
@@ -81,7 +82,6 @@ public class InteractiveCalendarBase : ComponentBase {
             var usuarioActual = this._authenticationStateProvider.GetCurrentUser(_api);
             var vacaciones = await _api.GetUsuarioCalendarioVacacionesAsync(usuarioActual.IdTecnico);
             IEnumerable<TipoDiaCalendarioResponse> tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
-            //Este diccionario representa un tipo de dia -> Festivo y su color de representación verde
             this.TipoDiaColor = tiposDias.ToDictionary(keySelector: m => m.Descripcion, elementSelector: m => m.ColorRepresentacion);
             ActualizarDiasCalendario(vacaciones, tiposDias);
         }
@@ -93,18 +93,18 @@ public class InteractiveCalendarBase : ComponentBase {
     /// <param name="vacaciones"></param>
     /// <param name="tiposDias"></param>
     /// <returns></returns>
-    public void ActualizarDiasCalendario( IEnumerable<CalendarioVacacionesResponse> vacaciones, 
+    public void ActualizarDiasCalendario(IEnumerable<CalendarioVacacionesResponse> vacaciones,
                                           IEnumerable<TipoDiaCalendarioResponse> tiposDias) {
-            this.diasCalendario = OperacionesCalendario.GenerarDiasCalendario(DateTime.Now.Year);
-            vacaciones.ToList().ForEach(x => {
-                var dia = this.diasCalendario.FirstOrDefault(y => x.FechaCalendario.Date == y.Date);
-                if (dia != null) {
-                    var tipoDia = tiposDias.First(y => y.Id == x.TipoDiaCalendario);
-                    dia.ColorSeleccion = tipoDia.ColorRepresentacion;
-                    dia.Estado = tipoDia.Descripcion;
-                }
-            });
-            StateHasChanged();
+        this.diasCalendario = OperacionesCalendario.GenerarDiasCalendario(DateTime.Now.Year);
+        vacaciones.ToList().ForEach(x => {
+            var dia = this.diasCalendario.FirstOrDefault(y => x.FechaCalendario.Date == y.Date);
+            if (dia != null) {
+                var tipoDia = tiposDias.First(y => y.Id == x.TipoDiaCalendario);
+                dia.ColorSeleccion = tipoDia.ColorRepresentacion;
+                dia.TipoDia = tipoDia.Descripcion;
+            }
+        });
+        StateHasChanged();
     }
 
 
@@ -161,7 +161,7 @@ public class InteractiveCalendarBase : ComponentBase {
     /// <param name="dia"></param>
     public void HoverButtonListener(DatoDia dia) {
         if (//Debe estar el modo multiseleccion
-            this.DayMultiseletionMode && 
+            this.DayMultiseletionMode &&
             //Debe aver un boton en modo multiseleccion
             !OperacionesCalendario.NingunDiaFiltro(this.diasCalendario, new(dia => dia.ColorSeleccion == PublicVariables.colorInicioMultiseleccion))
             //Este boton no puede ser el de inicio de la multiseleccion
@@ -173,43 +173,94 @@ public class InteractiveCalendarBase : ComponentBase {
     }
 
     /// <summary>
-    /// Boton de guardar datos del calendario
+    /// Boton de guardar datos del calendario 
     /// </summary>
     /// <exception cref="NotImplementedException"></exception>
     public async Task SaveCalendarButtonListener() {
+        var usuarioActivo = this._authenticationStateProvider.GetCurrentUser(_api);
+        //Obtenemos dias desde la aplicacion
+        var vacacionesEnAplicacion = await _api.GetUsuarioCalendarioVacacionesAsync(usuarioActivo.IdTecnico);
+
+        //Borramos primero los dias que antes eran de vacaciones y que ahora son laborables
+        //Es decir que se borran las vacaciones estén almacenadas con la misma fecha y que ahora sean laborables
+        var diasGuardadosYAhoraLaborables = this.diasCalendario.Where(x => vacacionesEnAplicacion.Any(X => X.FechaCalendario == x.Date) && x.TipoDia == "Laborable");
+        await BorrarDatosCalendario(diasGuardadosYAhoraLaborables, usuarioActivo.IdTecnico);
+
+        //Actualizamos los dias que han cambiado su estado
+        await ActualizarDiasQueCambiaronSuEstado(vacacionesEnAplicacion,usuarioActivo.IdTecnico);
+
+       //Añadimos por ultimo nuevos dias
+        IEnumerable<DatoDia> nuevosDias = this.diasCalendario.Where(X => X.TipoDia != "Laborable" && 
+                                                                         X.TipoDia != "Disabled" && 
+                                                                         X.TipoDia != "Festividad" &&  
+                                                                         !vacacionesEnAplicacion.Any(Y => Y.FechaCalendario.Date == X.Date));
+        await AddNuevosDias(nuevosDias,usuarioActivo.IdTecnico);
+
+        await OnAfterRenderAsync(true);
+    }
+
+    /// <summary>
+    /// Añadimos los nuevos dias de vacaciones
+    /// </summary>
+    /// <param name="nuevosDias">Nuevos dias a añadir</param>
+    /// <param name="idTecnico">Id del usuario del que se añadirá las vacaciones</param>
+    /// <returns></returns>
+    public async Task AddNuevosDias(IEnumerable<DatoDia> nuevosDias,int idTecnico) {
         var tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
-        this.TipoDiaColor = tiposDias.ToDictionary(keySelector: m => m.Descripcion, elementSelector: m => m.ColorRepresentacion);
-
-        var usuario = this._authenticationStateProvider.GetCurrentUser(_api);
-        var vacaciones = await _api.GetUsuarioCalendarioVacacionesAsync(usuario.IdTecnico);
-
-        var diasBorrar = this.diasCalendario.Where(x => vacaciones.Any(X => X.FechaCalendario == x.Date) && x.Estado == "Laborable");
-        var listadoEnBDYTrabajados = diasCalendario.Where(X => vacaciones.Any(y => X.Date == y.FechaCalendario) || X.Estado == "Laborable");
-        var nuevosDias = this.diasCalendario.Where(X => X.Estado != "Laborable" && X.Estado != "Festividad" && !vacaciones.Any(Y=>Y.FechaCalendario.Date==X.Date));
-
-
-
         foreach (var dia in nuevosDias) {
-
-                var tipoDia = tiposDias.First(x => x.ColorRepresentacion == dia.ColorSeleccion).Id;
-                await _api.CreateCalendarioVacacionesAsync(new CreateCalendarioVacacionesCommand() { FechaCalendario = dia.Date, IdTecnico = usuario.IdTecnico, TipoDiaCalendario = tipoDia });
-            
+            await _api.CreateCalendarioVacacionesAsync(new CreateCalendarioVacacionesCommand() { 
+                FechaCalendario = dia.Date, 
+                IdTecnico = idTecnico, 
+                TipoDiaCalendario = tiposDias.First(x => x.ColorRepresentacion == dia.ColorSeleccion).Id
+            });
         }
+    }
+
+    /// <summary>
+    /// Actualizar los tipos de dias con un nuevo estado
+    /// </summary>
+    /// <param name="vacacionesEnAplicacion">Vacaciones almacenadas en la aplicacion</param>
+    /// <param name="idUsuario">id del usuario</param>
+    /// <returns></returns>
+    public async Task ActualizarDiasQueCambiaronSuEstado(IEnumerable<CalendarioVacacionesResponse> vacacionesEnAplicacion,int idUsuario) {
+        //Dias y Tipos de dia almacenados en la aplicacion
+        var tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
+
+        //Obtenemos los dias que han cambiado su estado
+        var diasConEstadoCambiado = this.diasCalendario.Where(X => X.TipoDia != "Laborable" &&
+                                                                   X.TipoDia != "Disabled" &&
+                                                                   X.TipoDia != "Festividad" &&
+                                                                   vacacionesEnAplicacion.Any(Y => Y.FechaCalendario.Date == X.Date) &&
+                                                                   tiposDias.First(Z => Z.Id == vacacionesEnAplicacion.First(Y => Y.FechaCalendario.Date ==                                                        X.Date).TipoDiaCalendario).Descripcion != X.TipoDia);
+        if (diasConEstadoCambiado.Any())
+        foreach (var item in diasConEstadoCambiado) {
+            await _api.ReplaceCalendarioVacacionesAsync(new ReplaceCalendarioVacacionesCommand() {
+                FechaCalendarioNew = item.Date,
+                FechaCalendarioOld = item.Date,
+                IdTecnico = idUsuario,
+                TipoDiaCalendarioNew = tiposDias.First(X => X.Descripcion == item.TipoDia).Id,
+                TipoDiaCalendarioOld = vacacionesEnAplicacion.First(x => x.FechaCalendario == item.Date).TipoDiaCalendario
+            }); ;
+        }
+    }
 
 
+    /// <summary>
+    /// Borrar datos de la aplicacion
+    /// </summary>
+    /// <param name="diasBorrar">Dias para borrar en la aplicacion</param>
+    /// <param name="IdTecnicoUsuario">Id del usuario dle que se borran las vacaciones</param>
+    /// <returns></returns>
+    public async Task BorrarDatosCalendario(IEnumerable<DatoDia> diasBorrar,int IdTecnicoUsuario) {
+        if (diasBorrar.Any())
             foreach (var diaBorrar in diasBorrar) {
 
                 await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
                     Fecha = diaBorrar.Date,
-                    UsuarioID = usuario.IdTecnico
+                    UsuarioID = IdTecnicoUsuario
                 });
-            
-             }
-
-        await OnAfterRenderAsync(true);
-
+            }
     }
-
 
     //todo
     /// <summary>

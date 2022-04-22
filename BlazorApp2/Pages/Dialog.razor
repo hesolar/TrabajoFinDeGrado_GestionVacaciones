@@ -1,0 +1,65 @@
+﻿@inject Radzen.DialogService _dialogService
+@implements IDisposable
+
+<div class="row px-3">
+    <div class="col-md-4 p-3">
+        <RadzenCard>
+            <h4 class="mb-4">Confirm Dialog</h4>
+            <RadzenButton Text="Confirm dialog" Style="width: 140px;" ButtonStyle="ButtonStyle.Secondary" Click=@(args => _dialogService.Confirm("Confirmar Operación?", "", new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" })) />
+        </RadzenCard>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public string Operacion { get; set; } = "Cancelar";
+    [Parameter]
+    public EventCallback OkAction{ get; set; }
+
+
+
+
+    int orderID = 10248;
+
+    protected override void OnInitialized() {
+        _dialogService.OnOpen += Open;
+        _dialogService.OnClose += Close;
+    }
+
+    public void Dispose() {
+        // The DialogService is a singleton so it is advisable to unsubscribe.
+        _dialogService.OnOpen -= Open;
+        _dialogService.OnClose -= Close;
+    }
+
+    void Open(string title, Type type, Dictionary<string, object> parameters, Radzen.DialogOptions options) {
+    }
+
+    void Close(dynamic result) {
+    }
+
+
+    async Task ShowInlineDialog() {
+        var result = await _dialogService.OpenAsync("Simple Dialog", ds =>
+    @<div>
+        <p class="mb-4">Desea Realizar la Operación @this.Operacion ? </p>
+        <div class="row">
+            <div class="col">
+                <RadzenButton Text="Ok" Click="() =>{
+                ds.Close(true);
+                this.OkAction.InvokeAsync();
+
+                }" Class="mr-1" Style="width: 80px;" />
+                <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Class="mr-1" />
+            </div>
+        </div>
+    </div>
+    );
+
+    }
+
+ 
+    
+}

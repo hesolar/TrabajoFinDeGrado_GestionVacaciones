@@ -30,7 +30,7 @@
 
                 
 
-                <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion" disabled=@(variable.Estado=="Disabled")
+                <button class="@variable.TipoDia" style="background-color:@variable.ColorSeleccion" disabled=@(variable.TipoDia=="Disabled")
                 @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
                 @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
                 </th>         
@@ -54,7 +54,7 @@
                             if (totalDias < datosMes.Count){
                                 DatoDia variable = datosMes.ElementAt(totalDias);
                                 <th>
-                                <button class="@variable.Estado" style="background-color:@variable.ColorSeleccion" disabled=@(variable.Estado=="Disabled")
+                                <button class="@variable.TipoDia" style="background-color:@variable.ColorSeleccion" disabled=@(variable.TipoDia=="Disabled")
                                 @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
                                 @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
                                 </th>

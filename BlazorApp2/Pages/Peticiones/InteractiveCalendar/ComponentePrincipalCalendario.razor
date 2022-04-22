@@ -1,13 +1,12 @@
 ﻿@inject API _api;
 
 @*Botones de seleccion*@
-<RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
 <RadzenCard Style="border:none;background-color:azure">
 
-    <HeadCalendario/>
-    <PieCalendario CancelarCambiosButtonListener=calendario.CancelarCambiosButtonListener SaveCalendarButtonListener=calendario.SaveCalendarButtonListener/>
+    <HeadearCalendario CancelarCambiosButtonListener=calendario.CancelarCambiosButtonListener SaveCalendarButtonListener=calendario.SaveCalendarButtonListener/>
     <br />
     <br />
+    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
     <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
         <Items>
             @foreach (var dataItem in data) {

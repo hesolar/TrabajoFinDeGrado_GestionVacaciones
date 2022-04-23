@@ -1,4 +1,4 @@
-﻿@page "/Peticiones"
+﻿@page "/PeticionesPropias/Peticiones"
 @inject API _api;
 
 <PageTitle>Gestión Personal Vacaciones</PageTitle>
@@ -10,9 +10,8 @@
                   Text="@(TarjetaPeticionesPropias.Visible? "Ocultar" : "Mostrar")"
                   ButtonStyle="@(TarjetaPeticionesPropias.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />
     <RadzenCard Class="mt-4" @ref="TarjetaPeticionesPropias" Style="border:none;background-color:white">
-        <BlazorApp2.Pages.Peticiones.Solicitudes.PeticionesVacacionesPropias ChangeBackwardsCallback=@RefreshCalendar />
+        <BlazorApp2.Shared.Components.Solicitudes.PeticionesVacacionesPropias ChangeBackwardsCallback=@RefreshCalendar/>
         <br />
-        @*<BlazorApp2.Pages.Peticiones.Solicitudes.ResumenMensual/>*@
     </RadzenCard>
 </RadzenCard>
 

@@ -14,8 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Peticiones\InteractiveCalendar\InteractiveCalendar.razor" />
-    <None Include="Pages\Peticiones\InteractiveCalendar\Month.razor" />
+    <None Include="Shared\Components\InteractiveCalendar\ComponentePrincipalCalendario.razor" />
+    <None Include="Shared\Components\InteractiveCalendar\HeadearCalendario.razor" />
+    <None Include="Shared\Components\InteractiveCalendar\InteractiveCalendar.razor" />
+    <None Include="Shared\Components\InteractiveCalendar\Month.razor" />
+    <None Include="Shared\Components\Solicitudes\PeticionesVacacionesPropias.razor" />
   </ItemGroup>
 
   <ItemGroup>

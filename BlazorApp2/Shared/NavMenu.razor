@@ -1,35 +1,74 @@
 ﻿
 <AuthorizeView>
-     <Authorized>
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazorApp2</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+    <Authorized>
+        <div class="top-row ps-3 navbar navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="">BlazorApp2</a>
+                <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
 
-    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-        <nav class="flex-column">
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Home
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="Peticiones">
-                    <span class="oi oi-inbox" aria-hidden="true"></span> Peticiones Vacaciones
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="Calendario">
-                    <span class="oi oi-calendar" aria-hidden="true"></span>Calendario
-                </NavLink>
-            </div>
-   
-        </nav>
-    </div>
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+            <nav class="flex-column">
+
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Inicio
+                    </NavLink>
+                </div>
+
+                @*Peticiones propias*@
+                <RadzenPanelMenu>
+                    <RadzenPanelMenuItem Text="Ver Peticiones" Icon="description" Style="background-color:steelblue">
+
+                        <RadzenCard Style="background-color:lightslategrey">
+
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="PeticionesPropias/Peticiones">
+                                <span class="oi oi-inbox" aria-hidden="true"></span> Peticiones
+                            </NavLink>
+                        </div>
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="PeticionesPropias/Calendario">
+                                <span class="oi oi-calendar" aria-hidden="true"></span>Calendario
+                            </NavLink>
+                        </div>
+                          <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="PeticionesPropias/Estadisticas">
+                                <span class="oi oi-bar-chart" aria-hidden="true"></span>Estadísticas
+                            </NavLink>
+                        </div>
+
+
+                        </RadzenCard>
+
+                    </RadzenPanelMenuItem>
+                </RadzenPanelMenu>
+
+                @*Gestion*@
+                <RadzenPanelMenu>
+                    <RadzenPanelMenuItem Text="Gestión" Icon="compare_arrows" Style="background-color:steelblue">
+
+                        <RadzenCard Style="background-color:lightslategrey">
+                            
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Gestion/AprobarPeticiones">
+                                    <span class="oi oi-spreadsheet" aria-hidden="true"></span> Ver Solicitudes
+                                </NavLink>
+                            </div>
+                        </RadzenCard>
+
+                    </RadzenPanelMenuItem>
+                </RadzenPanelMenu>
+
+            </nav>
+
+
+
+        </div>
     </Authorized>
 </AuthorizeView>
 @code {
@@ -37,8 +76,7 @@
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
-    {
+    private void ToggleNavMenu() {
         collapseNavMenu = !collapseNavMenu;
     }
 }

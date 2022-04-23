@@ -1,0 +1,32 @@
+﻿
+/*tr, th {
+    border: 1px solid black;
+    margin: 0;
+    padding-top: 0;
+    padding-top: 0;
+    padding: 0;
+
+   
+}*/
+
+.weekdays {
+     font-size: 8px;
+}
+
+
+
+.Laborable {
+    background-color: #228bd9;
+    display: inline-block;
+    /*padding: 4px 12px;*/
+}
+
+button {
+    width: 100%;
+}
+
+.Disabled {
+    background-color: grey;
+    display: inline-block;
+    /*padding: 4px 12px;*/
+}

@@ -1,0 +1,64 @@
+﻿@inject Radzen.DialogService _dialogService
+@inject Radzen.DialogService _dialogService
+@implements IDisposable
+
+<header class="bg-dark py-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Calendario @DateTime.Now.Year</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Calendario Anual de vacaciones
+            </p>
+        </div>
+</header>
+
+
+<div class="py-5 bg-dark">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
+
+    <RadzenButton Icon="warning_amber" Text="Cancelar Cambios"    ButtonStyle="ButtonStyle.Danger"  Click=@(async() =>{
+       bool? result = await _dialogService.Confirm("Confirmar Operación?", "Confirmación", new ConfirmOptions() { CancelButtonText = "Cancelar",OkButtonText = "Eliminar",Resizable=true});
+        if(result.HasValue && result.Value)await CancelarCambiosButtonListener.InvokeAsync();
+    }) />
+    <RadzenButton Icon="check_circle"  Text="Guardar Seleccion"  ButtonStyle="ButtonStyle.Success"  Click=@(async() => {
+       bool? result =await   _dialogService.Confirm("Confirmar Operación?", "Confirmación", new ConfirmOptions() {OkButtonText = "Guardar", CancelButtonText = "Cancelar"  ,});
+        if(result.HasValue && result.Value)await SaveCalendarButtonListener.InvokeAsync();
+    
+    }) />
+    </div>
+
+</div>
+
+
+@code {
+    [Parameter]
+    public EventCallback CancelarCambiosButtonListener { get; set; }
+    [Parameter]
+    public EventCallback SaveCalendarButtonListener { get; set; }
+
+
+
+    protected override void OnInitialized() {
+        _dialogService.OnOpen += Open;
+        _dialogService.OnClose += Close;
+    }
+
+    public void Dispose() {
+        // The DialogService is a singleton so it is advisable to unsubscribe.
+        _dialogService.OnOpen -= Open;
+        _dialogService.OnClose -= Close;
+    }
+
+    void Open(string title, Type type, Dictionary<string, object> parameters, Radzen.DialogOptions options) {
+    }
+
+    void Close(dynamic result) {
+    }
+
+
+
+    
+
+ 
+
+}
+
+

@@ -1,8 +1,8 @@
 ﻿namespace Application.Operations.Queries;
 
-public class GetCalendarioVacacionesByIdHandler : IRequestHandler<GetCalendarioVacacionesByIdQuery, CalendarioVacacionesResponse> {
+public class GetCalendarioVacacionesByQueryIdHandler : IRequestHandler<GetCalendarioVacacionesByIdQuery, CalendarioVacacionesResponse> {
     private readonly ICalendarioVacacionesRepository _repository;
-    public GetCalendarioVacacionesByIdHandler(ICalendarioVacacionesRepository employeeRepository) {
+    public GetCalendarioVacacionesByQueryIdHandler(ICalendarioVacacionesRepository employeeRepository) {
         _repository = employeeRepository;
     }
     public async Task<CalendarioVacacionesResponse> Handle(GetCalendarioVacacionesByIdQuery request, CancellationToken cancellationToken) {

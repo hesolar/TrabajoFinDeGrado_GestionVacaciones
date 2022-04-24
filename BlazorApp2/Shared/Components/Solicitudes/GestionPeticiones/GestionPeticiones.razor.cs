@@ -15,10 +15,10 @@ public class GestionPeticionesBase: ComponentBase {
 
     protected UsuarioResponse InfoUsuario { get; set; }
 
-    protected IEnumerable<CalendarioVacaciones_PeticionesPropiasGrid> CalendarioVacacionesUsuario { get; set; } = new List<CalendarioVacaciones_PeticionesPropiasGrid>();
+    protected IEnumerable<CalendarioVacaciones_GestionPeticionesGrid> CalendarioVacacionesUsuario { get; set; } = new List<CalendarioVacaciones_GestionPeticionesGrid>();
 
-    protected RadzenDataGrid<CalendarioVacaciones_PeticionesPropiasGrid> ComponentePrincipal;
-    protected CalendarioVacaciones_PeticionesPropiasGrid? ValorAuxiliarEdicion;
+    protected RadzenDataGrid<CalendarioVacaciones_GestionPeticionesGrid> ComponentePrincipal;
+    protected CalendarioVacaciones_GestionPeticionesGrid? ValorAuxiliarEdicion;
 
     public IEnumerable<TipoDiaCalendarioResponse> TipoDiaCalendarioVaciones;
     public IEnumerable<EstadoCalendarioVacacionesResponse> EstadosCalendario;
@@ -48,14 +48,16 @@ public class GestionPeticionesBase: ComponentBase {
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
-    public async Task SaveRow(CalendarioVacaciones_PeticionesPropiasGrid order) {
+    public async Task SaveRow(CalendarioVacaciones_GestionPeticionesGrid order) {
         //Comprobamos si ha cambiado el valor de edicion
+        var usuario = await _api.GetUsuarioByCorreoEmpresaAsync(order.EmailCorporativo);
         if (ValorAuxiliarEdicion != null) {
             //Si tienen distinto valor actualizamos
+
             if (order.Estado != ValorAuxiliarEdicion.Estado)
                await _api.UpdateCalendarioVacacionesAsync(new UpdateCalendarioVacacionesCommand() {
                     FechaCalendario = order.FechaCalendario,
-                    IdTecnico = order.IdTecnico,
+                    IdTecnico = usuario.IdTecnico,
                     Estado = this.EstadosCalendario.First(X => X.Descripcion == order.Estado).Id,
                     TipoDiaCalendario = this.TipoDiaCalendarioVaciones.First(X=> X.Descripcion==order.TipoDiaCalendario).Id
                 }); 
@@ -67,7 +69,7 @@ public class GestionPeticionesBase: ComponentBase {
 
                 await _api.CreateCalendarioVacacionesAsync(new CreateCalendarioVacacionesCommand() {
                     FechaCalendario = order.FechaCalendario,
-                    IdTecnico = order.IdTecnico,
+                    IdTecnico = usuario.IdTecnico,
                     TipoDiaCalendario = this.TipoDiaCalendarioVaciones.First(x => x.Descripcion == order.TipoDiaCalendario).Id
                 }); ;
             }
@@ -87,26 +89,10 @@ public class GestionPeticionesBase: ComponentBase {
     /// </summary>
     /// <param name="OldCalendarioVacaciones"></param>
     /// <returns></returns>
-    public async Task EditRow(CalendarioVacaciones_PeticionesPropiasGrid OldCalendarioVacaciones) {
+    public async Task EditRow(CalendarioVacaciones_GestionPeticionesGrid OldCalendarioVacaciones) {
         ValorAuxiliarEdicion = new();
-        PropertyCopier<CalendarioVacaciones_PeticionesPropiasGrid, CalendarioVacaciones_PeticionesPropiasGrid>.Copy(OldCalendarioVacaciones, ValorAuxiliarEdicion);
+        PropertyCopier<CalendarioVacaciones_GestionPeticionesGrid, CalendarioVacaciones_GestionPeticionesGrid>.Copy(OldCalendarioVacaciones, ValorAuxiliarEdicion);
         await ComponentePrincipal.EditRow(OldCalendarioVacaciones);
-    }
-
-    /// <summary>
-    /// Eliminar una fila del grid
-    /// </summary>
-    /// <param name="calendarioAEliminar"></param>
-    /// <returns></returns>
-    public async Task DeleteRow(CalendarioVacaciones_PeticionesPropiasGrid calendarioAEliminar) {
-        await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
-            Fecha = calendarioAEliminar.FechaCalendario,
-            UsuarioID = calendarioAEliminar.IdTecnico
-        });
-        this.CalendarioVacacionesUsuario.ToList().Remove(calendarioAEliminar);
-        await ComponentePrincipal.Reload();
-        await LoadData();
-
     }
 
     /// <summary>
@@ -114,26 +100,13 @@ public class GestionPeticionesBase: ComponentBase {
     /// </summary>
     /// <param name="CalendarioEditado">Valor que no se aplicará la edicion</param>
     /// <returns></returns>
-    public async Task CancelEdit(CalendarioVacaciones_PeticionesPropiasGrid CalendarioEditado) {
+    public async Task CancelEdit(CalendarioVacaciones_GestionPeticionesGrid CalendarioEditado) {
         if (ValorAuxiliarEdicion != null) CalendarioEditado.FechaCalendario = ValorAuxiliarEdicion.FechaCalendario;
         ValorAuxiliarEdicion = null;
         ComponentePrincipal.CancelEditRow(CalendarioEditado);
         //if (this.CalendarioVacacionesUsuario.Any()) await LoadData();
     }
 
-    /// <summary>
-    /// Se inserta una nueva fila en el grid de datos con el id del usuario y la fecha actual
-    /// </summary>
-    /// <returns></returns>
-    public async Task InsertRow() {
-        CalendarioVacaciones_PeticionesPropiasGrid calendarioNuevo = new() {
-            IdTecnico = InfoUsuario.IdTecnico,
-            FechaCalendario = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
-        };
-        this.ValorAuxiliarEdicion = calendarioNuevo;
-        await ComponentePrincipal.InsertRow(calendarioNuevo);
-        StateHasChanged();
-    }
 
     /// <summary>
     /// Activa el proceso de carga de datos desde la api al componente principal
@@ -144,15 +117,11 @@ public class GestionPeticionesBase: ComponentBase {
         await Task.Delay(600);
         ComponentePrincipal.Reset(true);
         await ComponentePrincipal.FirstPage(true);
-        var usuario = _authenticationStateProvider.GetCurrentUser(_api);
-        IEnumerable<int> proyectosUsuario= await _api.GetProyectosUsuarioAsync(usuario.IdTecnico);
-        //GetCalendarioVacacionesSubordinados
-        IEnumerable<CalendarioVacacionesResponse> respuesta= await _api.GetCalendarioVacacionesSubordinadosAsync(usuario.WebRol,usuario.IdTecnico,proyectosUsuario);
-        this.CalendarioVacacionesUsuario = respuesta.ConvertirListado(this.EstadosCalendario,this.TipoDiaCalendarioVaciones).Where(X => X.Estado != "Cancelado" || X.Estado != "Aprobado"); ;
+       
+       ( IEnumerable<CalendarioVacacionesResponse> respuesta,IEnumerable<UsuarioResponse> usuarios) =await ObtenerVacacionesSubordinados();
 
-
-
-
+        this.CalendarioVacacionesUsuario = respuesta.ConvertirListado(usuarios, this.EstadosCalendario, this.TipoDiaCalendarioVaciones)
+            .Where(X => X.Estado != "Cancelado" && X.Estado != "Aprobado"); ;
 
 
         //CalendarioVacacionesUsuario = c.ConvertirListado(this.EstadosCalendario, this.TipoDiaCalendarioVaciones);
@@ -160,6 +129,27 @@ public class GestionPeticionesBase: ComponentBase {
         await ChangeBackwardsCallback.InvokeAsync();
         StateHasChanged();
     }
+
+
+    //todo cambiar llamada solo con el usuario
+    public async Task<(IEnumerable<CalendarioVacacionesResponse>,IEnumerable<UsuarioResponse>)> ObtenerVacacionesSubordinados() {
+        //usuario activo
+        var usuario = _authenticationStateProvider.GetCurrentUser(_api);
+        //
+        IEnumerable<int> proyectosUsuario = await _api.GetProyectosUsuarioAsync(usuario.IdTecnico);
+        //GetCalendarioVacacionesSubordinados
+        IEnumerable<CalendarioVacacionesResponse> vacaciones = await _api.GetCalendarioVacacionesSubordinadosAsync(usuario.WebRol, usuario.IdTecnico, proyectosUsuario);
+
+        List<UsuarioResponse> usuarios= new();
+        foreach (CalendarioVacacionesResponse c in vacaciones) {
+            usuarios.Add(await _api.GetUsuarioByIdAsync(c.IdTecnico));
+        }
+
+
+        return (vacaciones,usuarios);
+
+    }
+
 
     protected void RecoverAppState() {
         if (ErrorBoundaryInsercionesNomodificaciones != null && ErrorBoundaryInsercionesNomodificaciones.ErrorContent != null) ErrorBoundaryInsercionesNomodificaciones.Recover();

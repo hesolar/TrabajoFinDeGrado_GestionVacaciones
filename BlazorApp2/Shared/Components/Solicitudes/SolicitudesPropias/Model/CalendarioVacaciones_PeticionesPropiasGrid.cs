@@ -1,6 +1,6 @@
 ﻿namespace BlazorApp2.Pages.Peticiones.Solicitudes;
 
-public static class MetodosExtension {
+public static class MetodosExtension_PeticionesPropias {
     public static CalendarioVacaciones_PeticionesPropiasGrid Convertir(this CalendarioVacacionesResponse c,
                                                          IEnumerable<EstadoCalendarioVacacionesResponse> estados, 
                                                          IEnumerable<TipoDiaCalendarioResponse> tipos) {

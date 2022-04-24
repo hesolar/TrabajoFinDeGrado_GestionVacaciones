@@ -18,7 +18,7 @@
     <None Include="Shared\Components\InteractiveCalendar\HeadearCalendario.razor" />
     <None Include="Shared\Components\InteractiveCalendar\InteractiveCalendar.razor" />
     <None Include="Shared\Components\InteractiveCalendar\Month.razor" />
-    <None Include="Shared\Components\Solicitudes\PeticionesVacacionesPropias.razor" />
+    <None Include="Shared\Components\Solicitudes\SolicitudesPropias\PeticionesVacacionesPropias.razor" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,133 @@
 ﻿@page "/PeticionesPropias/Estadisticas"
-<h3>Estadisticas</h3>
-Sin implementar.
+
+@inject API _api;
+@inject AuthenticationStateProvider _authenticationStateprovider;
+@using System.Globalization
+
+
+
+<h1>Página de Estadísticas</h1>
+
+  <div class="container">
+        <RadzenCard Class="mt-4 w-100 mb-4 d-flex align-items-center" >
+            <RadzenLabel Text="Color scheme:" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown Data="@colorSchemes" @bind-Value="@colorScheme" />
+        </RadzenCard>
+        <div class="row my-5">
+            <div class="col-sm-12 col-lg-8">
+               @* <RadzenChart ColorScheme="@colorScheme">
+                    @for (var year = 2015; year <= 2022; year++)
+                    {
+                        var currentYearRevenue = datosDonut.Where(r => r.Year == year.ToString()).ToList();
+                        <RadzenColumnSeries Data="@currentYearRevenue" CategoryProperty="Quarter" Title="@year.ToString()" ValueProperty="Revenue" />
+                    }
+                    <RadzenColumnOptions Margin="0" />
+                    <RadzenValueAxis Formatter="@FormatAsUSD" />
+                </RadzenChart>*@
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                @if(datosDonut!=null) {
+                    <RadzenChart ColorScheme="@colorScheme">
+                        <RadzenPieSeries Data="@datosDonut" Title="Distribucion Vacaciones Anuales" CategoryProperty="Year" ValueProperty="TotalDias" />
+                    </RadzenChart>
+                }
+            </div>
+        </div>
+		
+	</div>
+
+
+@*
+  <RadzenCard Class="mt-4 w-100 mb-4 d-flex align-items-center" >
+            <RadzenLabel Text="Color scheme:" Style="margin-right: 8px; vertical-align: middle;" />
+            <RadzenDropDown Data="@colorSchemes" @bind-Value="@colorScheme" />
+</RadzenCard>
+    
+                    
+                    @if(data!=null) {
+@*
+                <RadzenChart ColorScheme="@colorScheme">
+                    <RadzenDonutSeries Data="@data" CategoryProperty="Year" ValueProperty="TotalDias">
+                        <TitleTemplate>
+                            <div class="rz-donut-content">
+                                <div>Distribucion Vacaciones</div>
+                                <div>Anuales</div>
+                            </div>
+                        </TitleTemplate>
+                    </RadzenDonutSeries>
+                </RadzenChart>*@
+
+              
+      @*          <RadzenChart ColorScheme="@colorScheme">
+                    <RadzenPieSeries Data="@data" Title="Distribucion Vacaciones Anuales" CategoryProperty="Year" ValueProperty="TotalDias" />
+                </RadzenChart>
+            }*@
+      
+
+
+
 
 @code {
+    public DatoAgr[] datosDonut;
+    IEnumerable<ColorScheme> colorSchemes = Enum.GetValues(typeof(ColorScheme)).Cast<ColorScheme>();
+    ColorScheme colorScheme = ColorScheme.Pastel;
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+
+
+        if (firstRender) {
+
+
+            UsuarioResponse usuario = _authenticationStateprovider.GetCurrentUser(_api);
+            var calendarios = await _api.GetUsuarioCalendarioVacacionesAsync(usuario.IdTecnico);
+            var gruposYear = calendarios.GroupBy(X => X.FechaCalendario.Year).ToList();
+            List<DatoAgr> lista = new();
+            gruposYear.ForEach(X => {
+                DatoAgr d = new DatoAgr(X.First().FechaCalendario.Year, X.Select(X => X.FechaCalendario.Date));
+                lista.Add(d);
+            });
+            datosDonut = lista.ToArray();
+            StateHasChanged();
+            //agrupado por tipo dia y por año
+            //List<DatoAgr> lista = new();
+            //foreach (var grupo in gruposYear) {
+
+            //    var grupoV = grupo.GroupBy(X => X.TipoDiaCalendario);
+
+            //    foreach (var grupito in grupoV) {
+            //        lista.Add(new DatoAgr(grupito.First().FechaCalendario.Year,
+            //        grupito.First().TipoDiaCalendario,
+            //        grupito.Select(X => X.FechaCalendario.Date)));
+            //    }
+
+            //}
+
+
+        }
+
+    }
+
+
+    public class DatoAgr {
+
+
+        public string Year{ get; set; }
+        public int TipoDia{ get; set; }
+
+        public IEnumerable<DateTime> Dias;
+        public int TotalDias;
+
+        public DatoAgr(int year, int tiposDias, IEnumerable<DateTime> dias) {
+            this.Year = year.ToString();
+            this.TipoDia = tiposDias;
+            this.Dias = dias;
+            this.TotalDias = Dias.Count();
+        }
+        public DatoAgr(int year, IEnumerable<DateTime> dias) {
+            this.Year = year.ToString();
+            this.Dias = dias;
+            this.TotalDias = Dias.Count();
+        }
+
+    }
 
 }

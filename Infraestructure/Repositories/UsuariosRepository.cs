@@ -32,7 +32,6 @@ public class UsuarioRepository :  IUsuarioRepository {
     }
 
     public async Task<IEnumerable<Usuario>> GetSubordinados(IEnumerable<int> proyectos, int webRol) {
-        throw new NotImplementedException();
         HashSet<Usuario> subordinados = new();
 
         return await _context.Usuarios.Where(u => EsRolSubordinado(webRol, u) && EstaEnProyecto(proyectos, u)).ToListAsync();

@@ -169,17 +169,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               }
             }
@@ -351,27 +351,26 @@
         }
       }
     },
-    "/api/CalendarioVacaciones/CalendarioVacaciones/{Proyecto}/{WebRol}": {
-      "get": {
+    "/api/CalendarioVacaciones/GetCalendarioVacacionesSubordinados": {
+      "post": {
         "tags": [
           "CalendarioVacaciones"
         ],
         "parameters": [
           {
             "name": "WebRol",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           },
           {
-            "name": "Proyecto",
-            "in": "path",
-            "required": true,
+            "name": "idUsuario",
+            "in": "query",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -2590,6 +2589,10 @@
             "format": "date-time"
           },
           "tipoDiaCalendario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
             "type": "integer",
             "format": "int32"
           }

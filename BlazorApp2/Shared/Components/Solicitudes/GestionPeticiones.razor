@@ -1,6 +1,7 @@
-﻿@inherits SolicitudesPropiasBase
+﻿@using BlazorApp2.Shared.Components.Solicitudes.Model
+@inherits GestionPeticionesBase
 
-<h1>Solicitudes: @InfoUsuario?.Nombre @InfoUsuario?.Apellido1 @InfoUsuario?.Apellido2 </h1>
+<h1>Solicitudes Recibidas: </h1>
 
 <RadzenButton Icon="refresh" 
               Click="@LoadData" 
@@ -38,17 +39,10 @@
             </EditTemplate>
         </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn TItem="CalendarioVacaciones_PeticionesPropiasGrid" Property="TipoDiaCalendario" Title="Tipo Día">
-               <EditTemplate Context="order">
-                    <RadzenDropDown @bind-Value="order.TipoDiaCalendario" Data="@TipoDiaCalendarioVaciones.Where(X=>X.Descripcion!="Laborable").Select(X=> X.Descripcion)" TextProperty="TipoDiaCalendario" ValueProperty="TipoDiaCalendario" Style="width:100%; display: block;" />
-                </EditTemplate>
-         
+        <RadzenDataGridColumn TItem="CalendarioVacaciones_PeticionesPropiasGrid" Property="TipoDiaCalendario" Title="Tipo Día"/>
+    
 
-        </RadzenDataGridColumn>
-
-
-
-        <RadzenDataGridColumn TItem="CalendarioVacaciones_PeticionesPropiasGrid" Property="Estado" Title="Estado Petición" >
+         <RadzenDataGridColumn TItem="CalendarioVacaciones_PeticionesPropiasGrid" Property="Estado" Title="Estado Petición" >
              <EditTemplate Context="order">
                     <RadzenDropDown @bind-Value="order.Estado" Data=@this.EstadosCalendario.Select(X=>X.Descripcion) TextProperty="Estado" ValueProperty="Estado" Style="width:100%; display: block;" />
              </EditTemplate>
@@ -71,14 +65,14 @@
 
             <EditTemplate Context="order">
                 
-                <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
-                    <ChildContent>
+                @*<ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">*@
+                    @*<ChildContent>*@
                         <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(order))"/>
                         <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(order))"/>
-                    </ChildContent>
-                    <ErrorContent> <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="No se pudo insertar"/>  </ErrorContent>
+                    @*</ChildContent>*@
+                    @*<ErrorContent> <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="No se pudo insertar"/>  </ErrorContent>*@
 
-                </ErrorBoundary>
+                @*</ErrorBoundary>*@
             </EditTemplate>
         </RadzenDataGridColumn>
     </Columns>

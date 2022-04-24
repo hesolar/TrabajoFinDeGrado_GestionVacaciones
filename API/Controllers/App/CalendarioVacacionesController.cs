@@ -31,9 +31,9 @@ public class CalendarioVacacionesController : ControllerBase {
 
     [HttpPut("UpdateCalendarioVacaciones")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> Update(UpdateCalendarioVacacionesCommand command) {
+    public async Task<ActionResult<bool>> Update(UpdateCalendarioVacacionesCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpGet("GetCalendarioVacacionesById/{idTecnico}/{Fecha}")]
@@ -59,10 +59,10 @@ public class CalendarioVacacionesController : ControllerBase {
     }
 
 
-    [HttpGet("CalendarioVacaciones/{Proyecto}/{WebRol}")]
+    [HttpPost("GetCalendarioVacacionesSubordinados")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IEnumerable<CalendarioVacacionesResponse>> GetCalendarioVacacionesSubordinados(IEnumerable<int> Proyectos, int WebRol) {
-        return  await _mediator.Send(new GetSubordinadosQuery() { Proyectos=Proyectos, WebRol=WebRol});
+    public async Task<IEnumerable<CalendarioVacacionesResponse>> GetCalendarioVacacionesSubordinados(IEnumerable<int> Proyectos, int WebRol,int idUsuario) {
+        return  await _mediator.Send(new GetSubordinadosQuery() { Proyectos=Proyectos, WebRol=WebRol, IdUsuario=idUsuario});
 
 
     }

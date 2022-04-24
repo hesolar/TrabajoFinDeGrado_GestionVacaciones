@@ -1,9 +1,7 @@
-﻿
-using BlazorApp2.Pages.Peticiones.Solicitudes;
-using Microsoft.AspNetCore.Components.Web;
+﻿using BlazorApp2.Pages.Peticiones.Solicitudes;
 
-namespace BlazorApp2.Pages;
-public class SolicitudesPropiasBase : ComponentBase {
+namespace BlazorApp2.Shared.Components.Solicitudes.Model; 
+public class GestionPeticionesBase: ComponentBase {
 
     [Inject]
     protected AuthenticationStateProvider _authenticationStateProvider { get; set; }
@@ -22,8 +20,8 @@ public class SolicitudesPropiasBase : ComponentBase {
     protected RadzenDataGrid<CalendarioVacaciones_PeticionesPropiasGrid> ComponentePrincipal;
     protected CalendarioVacaciones_PeticionesPropiasGrid? ValorAuxiliarEdicion;
 
-    public  IEnumerable<TipoDiaCalendarioResponse> TipoDiaCalendarioVaciones;
-    public  IEnumerable<EstadoCalendarioVacacionesResponse> EstadosCalendario;
+    public IEnumerable<TipoDiaCalendarioResponse> TipoDiaCalendarioVaciones;
+    public IEnumerable<EstadoCalendarioVacacionesResponse> EstadosCalendario;
 
     //Gestor Errores
     protected ErrorBoundary ErrorBoundaryBorradosModificaciones;
@@ -38,8 +36,8 @@ public class SolicitudesPropiasBase : ComponentBase {
     /// <returns></returns>
 
     protected override async Task OnInitializedAsync() {
-        EstadosCalendario=await _api.GetAllEstadoCalendarioVacacionesAsync();
-        TipoDiaCalendarioVaciones=await _api.GetAllTipoDiaCalendarioAsync();
+        EstadosCalendario = await _api.GetAllEstadoCalendarioVacacionesAsync();
+        TipoDiaCalendarioVaciones = await _api.GetAllTipoDiaCalendarioAsync();
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         var userIdentity = authState.User.Identity.Name;
         InfoUsuario = await _api.GetUsuarioByCorreoEmpresaAsync(userIdentity);
@@ -52,18 +50,17 @@ public class SolicitudesPropiasBase : ComponentBase {
     /// <returns></returns>
     public async Task SaveRow(CalendarioVacaciones_PeticionesPropiasGrid order) {
         //Comprobamos si ha cambiado el valor de edicion
-        if (ValorAuxiliarEdicion!=null) {
+        if (ValorAuxiliarEdicion != null) {
             //Si tienen distinto valor actualizamos
-            if (order.FechaCalendario != ValorAuxiliarEdicion.FechaCalendario ||
-                order.TipoDiaCalendario != ValorAuxiliarEdicion.TipoDiaCalendario) {
-                await _api.ReplaceCalendarioVacacionesAsync(new ReplaceCalendarioVacacionesCommand() {
-                    FechaCalendarioNew = order.FechaCalendario,
-                    TipoDiaCalendarioNew = this.TipoDiaCalendarioVaciones.First(x=> x.Descripcion==order.TipoDiaCalendario).Id,
-                    FechaCalendarioOld = ValorAuxiliarEdicion.FechaCalendario,
+            if (order.Estado != ValorAuxiliarEdicion.Estado)
+               await _api.UpdateCalendarioVacacionesAsync(new UpdateCalendarioVacacionesCommand() {
+                    FechaCalendario = order.FechaCalendario,
                     IdTecnico = order.IdTecnico,
-                    TipoDiaCalendarioOld = this.TipoDiaCalendarioVaciones.First(x => x.Descripcion == order.TipoDiaCalendario).Id
-                }) ;
-            }
+                    Estado = this.EstadosCalendario.First(X => X.Descripcion == order.Estado).Id,
+                    TipoDiaCalendario = this.TipoDiaCalendarioVaciones.First(X=> X.Descripcion==order.TipoDiaCalendario).Id
+                }); 
+              
+            
             //Sino lo insertamos a la bd
             else {
 
@@ -75,7 +72,7 @@ public class SolicitudesPropiasBase : ComponentBase {
                 }); ;
             }
 
-            
+
             await LoadData();
         }
         //Sino cancelo la edicion
@@ -95,6 +92,7 @@ public class SolicitudesPropiasBase : ComponentBase {
         PropertyCopier<CalendarioVacaciones_PeticionesPropiasGrid, CalendarioVacaciones_PeticionesPropiasGrid>.Copy(OldCalendarioVacaciones, ValorAuxiliarEdicion);
         await ComponentePrincipal.EditRow(OldCalendarioVacaciones);
     }
+
     /// <summary>
     /// Eliminar una fila del grid
     /// </summary>
@@ -128,7 +126,6 @@ public class SolicitudesPropiasBase : ComponentBase {
     /// </summary>
     /// <returns></returns>
     public async Task InsertRow() {
-
         CalendarioVacaciones_PeticionesPropiasGrid calendarioNuevo = new() {
             IdTecnico = InfoUsuario.IdTecnico,
             FechaCalendario = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)
@@ -147,8 +144,18 @@ public class SolicitudesPropiasBase : ComponentBase {
         await Task.Delay(600);
         ComponentePrincipal.Reset(true);
         await ComponentePrincipal.FirstPage(true);
-        IEnumerable<CalendarioVacacionesResponse> c= await _api.GetUsuarioCalendarioVacacionesAsync(InfoUsuario.IdTecnico);
-         CalendarioVacacionesUsuario= c.ConvertirListado(this.EstadosCalendario,this.TipoDiaCalendarioVaciones);
+        var usuario = _authenticationStateProvider.GetCurrentUser(_api);
+        IEnumerable<int> proyectosUsuario= await _api.GetProyectosUsuarioAsync(usuario.IdTecnico);
+        //GetCalendarioVacacionesSubordinados
+        IEnumerable<CalendarioVacacionesResponse> respuesta= await _api.GetCalendarioVacacionesSubordinadosAsync(usuario.WebRol,usuario.IdTecnico,proyectosUsuario);
+        this.CalendarioVacacionesUsuario = respuesta.ConvertirListado(this.EstadosCalendario,this.TipoDiaCalendarioVaciones).Where(X => X.Estado != "Cancelado" || X.Estado != "Aprobado"); ;
+
+
+
+
+
+
+        //CalendarioVacacionesUsuario = c.ConvertirListado(this.EstadosCalendario, this.TipoDiaCalendarioVaciones);
         ComponentePrincipal.IsLoading = false;
         await ChangeBackwardsCallback.InvokeAsync();
         StateHasChanged();
@@ -157,7 +164,7 @@ public class SolicitudesPropiasBase : ComponentBase {
     protected void RecoverAppState() {
         if (ErrorBoundaryInsercionesNomodificaciones != null && ErrorBoundaryInsercionesNomodificaciones.ErrorContent != null) ErrorBoundaryInsercionesNomodificaciones.Recover();
         if (ErrorBoundaryBorradosModificaciones != null && ErrorBoundaryBorradosModificaciones.ErrorContent != null) ErrorBoundaryBorradosModificaciones.Recover();
-      
+
     }
 
 }

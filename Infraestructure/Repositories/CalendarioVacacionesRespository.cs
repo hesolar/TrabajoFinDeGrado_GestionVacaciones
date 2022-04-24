@@ -31,7 +31,7 @@ public class CalendarioVacacionesRepository : ICalendarioVacacionesRepository {
 
 
     public Task<bool> UpdateAsync(CalendarioVacaciones entity) {
-        var oldEntity = _context.CalendarioVacaciones.First(X => X.IdTecnico == entity.IdTecnico);
+        var oldEntity = _context.CalendarioVacaciones.First(X => X.IdTecnico == entity.IdTecnico && X.FechaCalendario== entity.FechaCalendario);
         return baseOperations.UpdateAsync(oldEntity, entity);
     }
 

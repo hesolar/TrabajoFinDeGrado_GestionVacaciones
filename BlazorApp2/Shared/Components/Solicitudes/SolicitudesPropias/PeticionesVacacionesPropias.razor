@@ -49,9 +49,7 @@
 
 
         <RadzenDataGridColumn TItem="CalendarioVacaciones_PeticionesPropiasGrid" Property="Estado" Title="Estado Petición" >
-             <EditTemplate Context="order">
-                    <RadzenDropDown @bind-Value="order.Estado" Data=@this.EstadosCalendario.Select(X=>X.Descripcion) TextProperty="Estado" ValueProperty="Estado" Style="width:100%; display: block;" />
-             </EditTemplate>
+             
         </RadzenDataGridColumn>
 
 

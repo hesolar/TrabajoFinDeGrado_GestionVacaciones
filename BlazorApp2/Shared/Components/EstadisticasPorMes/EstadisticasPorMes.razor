@@ -1,0 +1,89 @@
+﻿@using System.Globalization
+
+
+@if (serie1 != null) {
+    
+
+<h2>Distribución vacaciones Mensual</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 my-5">
+                
+               <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
+               <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
+                
+                <RadzenChart>
+                    <RadzenLineSeries Smooth="@smooth" Data="@serie1" CategoryProperty="Date" Title="Dias Concedidos" LineType="LineType.Dashed" ValueProperty="Revenue">
+                        <RadzenMarkers MarkerType="MarkerType.Square" />
+                    </RadzenLineSeries>
+                   @* <RadzenLineSeries Smooth="@smooth" Data="@serie2" CategoryProperty="Date" Title="Peticiones Canceladas" ValueProperty="Revenue">
+                        <RadzenMarkers MarkerType="MarkerType.Diamond" />
+                    </RadzenLineSeries>*@
+                    <RadzenValueAxis >
+                        <RadzenGridLines Visible="true" />
+                        <RadzenAxisTitle Text="Total Días" />
+                    </RadzenValueAxis>
+                </RadzenChart>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    bool smooth = false;
+    class DatoGrafica
+    {
+        public DateTime Date { get; set; }
+        public double Revenue { get; set; }
+    }
+
+
+
+    DatoGrafica[] serie1;
+
+
+
+
+    protected override void OnParametersSet() {
+        if (calendarios != null) LoadData();
+    }
+    public void LoadData() {
+        List<DatoGrafica> Aprobados = new();
+        var calendariosAprobados = calendarios.Where(X => this.EstadosDias.First(y=> y.Id==X.Estado).Descripcion == this.EstadoDeseado);
+        calendariosAprobados.GroupBy(X => X.FechaCalendario.Month).ToList().ForEach(Y => {
+            Aprobados.Add(new DatoGrafica { Date = DateTime.Parse($"{this.YearSeleccionado}-{Y.First().FechaCalendario.Month}-01"), Revenue = Y.Count() });
+            
+        });
+        Enumerable.Range(1, 12).ToList().ForEach(mes => { 
+
+            if(!Aprobados.Any(X=> X.Date.Month == mes)){
+                Aprobados.Add(new DatoGrafica() { Date = DateTime.Parse($"{this.YearSeleccionado}-{mes}-01"), Revenue = 0 });
+            }
+        });
+        serie1 = Aprobados.OrderBy(X=> X.Date.Month).ToArray();
+
+
+        StateHasChanged();
+
+    }
+
+    [Parameter]
+    public ColorScheme colorScheme { get; set; }
+
+    [Parameter]
+    public int YearSeleccionado { get; set; } 
+
+    [Parameter]
+    public ICollection<CalendarioVacacionesResponse> calendarios { get; set; }
+    [Parameter]
+
+    public ICollection<TipoDiaCalendarioResponse> TiposDias { get; set; } 
+    [Parameter]
+
+    public ICollection<EstadoCalendarioVacacionesResponse> EstadosDias { get; set; }
+
+    [Parameter]
+    public UsuarioResponse usuario{ get; set; }
+    [Parameter]
+    public string EstadoDeseado  { get; set; }
+
+}

@@ -1,3 +1,6 @@
+using Blazorise;
+using Radzen;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,6 +22,13 @@ builder.Services.AddSingleton<API>(new API("https://localhost:7140//", new HttpC
 builder.Services.AddMudServices();
 //Radzen
 builder.Services.AddScoped<Radzen.DialogService>();
+builder.Services.AddScoped<TooltipService>();
+
+//blazirse
+builder.Services
+    .AddBlazorise(options => {
+        options.Immediate = true;
+    });
 
 var app = builder.Build();
 

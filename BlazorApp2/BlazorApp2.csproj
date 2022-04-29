@@ -18,7 +18,7 @@
     <None Include="Shared\Components\InteractiveCalendar\HeadearCalendario.razor" />
     <None Include="Shared\Components\InteractiveCalendar\InteractiveCalendar.razor" />
     <None Include="Shared\Components\InteractiveCalendar\Month.razor" />
-    <None Include="Shared\Components\Solicitudes\SolicitudesPropias\PeticionesVacacionesPropias.razor" />
+    <None Include="Shared\Components\Solicitudes\SolicitudesPropias\SolicitudesVacacionesPropias.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,5 +57,7 @@
     </PackageReference>
     <PackageReference Include="Radzen.Blazor" Version="3.18.0" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4css_4bootstrap_4bootstrap_1min_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

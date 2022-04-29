@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazorApp2.Pages.Peticiones.InteractiveCalendar;
+namespace BlazorApp2.Shared.Components.Vacaciones;
+
+
+
 public class DatoDia {
     #region constructor
     public DatoDia(DateTime d) {

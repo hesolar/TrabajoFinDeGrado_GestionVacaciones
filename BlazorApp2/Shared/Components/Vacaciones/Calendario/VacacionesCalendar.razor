@@ -1,0 +1,38 @@
+﻿@using BlazorApp2.Shared.Components.Vacaciones;
+
+
+@inherits VacacionesCalendarBase
+
+
+@if (this.diasCalendario != null) {
+    
+    
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+                @foreach (var mes in OperacionesCalendario.DividirYearEnMeses(this.diasCalendario)) {
+                    <div class="col mb-3">
+                        <div class="card h-100">
+
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="@PublicVariables.Meses[mes.Key]" />
+
+                                </div>
+                            </div>
+                            
+                           
+                            <RadzenCard>
+                                @*<Month  OnClickCallback="@DaySelectorEventListener" OnHover="@HoverButtonListener"></Month>*@
+                                <MonthCalendarioVacaciones Mes=mes.Key datosMes=mes.Value/>
+                            </RadzenCard>
+                        </div
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+
+

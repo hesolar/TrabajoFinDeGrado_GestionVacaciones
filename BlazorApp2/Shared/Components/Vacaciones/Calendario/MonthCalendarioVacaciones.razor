@@ -1,7 +1,9 @@
-﻿@using BlazorApp2.Pages.Peticiones.InteractiveCalendar;
+﻿@using BlazorApp2.Shared.Components.Vacaciones;
 
     <table>
     @*Dias de la semana*@
+
+
     <tr>
         @foreach(var diaSemana in PublicVariables.WeekDays.Values)
         { 
@@ -26,18 +28,23 @@
                 DatoDia variable = datosMes.ElementAt(totalDias);
 
 
-                <th> 
+                <th>
+                                @if (variable.Estado == "Aprobadas") {
+                                    <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
+                                }
+                                else {
+                                    if (variable.Date.DayOfWeek == DayOfWeek.Saturday || variable.Date.DayOfWeek == DayOfWeek.Sunday) {
 
-                    @if (variable.Estado == "Aprobadas") {
-                        <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
-                    }
-                    else {
-                        <button class="@variable.TipoDia" style="background-color:@variable.ColorSeleccion" disabled=@(variable.TipoDia=="Disabled")
-                        @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
-                        @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>   
-                    }
+                                        <button class="Disabled">@datosMes.ElementAt(totalDias).Date.Day </button>
+                                    }
+                                    else{
+                                        
+                                        <button class="Laborable">@datosMes.ElementAt(totalDias).Date.Day </button>
+                                        
+                                    }
 
-                </th>         
+                               }
+                  </th>       
 
                 
                 i++;
@@ -59,12 +66,19 @@
                                 DatoDia variable = datosMes.ElementAt(totalDias);
                                 <th>
                                     @if (variable.Estado == "Aprobadas") {
-                                        <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
+                                    <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
+                                }
+                                else {
+                                    if (variable.Date.DayOfWeek == DayOfWeek.Saturday || variable.Date.DayOfWeek == DayOfWeek.Sunday) {
+
+                                        <button class="Disabled">@datosMes.ElementAt(totalDias).Date.Day </button>
                                     }
-                                    else {
-                                    <button class="@variable.TipoDia" style="background-color:@variable.ColorSeleccion" disabled=@(variable.TipoDia=="Disabled")
-                                    @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
-                                    @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
+                                    else{
+                                        
+                                        <button class="Laborable">@datosMes.ElementAt(totalDias).Date.Day </button>
+                                        
+                                    }
+
                                     }
                                 </th>
                              }  
@@ -82,8 +96,5 @@
     public DatosDias datosMes { get; set; }
     [Parameter]
     public int Mes { get; set; }
-    [Parameter]
-    public EventCallback<DatoDia> OnClickCallback { get; set; }
-    [Parameter]
-    public EventCallback<DatoDia> OnHover { get; set; }
+   
 }

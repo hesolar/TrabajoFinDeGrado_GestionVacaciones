@@ -6,7 +6,9 @@
     <HeadearCalendario CancelarCambiosButtonListener=calendario.CancelarCambiosButtonListener SaveCalendarButtonListener=calendario.SaveCalendarButtonListener botonesVisibles=BotonesVisibles/>
     <br />
     <br />
-    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
+    <RadzenButton Style="background-color:greenyellow; width: 30%;color:black;" Text="Peticiones Aprobadas"  Icon="check_circle"  />
+    <br />
+    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Peticiones Pendientes" />
     <br />
     <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
         <Items>

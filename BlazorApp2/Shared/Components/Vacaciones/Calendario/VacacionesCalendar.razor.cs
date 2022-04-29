@@ -1,9 +1,8 @@
 ﻿
 
 
-namespace BlazorApp2.Pages.Peticiones.InteractiveCalendar;
-
-public class InteractiveCalendarBase : ComponentBase {
+namespace BlazorApp2.Shared.Components.Vacaciones;
+public class VacacionesCalendarBase : ComponentBase {
     #region variables principales
 
     //Dias Calendario

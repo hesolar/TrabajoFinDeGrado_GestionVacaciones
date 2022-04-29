@@ -1,0 +1,34 @@
+﻿@inherits VacacionesGridBase
+
+<h1>Vacaciones: @InfoUsuario?.Nombre @InfoUsuario?.Apellido1 @InfoUsuario?.Apellido2 </h1>
+
+
+<RadzenButton Icon="refresh" 
+              Click="@LoadData" 
+              Text="Cargar Solicitudes" 
+              ButtonStyle="ButtonStyle.Primary" style="margin-bottom: 10px" />
+
+
+
+
+<RadzenDataGrid AllowColumnReorder="true" 
+                @ref="ComponentePrincipal" 
+                AllowColumnPicking="true"
+                AllowFiltering="true" 
+                AllowColumnResize="true" 
+                FilterMode="FilterMode.Advanced" 
+                PageSize="5" AllowPaging="true" 
+                AllowSorting="true" 
+                Data=@CalendarioVacacionesUsuario
+                TItem="CalendarioVacaciones_PeticionesPropiasGrid" 
+                ColumnWidth="160px" 
+                LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="CalendarioVacaciones_PeticionesPropiasGrid" Property="FechaCalendario" Title="Fecha Dia">
+            <Template Context="order">
+                @order.FechaCalendario.ToString("dd-MM-yyyy")
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="CalendarioVacaciones_PeticionesPropiasGrid" Property="TipoDiaCalendario" Title="Tipo Día"/>   
+    </Columns>
+</RadzenDataGrid>

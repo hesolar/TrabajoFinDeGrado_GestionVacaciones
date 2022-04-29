@@ -14,7 +14,6 @@ public class SolicitudesPropiasBase : ComponentBase {
     public EventCallback ChangeBackwardsCallback { get; set; }
 
 
-
     protected UsuarioResponse InfoUsuario { get; set; }
 
     protected IEnumerable<CalendarioVacaciones_PeticionesPropiasGrid> CalendarioVacacionesUsuario { get; set; } = new List<CalendarioVacaciones_PeticionesPropiasGrid>();
@@ -37,13 +36,16 @@ public class SolicitudesPropiasBase : ComponentBase {
     /// </summary>
     /// <returns></returns>
 
-    protected override async Task OnInitializedAsync() {
+    protected override async Task OnParametersSetAsync() {
         EstadosCalendario=await _api.GetAllEstadoCalendarioVacacionesAsync();
         TipoDiaCalendarioVaciones=await _api.GetAllTipoDiaCalendarioAsync();
         var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
         var userIdentity = authState.User.Identity.Name;
         InfoUsuario = await _api.GetUsuarioByCorreoEmpresaAsync(userIdentity);
     }
+
+
+
 
     /// <summary>
     /// Guarda el resultado de guardar un calendario si este ha cambiado
@@ -139,21 +141,28 @@ public class SolicitudesPropiasBase : ComponentBase {
     }
 
     /// <summary>
-    /// Activa el proceso de carga de datos desde la api al componente principal
+    /// Activa el proceso de carga de datos desde la api al componente principal,mostramos las peticiones no aprobadas
     /// </summary>
     /// <returns></returns>
     protected async Task LoadData() {
         ComponentePrincipal.IsLoading = true;
-        await Task.Delay(600);
         ComponentePrincipal.Reset(true);
         await ComponentePrincipal.FirstPage(true);
-        IEnumerable<CalendarioVacacionesResponse> c= await _api.GetUsuarioCalendarioVacacionesAsync(InfoUsuario.IdTecnico);
-         CalendarioVacacionesUsuario= c.ConvertirListado(this.EstadosCalendario,this.TipoDiaCalendarioVaciones);
+        StateHasChanged();
+        IEnumerable<CalendarioVacacionesResponse> datos = await _api.GetUsuarioCalendarioVacacionesAsync(InfoUsuario.IdTecnico);
+        int estadoAprobado = this.EstadosCalendario.First(X => X.Descripcion == "Aprobadas").Id;
+        datos = datos.Where(X => X.Estado != estadoAprobado);
+        CalendarioVacacionesUsuario = datos.ConvertirListado(this.EstadosCalendario,this.TipoDiaCalendarioVaciones);
         ComponentePrincipal.IsLoading = false;
         await ChangeBackwardsCallback.InvokeAsync();
-        StateHasChanged();
     }
 
+
+
+
+    /// <summary>
+    /// Cuando se detecta un error controlado , recuperamos el estado de la app anterior al error
+    /// </summary>
     protected void RecoverAppState() {
         if (ErrorBoundaryInsercionesNomodificaciones != null && ErrorBoundaryInsercionesNomodificaciones.ErrorContent != null) ErrorBoundaryInsercionesNomodificaciones.Recover();
         if (ErrorBoundaryBorradosModificaciones != null && ErrorBoundaryBorradosModificaciones.ErrorContent != null) ErrorBoundaryBorradosModificaciones.Recover();

@@ -9,11 +9,10 @@
         <div class="row">
             <div class="col-sm-12 my-5">
                 
-               <RadzenCheckBox @bind-Value="@smooth" Name="smooth"></RadzenCheckBox>
                <RadzenLabel Text="Smooth" For="smooth" Style="margin-left: 8px; vertical-align: middle;" />
                 
                 <RadzenChart>
-                    <RadzenLineSeries Smooth="@smooth" Data="@serie1" CategoryProperty="Date" Title="Dias Concedidos" LineType="LineType.Dashed" ValueProperty="Revenue">
+                    <RadzenLineSeries Smooth="true" Data="@serie1" CategoryProperty="Nombre" Title="Dias Concedidos" LineType="LineType.Dashed" ValueProperty="Revenue">
                         <RadzenMarkers MarkerType="MarkerType.Square" />
                     </RadzenLineSeries>
                    @* <RadzenLineSeries Smooth="@smooth" Data="@serie2" CategoryProperty="Date" Title="Peticiones Canceladas" ValueProperty="Revenue">
@@ -29,18 +28,16 @@
     </div>
 }
 @code {
-    bool smooth = false;
-    class DatoGrafica
-    {
-        public DateTime Date { get; set; }
-        public double Revenue { get; set; }
-    }
-
-
-
+   
     DatoGrafica[] serie1;
 
+     private string obtenerNombreMesNumero (int numeroMes){
 
+       DateTimeFormatInfo formatoFecha = CultureInfo.CurrentCulture.DateTimeFormat;
+       string nombreMes = formatoFecha.GetMonthName(numeroMes);
+       return nombreMes.Substring(0,3);
+
+     }
 
 
     protected override void OnParametersSet() {
@@ -50,20 +47,24 @@
         List<DatoGrafica> Aprobados = new();
         var calendariosAprobados = calendarios.Where(X => this.EstadosDias.First(y=> y.Id==X.Estado).Descripcion == this.EstadoDeseado);
         calendariosAprobados.GroupBy(X => X.FechaCalendario.Month).ToList().ForEach(Y => {
-            Aprobados.Add(new DatoGrafica { Date = DateTime.Parse($"{this.YearSeleccionado}-{Y.First().FechaCalendario.Month}-01"), Revenue = Y.Count() });
+            Aprobados.Add(new DatoGrafica { Date = DateTime.Parse($"{this.YearSeleccionado}-{Y.First().FechaCalendario.Month}-01"),
+                                            Revenue = Y.Count() ,
+                                            Nombre = obtenerNombreMesNumero(Y.First().FechaCalendario.Month)
+            });
             
         });
         Enumerable.Range(1, 12).ToList().ForEach(mes => { 
 
             if(!Aprobados.Any(X=> X.Date.Month == mes)){
-                Aprobados.Add(new DatoGrafica() { Date = DateTime.Parse($"{this.YearSeleccionado}-{mes}-01"), Revenue = 0 });
+                Aprobados.Add(new DatoGrafica() { Date = DateTime.Parse($"{this.YearSeleccionado}-{mes}-01"), 
+                                                  Revenue = 0 ,
+                                                  Nombre= obtenerNombreMesNumero(mes)
+                
+                });
             }
         });
         serie1 = Aprobados.OrderBy(X=> X.Date.Month).ToArray();
-
-
         StateHasChanged();
-
     }
 
     [Parameter]

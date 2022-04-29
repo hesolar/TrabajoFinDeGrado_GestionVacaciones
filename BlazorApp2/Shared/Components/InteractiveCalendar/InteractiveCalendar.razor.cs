@@ -8,6 +8,10 @@ public class InteractiveCalendarBase : ComponentBase {
 
     //Dias Calendario
     public DatosDias diasCalendario;
+    
+    //Evento para notificar un cambio en los datos
+    [Parameter]
+    public EventCallback<bool> NotifyChange { get; set; }
 
     //Estado de la seleccion
     [CascadingParameter(Name = "EstadoDiaSeleccion")]
@@ -26,6 +30,8 @@ public class InteractiveCalendarBase : ComponentBase {
     protected AuthenticationStateProvider _authenticationStateProvider { get; set; }
 
 
+
+
     //Estados de las selecciones, representa un estado de dia y su color => Laboral, azul
     public Dictionary<string, string> TipoDiaColor = new();
 
@@ -33,12 +39,8 @@ public class InteractiveCalendarBase : ComponentBase {
 
     #endregion
 
-
-    //Generar todos los dias del calendario
-    public InteractiveCalendarBase() {
-        this.diasCalendario = OperacionesCalendario.GenerarDiasCalendario(DateTime.Now.Year);
-    }
-
+    public DatosDias datosDiasIniciales;
+   
 
 
     /// <summary>
@@ -88,26 +90,42 @@ public class InteractiveCalendarBase : ComponentBase {
     }
 
     /// <summary>
-    /// Dado un conjunto de vacaciones y sus estados se actualiza el calendario
+    /// Dado un conjunto de vacaciones y sus estados se actualiza el calendario, se marca también el estado inicial del calendario para poder comparar si suestado cambio
     /// </summary>
     /// <param name="vacaciones"></param>
     /// <param name="tiposDias"></param>
     /// <returns></returns>
     public void ActualizarDiasCalendario(IEnumerable<CalendarioVacacionesResponse> vacaciones,
                                           IEnumerable<TipoDiaCalendarioResponse> tiposDias) {
-        this.diasCalendario = OperacionesCalendario.GenerarDiasCalendario(DateTime.Now.Year);
-        vacaciones.ToList().ForEach(x => {
-            var dia = this.diasCalendario.FirstOrDefault(y => x.FechaCalendario.Date == y.Date);
-            if (dia != null) {
-                var tipoDia = tiposDias.First(y => y.Id == x.TipoDiaCalendario);
-                dia.ColorSeleccion = tipoDia.ColorRepresentacion;
-                dia.TipoDia = tipoDia.Descripcion;
-            }
-        });
+
+        this.diasCalendario = GenerarDatosCalendario(vacaciones, tiposDias);
+        this.datosDiasIniciales = GenerarDatosCalendario(vacaciones, tiposDias);
+        
+        
+   
+
+
         StateHasChanged();
     }
-
-
+    /// <summary>
+    /// Genera los dias de un calendario con los datos que llegan desde la BD
+    /// </summary>
+    /// <param name="datosCalendario">dia</param>
+    /// <param name="vacaciones">vacaciones desde la BD</param>
+    /// <param name="tiposDias">Tipos de dias encontrados</param>
+    public DatosDias GenerarDatosCalendario(IEnumerable<CalendarioVacacionesResponse> vacaciones, IEnumerable<TipoDiaCalendarioResponse> tiposDias) {
+        DatosDias datosCalendario;
+        datosCalendario = OperacionesCalendario.GenerarDiasCalendario(DateTime.Now.Year);
+        vacaciones.ToList().ForEach(x => {
+            var dia = datosCalendario.FirstOrDefault(y => x.FechaCalendario.Date == y.Date);
+            if (dia != null) {
+                var tipoDia = tiposDias.FirstOrDefault(y => y.Id == x.TipoDiaCalendario);
+                dia.ColorSeleccion = tipoDia?.ColorRepresentacion;
+                dia.TipoDia = tipoDia?.Descripcion;
+            }
+        });
+        return datosCalendario;
+    }
 
     #region Event Listeners
 
@@ -129,6 +147,10 @@ public class InteractiveCalendarBase : ComponentBase {
     public void DaySelectorEventListener(DatoDia dia) {
         if (this.DayMultiseletionMode) MultiSelectionDayClickListener(dia);
         else SingleSelectionDay(dia);
+
+        StateHasChanged();
+        var xd = this.datosDiasIniciales.Equals(this.diasCalendario);
+        NotifyChange.InvokeAsync(xd);
     }
 
     /// <summary>

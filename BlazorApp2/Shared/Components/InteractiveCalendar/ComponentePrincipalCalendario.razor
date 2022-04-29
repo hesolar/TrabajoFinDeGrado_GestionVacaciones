@@ -3,10 +3,11 @@
 @*Botones de seleccion*@
 <RadzenCard Style="border:none;background-color:azure">
 
-    <HeadearCalendario CancelarCambiosButtonListener=calendario.CancelarCambiosButtonListener SaveCalendarButtonListener=calendario.SaveCalendarButtonListener/>
+    <HeadearCalendario CancelarCambiosButtonListener=calendario.CancelarCambiosButtonListener SaveCalendarButtonListener=calendario.SaveCalendarButtonListener botonesVisibles=BotonesVisibles/>
     <br />
     <br />
     <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Selección Tipo Dia" />
+    <br />
     <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
         <Items>
             @foreach (var dataItem in data) {
@@ -20,7 +21,7 @@
 
      <CascadingValue Value="@Multiseleccion" Name="Multiseleccion">
         <CascadingValue Value="@valor" Name="EstadoDiaSeleccion">
-            <InteractiveCalendar @ref="calendario"/>
+            <InteractiveCalendar @ref="calendario" NotifyChange=NotifyChange/>
         </CascadingValue>
     </CascadingValue>
 </RadzenCard>
@@ -28,6 +29,15 @@
 
 
 @code{
+    [Parameter]
+    public bool BotonesVisibles{ get; set; }
+    public void NotifyChange(bool change) {
+        BotonesVisibles = !change;
+    }
+
+
+
+
     public IEnumerable<TipoDiaCalendarioResponse> data { get; set; } = new List<TipoDiaCalendarioResponse>();
 
     protected override async Task OnParametersSetAsync() {

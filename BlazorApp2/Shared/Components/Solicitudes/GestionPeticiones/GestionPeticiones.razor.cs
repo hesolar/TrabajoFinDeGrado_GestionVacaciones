@@ -121,7 +121,7 @@ public class GestionPeticionesBase: ComponentBase {
        ( IEnumerable<CalendarioVacacionesResponse> respuesta,IEnumerable<UsuarioResponse> usuarios) =await ObtenerVacacionesSubordinados();
 
         this.CalendarioVacacionesUsuario = respuesta.ConvertirListado(usuarios, this.EstadosCalendario, this.TipoDiaCalendarioVaciones)
-            .Where(X => X.Estado != "Cancelado" && X.Estado != "Aprobado"); ;
+            .Where(X => X.Estado != "Canceladas" && X.Estado != "Aprobadas"); ;
 
 
         //CalendarioVacacionesUsuario = c.ConvertirListado(this.EstadosCalendario, this.TipoDiaCalendarioVaciones);

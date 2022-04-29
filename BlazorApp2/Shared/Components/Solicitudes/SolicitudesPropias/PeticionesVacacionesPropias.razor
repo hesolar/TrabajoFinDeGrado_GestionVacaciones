@@ -34,7 +34,7 @@
                 @order.FechaCalendario.ToString("dd-MM-yyyy")
             </Template>
             <EditTemplate Context="order">
-                <RadzenDatePicker @bind-Value="order.FechaCalendario" Style="width:100%" MouseEnter="RecoverAppState"/>
+                <RadzenDatePicker DateFormat="d" @bind-Value="order.FechaCalendario" Style="width:100%" MouseEnter="RecoverAppState"/>
             </EditTemplate>
         </RadzenDataGridColumn>
 

@@ -6,60 +6,62 @@
 
 @using System.Globalization
 
+<ErrorBoundary>
+    <ChildContent>
+
+        @if (datos != null) {
 
 
-<div class="container">
-        
-    @if (this.datos != null) {
-        
-        <RadzenCard Class="mt-4 w-100 mb-4 d-flex align-items-center" >
-            
-            <RadzenLabel Text="Cambiar Coloración:" Style="margin-right: 8px; vertical-align: middle;" />
-            <RadzenDropDown Data="@colorSchemes" @bind-Value="@colorScheme" />
-            
-            <RadzenDropDown Data=@this.datos.GroupBy(X=> X.FechaCalendario.Year).Select(X=> X.Key).OrderBy(X=>X) @bind-Value="@YearSeleccionado" />            
-        </RadzenCard>
-        <br />
+            <h1>Estadísticas </h1>
+            <div class="container">
+               <RadzenCard Class="mt-4 w-100 mb-4 d-flex align-items-center">
+               <p> En el año @this.YearSeleccionado se han concecido un total de <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Aprobadas").Count())</strong> dias de vacaciones,
+                se han solicitado <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Pendientes").Count()).</strong></p>
+                </RadzenCard>
+                <RadzenCard >
 
-        <RadzenCard>
-                 <BlazorApp2.Shared.Components.EstadisticasVacacionesAprobadas.EstadisticasPeticionesAprobadas
-                 calendarios=@datos.Where(X=>this.EstadosDias.First(y=> y.Id ==X.Estado).Descripcion=="Aprobado").ToList() colorScheme=colorScheme EstadosDias=EstadosDias TiposDias=TiposDias usuario=usuario YearSeleccionado=this.YearSeleccionado/>
-       
-        
-        <br />
-       
-            <BlazorApp2.Shared.Components.EstadisticasPorMes.EstadisticasPorMes YearSeleccionado=YearSeleccionado
-               calendarios =@datos.Where(X=>X.FechaCalendario.Year==this.YearSeleccionado).ToList() 
-               EstadosDias=EstadosDias TiposDias=TiposDias colorScheme=colorScheme EstadoDeseado="Aprobado" />
-        </RadzenCard>
-        <br />
-        <br />
+                    <RadzenLabel Text="Cambiar Coloración:"  />
+                    <RadzenDropDown Data="@colorSchemes" @bind-Value="@colorScheme" />
+                    <br>
+                    <RadzenLabel Text="Seleccionar Estadisticas año:"  />
+                    <RadzenDropDown Data=@this.datos.GroupBy(X=> X.FechaCalendario.Year).Select(X=> X.Key).OrderBy(X=>X) @bind-Value="@YearSeleccionado" />
+                </RadzenCard>
+                <br />
 
-        <RadzenCard>
-               <BlazorApp2.Shared.Components.EstadisticasPorEstadoVacaciones.EstadisticasPorEstadoVacaciones YearSeleccionado=YearSeleccionado
-               calendarios =@datos.Where(X=>X.FechaCalendario.Year==this.YearSeleccionado).ToList() EstadosDias=EstadosDias TiposDias=TiposDias colorScheme=colorScheme />
-        
-             
-
-        </RadzenCard>
-           
-    }
-    
+                <RadzenCard>
+                    <BlazorApp2.Shared.Components.EstadisticasVacacionesAprobadas.EstadisticasPeticionesAprobadas calendarios=@datos.Where(X=>this.EstadosDias.First(y=> y.Id ==X.Estado).Descripcion=="Aprobadas").ToList() colorScheme=colorScheme EstadosDias=EstadosDias TiposDias=TiposDias usuario=usuario YearSeleccionado=this.YearSeleccionado />
 
 
-</div>
+                    <br />
 
+                    <BlazorApp2.Shared.Components.EstadisticasPorMes.EstadisticasPorMes YearSeleccionado=YearSeleccionado
+                                                                                    calendarios=@datos.Where(X=>X.FechaCalendario.Year==this.YearSeleccionado).ToList()
+                                                                                    EstadosDias=EstadosDias TiposDias=TiposDias colorScheme=colorScheme EstadoDeseado="Aprobadas" />
+                </RadzenCard>
+                <br />
+                <br />
 
+                <RadzenCard>
+                    <BlazorApp2.Shared.Components.EstadisticasPorEstadoVacaciones.EstadisticasPorEstadoVacaciones YearSeleccionado=YearSeleccionado                                                                                          calendarios=@datos.Where(X=>X.FechaCalendario.Year==this.YearSeleccionado).ToList() EstadosDias=EstadosDias TiposDias=TiposDias colorScheme=colorScheme />
+                </RadzenCard>
+            </div>
 
+        }
+    </ChildContent>
+    <ErrorContent>
+        <RadzenIcon Icon="announcement" IconStyle=Radzen.IconStyle.Danger />
+        <p class="errorUI">No hay datos disponibles!</p>
+    </ErrorContent>
+</ErrorBoundary>
 
 
 
 
 
-@code{
+@code {
     IEnumerable<ColorScheme> colorSchemes = Enum.GetValues(typeof(ColorScheme)).Cast<ColorScheme>();
-    public int YearSeleccionado= DateTime.Now.Year;
-    public ColorScheme colorScheme  = ColorScheme.Pastel;
+    public int YearSeleccionado = DateTime.Now.Year;
+    public ColorScheme colorScheme = ColorScheme.Pastel;
 
     public ICollection<CalendarioVacacionesResponse> datos;
 
@@ -70,11 +72,14 @@
 
 
     protected override async Task OnInitializedAsync() {
-        this.usuario=  _authenticationStateprovider.GetCurrentUser(_api);
+        this.usuario = _authenticationStateprovider.GetCurrentUser(_api);
         this.EstadosDias = await _api.GetAllEstadoCalendarioVacacionesAsync();
         this.TiposDias = await _api.GetAllTipoDiaCalendarioAsync();
         var datosRecibidos = await _api.GetUsuarioCalendarioVacacionesAsync(usuario.IdTecnico);
-        this.datos = datosRecibidos.Where(X => TiposDias.First(y => y.Id == X.TipoDiaCalendario).Descripcion != "Laborable").ToList();
+
+        if (datosRecibidos is not null && datosRecibidos.Any())
+            this.datos = datosRecibidos.ToList();
+
         StateHasChanged();
     }
 

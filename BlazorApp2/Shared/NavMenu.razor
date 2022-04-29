@@ -25,6 +25,8 @@
                         </div>
                 
 
+
+                
                 @*Peticiones propias*@
                 <RadzenPanelMenu>
                     <RadzenPanelMenuItem Text="Ver Peticiones" Icon="description" Style="background-color:steelblue">
@@ -41,11 +43,7 @@
                                 <span class="oi oi-calendar" aria-hidden="true"/>Calendario
                             </NavLink>
                         </div>
-                         <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="PeticionesPropias/Vacaciones">
-                                <span class="oi oi-sun" aria-hidden="true"/>Ver Vacaciones
-                            </NavLink>
-                        </div>
+                         
 
                           <div class="nav-item px-3">
                             <NavLink class="nav-link" href="PeticionesPropias/Estadisticas">
@@ -58,7 +56,25 @@
 
                     </RadzenPanelMenuItem>
                 </RadzenPanelMenu>
+                 @*Vacaciones*@
+                <RadzenPanelMenu >
+                        <RadzenPanelMenuItem Text="Vacaciones" Icon="flight-takeoff" Style="background-color:steelblue">
 
+                        <RadzenCard Style="background-color:lightslategrey">
+                            <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="Vacaciones/Ver">
+                                <span class="oi oi-eye" aria-hidden="true"/>Ver 
+                            </NavLink>
+                            </div>
+                             <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="Vacaciones/Cancelar">
+                                <span class="oi oi-circle-x" aria-hidden="true"/>Anular 
+                            </NavLink>
+                            </div>
+                        </RadzenCard>
+
+                    </RadzenPanelMenuItem>
+                </RadzenPanelMenu>
                 @*Gestion*@
                 <RadzenPanelMenu>
                     <RadzenPanelMenuItem Text="Gestión" Icon="compare_arrows" Style="background-color:steelblue">
@@ -68,6 +84,33 @@
                             <div class="nav-item px-3">
                                 <NavLink class="nav-link" href="Gestion/AprobarPeticiones">
                                     <span class="oi oi-spreadsheet" aria-hidden="true"></span> Ver Solicitudes
+                                </NavLink>
+                            </div>
+                             <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Gestion/ModificardatosUsuario">
+                                    <span class="oi oi-person" aria-hidden="true"></span> Modificar Perfil
+                                </NavLink>
+                            </div>
+
+                             <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Gestion/GestionEquipo">
+                                    <span class="oi oi-people" aria-hidden="true"></span> Gestión Equipo
+                                </NavLink>
+                            </div>
+
+                        </RadzenCard>
+
+                    </RadzenPanelMenuItem>
+                </RadzenPanelMenu>
+
+                <RadzenPanelMenu>
+                    <RadzenPanelMenuItem Text="Administración Aplicación" Icon="build" Style="background-color:steelblue">
+
+                        <RadzenCard Style="background-color:lightslategrey">
+                            
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Gestion">
+                                    <span class="oi oi-pencil" aria-hidden="true"></span>Gestion
                                 </NavLink>
                             </div>
                         </RadzenCard>

@@ -1,0 +1,31 @@
+﻿@page "/Vacaciones/Cancelar"
+@using BlazorApp2.Pages.CancelarVacaciones
+
+@inherits CancelarVacacionesBase
+<PageTitle> Eliminar Vacaciones Concedidas</PageTitle>
+
+
+<h1>Vacaciones: @InfoUsuario?.Nombre @InfoUsuario?.Apellido1 @InfoUsuario?.Apellido2 </h1>
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="10" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@Vacaciones" TItem="CalendarioVacacionesResponse" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+    <Columns>
+        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" Filterable="false" Title="Fecha" Width="70px" TextAlign="TextAlign.Center">
+
+            <Template Context="order">
+                @order.FechaCalendario.ToString("dd-MM-yyyy")
+            </Template>
+        </RadzenDataGridColumn>
+
+        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Pickable="false" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+
+
+            <Template Context="order">
+                <BlazorApp2.Shared.Components.Vacaciones.Cancelar.Dialog CancelarCambiosButtonListener="BorrarDia" dia=order/>
+
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+

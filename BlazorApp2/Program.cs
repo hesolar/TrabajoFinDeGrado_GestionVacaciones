@@ -1,5 +1,6 @@
 using Blazorise;
 using Radzen;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ builder.Services
     .AddBlazorise(options => {
         options.Immediate = true;
     });
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

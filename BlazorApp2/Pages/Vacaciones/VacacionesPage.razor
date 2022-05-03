@@ -10,7 +10,7 @@
                   Text="@(TarjetaPeticionesPropias.Visible? "Ocultar" : "Mostrar")"
                   ButtonStyle="@(TarjetaPeticionesPropias.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />
     <RadzenCard Class="mt-4" @ref="TarjetaPeticionesPropias" Style="border:none;background-color:white">
-        <BlazorApp2.Shared.Components.Vacaciones.Grid.VacacionesGrid/>
+        <BlazorApp2.Shared.Components.Vacaciones.Ver.Grid.VacacionesGrid/>
     </RadzenCard>
 </RadzenCard>
 
@@ -36,8 +36,7 @@
         <RadzenButton Style="background-color:greenyellow; width: 30%;color:black;" Text="Peticiones Aprobadas"  Icon="check_circle"  />
 
         <div style="pointer-events:none">
-
-        <BlazorApp2.Shared.Components.Vacaciones.Calendario.VacacionesCalendar/>
+            <BlazorApp2.Shared.Components.Vacaciones.Ver.Calendario.VacacionesCalendar/>
         </div>
     </RadzenCard>
 </RadzenCard>

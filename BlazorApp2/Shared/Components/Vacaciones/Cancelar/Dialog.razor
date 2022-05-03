@@ -1,0 +1,20 @@
+﻿@inject Radzen.DialogService _dialogService
+
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-8 justify-content-center">
+
+    <RadzenButton Icon="report" Text="Eliminar" ButtonStyle="ButtonStyle.Danger" Click=@(async() =>{
+                  bool? result = await _dialogService.Confirm("Confirmar Operación?", "Confirmación", new ConfirmOptions() { CancelButtonText = "Cancelar",OkButtonText = "Eliminar",Resizable=true});
+                  if(result.HasValue && result.Value)await CancelarCambiosButtonListener.InvokeAsync(dia);
+                  }) />
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<CalendarioVacacionesResponse> CancelarCambiosButtonListener { get; set; }
+    [Parameter]
+    public CalendarioVacacionesResponse dia { get; set; }
+
+
+}
+
+

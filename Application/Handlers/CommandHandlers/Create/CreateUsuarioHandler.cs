@@ -11,12 +11,14 @@ public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, bool> 
         //añade usuario
         var employeeEntitiy = MapperBase<UsuarioMappingProfile, Core.Entities.Usuario>.MappEntity(request);
         if (employeeEntitiy is null) throw new ApplicationException("Issue with mapper");
-        var result=  _usuarioRepo.AddAsync(employeeEntitiy);
+        var result= await _usuarioRepo.AddAsync(employeeEntitiy);
         //añade proyectos de usuario
         bool resultadoAñadir =  await AddProyectosUsuario(request.Proyectos, employeeEntitiy.IdTecnico);
         //resultado de añadir usuario y sus proyectos
-        return result.Result && resultadoAñadir;
+        return result && resultadoAñadir;
     }
+
+    //todo
     /// <summary>
     /// Añade proyectos de un usuario
     /// </summary>
@@ -24,11 +26,14 @@ public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, bool> 
     /// <param name="idUsuario"></param>
     /// <returns></returns>
     public async Task<bool> AddProyectosUsuario(IEnumerable<int> proyectos, int idUsuario) {
-        bool result = true;
-        proyectos.ToList().ForEach(proyecto => {
-            result = result &&  _usuarioProyectoRepo.NuevoProyectoUsuario(idUsuario, proyecto).Result;
-        });
-        return result;
+        //bool result = true;
+        //foreach (var proyecto in proyectos) { 
+        //    result = result &&  await _usuarioProyectoRepo.NuevoProyectoUsuario(idUsuario, proyecto);
+        
+        //}
+
+        //return result;
+        return true;
     }
 
 }

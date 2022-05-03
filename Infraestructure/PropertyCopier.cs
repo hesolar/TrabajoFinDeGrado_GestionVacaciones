@@ -8,7 +8,8 @@ public static class PropertyCopier<TParent, TChild> where TParent : class
         foreach (var parentProperty in parentProperties) {
             foreach (var childProperty in childProperties) {
                 if (parentProperty.Name == childProperty.Name && parentProperty.PropertyType == childProperty.PropertyType) {
-                    childProperty.SetValue(child, parentProperty.GetValue(parent));
+                    var propertyValue = parentProperty.GetValue(parent);
+                    if (propertyValue!=null) childProperty.SetValue(child, propertyValue);
                     break;
                 }
             }

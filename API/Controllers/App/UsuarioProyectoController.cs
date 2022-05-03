@@ -22,9 +22,9 @@ public class UsuarioProyectoController : ControllerBase {
 
     [HttpDelete("DeleteUsuarioProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> DeleteUsuario(DeleteUsuarioProyectoCommand command) {
+    public async Task<ActionResult<bool>> DeleteUsuario(DeleteUsuarioProyectoCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
 

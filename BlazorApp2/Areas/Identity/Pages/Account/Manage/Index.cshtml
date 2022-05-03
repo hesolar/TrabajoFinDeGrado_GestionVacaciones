@@ -5,6 +5,7 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
+
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
@@ -12,14 +13,41 @@
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Username" class="form-control" disabled />
-                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="EmailCorporativo" class="form-control" disabled />
+                <label asp-for="EmailCorporativo" class="form-label"></label>
             </div>
-            <div class="form-floating">
+           @* <div class="form-floating">
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>*@
+
+             <div class="form-floating">
+                <input asp-for="Input.Nombre" class="form-control"  />
+                <label asp-for="Input.Nombre" class="form-label"></label>
             </div>
+
+             <div class="form-floating">
+                <input asp-for="Input.Apellido1" class="form-control"  />
+                <label asp-for="Input.Apellido1" class="form-label"></label>
+            </div>
+             <div class="form-floating">
+                <input asp-for="Input.Apellido2" class="form-control"  />
+                <label asp-for="Input.Apellido2" class="form-label"></label>
+            </div>
+             <div class="form-floating">
+                <input asp-for="Input.Telefono1" class="form-control"  />
+                <label asp-for="Input.Telefono1" class="form-label"></label>
+            </div> 
+            <div class="form-floating">
+                <input asp-for="Input.Telefono2" class="form-control"  />
+                <label asp-for="Input.Telefono2" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.NIF" class="form-control"  />
+                <label asp-for="Input.NIF" class="form-label"></label>
+            </div>
+
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>

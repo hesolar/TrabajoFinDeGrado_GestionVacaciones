@@ -17,15 +17,17 @@ namespace BlazorApp2.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly API _api;
 
         public DeletePersonalDataModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,API api)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _api = api;
         }
 
         /// <summary>
@@ -87,6 +89,10 @@ namespace BlazorApp2.Areas.Identity.Pages.Account.Manage
             }
 
             var result = await _userManager.DeleteAsync(user);
+            var usuarioxAplicacion = await _api.GetUsuarioByCorreoEmpresaAsync(user.Email);
+            DeleteUsuarioCommand d =MapFrom<UsuarioResponse,DeleteUsuarioCommand>.Map(usuarioxAplicacion);
+
+            await _api.DeleteUsuarioAsync(d);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {

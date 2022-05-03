@@ -1654,17 +1654,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               }
             }
@@ -1702,17 +1702,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               }
             }
@@ -1915,17 +1915,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "boolean"
                 }
               }
             }
@@ -2250,8 +2250,7 @@
           },
           "fechaRegistro": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "format": "date-time"
           },
           "fechaAltaEmpresa": {
             "type": "string",
@@ -2273,7 +2272,8 @@
           },
           "seguimientNotificacion": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "seguimientoFecha": {
             "type": "string",

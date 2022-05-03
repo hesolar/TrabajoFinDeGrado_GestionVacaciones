@@ -17,20 +17,20 @@ public class UsuarioController : ControllerBase {
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<bool>> CreateUsuario([FromBody] CreateUsuarioCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpDelete("DeleteUsuario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> DeleteUsuario(DeleteUsuarioCommand command) {
+    public async Task<ActionResult<bool>> DeleteUsuario(DeleteUsuarioCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
     [HttpPut("UpdateUsuario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> UpdateUsuario(UpdateUsuarioCommand command) {
+    public async Task<ActionResult<bool>> UpdateUsuario(UpdateUsuarioCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
     [HttpGet("GetUsuarioById/{idUsuario}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

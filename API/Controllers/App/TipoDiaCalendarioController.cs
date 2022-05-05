@@ -15,9 +15,9 @@ public class TipoDiaCalendarioController : ControllerBase {
     }
     [HttpPost("CreateTipoDiaCalendario")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> CreateTipoDiaCalendario([FromBody] CreateTipoDiaCalendarioCommand command) {
+    public async Task<ActionResult<bool>> CreateTipoDiaCalendario([FromBody] CreateTipoDiaCalendarioCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
 

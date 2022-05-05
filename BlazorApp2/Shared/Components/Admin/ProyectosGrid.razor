@@ -1,0 +1,97 @@
+﻿@inherits ProyectosGridBase
+
+@if (this.Proyectos != null) {
+
+
+    <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="A" Click="@InsertRow" Disabled=@(orderToModify != null) />
+
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25"
+                AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@Proyectos" TItem="ProyectoResponse" LogicalFilterOperator="LogicalFilterOperator.Or" @ref="ordersGrid"
+                RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" IsLoading=IsLoading>
+        <Columns>
+
+            @*<RadzenDataGridColumn TItem="ProyectoResponse" Property="IdProyecto" Title="Id Proyecto"/>*@
+
+            <RadzenDataGridColumn TItem="ProyectoResponse" Property="Nombre" Title="Nombre">
+                <EditTemplate Context="order">
+
+                    <RadzenRequiredValidator Text="Nombre requerido" Component="Nombre" Popup="true" />
+                    <RadzenTextBox Name="Nombre" @bind-Value="order.Nombre" Data="@Proyectos" TextProperty="Nombre" ValueProperty="Nombre" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="ProyectoResponse" Property="Descripcion" Title="Descripcion">
+                <EditTemplate Context="order">
+                    <RadzenRequiredValidator Text="Descripcion requerida" Component="Descripcion" Popup="true" />
+                    <RadzenTextBox Name="Descripcion" @bind-Value="order.Descripcion" Data="@Proyectos" TextProperty="Descripcion" ValueProperty="Descripcion" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+
+
+            <RadzenDataGridColumn TItem="ProyectoResponse" Property="IdManager" Title="Id Manager">
+
+                <EditTemplate Context="order">
+
+                    <RadzenNumericRangeValidator Component="IdManager" Text="Id Manager requerido" Min="1" Popup=true Style="position:absolute; z-index: 100;" />
+                    <RadzenDropDown Name="IdManager" @bind-Value="order.IdManager" Data="@UsuariosAplicacion.Select(X=>X.IdTecnico)" TextProperty="IdManager" ValueProperty="IdManager" />
+                </EditTemplate>
+
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="ProyectoResponse" Property="FechaDesde" Title="Fecha Desde">
+                <Template Context="order">
+                    @order.FechaDesde.ToString("dd-MM-yyyy")
+                </Template>
+                <EditTemplate Context="order">
+
+                    <RadzenRequiredValidator Text="Fecha requerida" Component="FechaDesde" Popup="true" />
+                    <RadzenDatePicker Name="FechaDesde" @bind-Value=order.FechaDesde Data="@Proyectos" TextProperty="FechaDesde" DateFormat="d" ValueProperty="FechaDesde" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+
+            <RadzenDataGridColumn TItem="ProyectoResponse" Property="FechaHasta" Title="Fecha Hasta">
+                <EditTemplate Context="order">
+                    <RadzenDatePicker DateFormat="d" @bind-Value=order.FechaHasta Data="@Proyectos" TextProperty="FechaHasta" ValueProperty="FechaHasta" />
+                </EditTemplate>
+            </RadzenDataGridColumn>
+
+
+
+            <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
+                <ChildContent>
+
+
+
+
+
+                    <RadzenDataGridColumn TItem="ProyectoResponse" Context="sampleBlazorModelsSampleOrder" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="order">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(order))" @onclick:stopPropagation="true" />
+                            <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(order))" @onclick:stopPropagation="true" />
+
+
+                        </Template>
+                        <EditTemplate Context="order">
+
+
+                            @if (this.validarProyecto(order)) {
+
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(order))" />
+                            }
+                            else {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
+
+                            }
+
+                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(order))" />
+
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+                </ChildContent>
+                <ErrorContent> <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" MouseEnter="RecoverAppState" Text="No se pudo insertar" />  </ErrorContent>
+            </ErrorBoundary>
+        </Columns>
+    </RadzenDataGrid>
+}

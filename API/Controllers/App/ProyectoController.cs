@@ -26,25 +26,25 @@ public class ProyectoController : ControllerBase {
 
     [HttpPost("CreateProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> Create([FromBody] CreateProyectoCommand command) {
+    public async Task<ActionResult<bool>> Create([FromBody] CreateProyectoCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
 
 
     [HttpPut("UpdateProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> Update(UpdateProyectoCommand command) {
+    public async Task<ActionResult<bool>> Update(UpdateProyectoCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpDelete("DeleteProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> Delete(DeleteProyectoCommand command) {
+    public async Task<ActionResult<bool>> Delete(DeleteProyectoCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 }
 

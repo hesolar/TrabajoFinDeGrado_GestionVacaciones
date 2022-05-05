@@ -21,24 +21,24 @@ public class TecnicoProyectosController : ControllerBase {
 
     [HttpPost("CreateTecnicoProyectos")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> Create([FromBody] CreateTecnicoProyectosCommand command) {
+    public async Task<ActionResult<bool>> Create([FromBody] CreateTecnicoProyectosCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
 
 
     [HttpPut("UpdateTecnicoProyectos")]
-    public async Task<ActionResult<String>> Update(UpdateTecnicoProyectosCommand command) {
+    public async Task<ActionResult<bool>> Update(UpdateTecnicoProyectosCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     // DELETE api/<RolesController>/5
     [HttpDelete("DeleteTecnicoProyectos")]
-    public async Task<ActionResult<String>> Delete([FromBody] DeleteTecnicoProyectosCommand command) {
+    public async Task<ActionResult<bool>> Delete([FromBody] DeleteTecnicoProyectosCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 }
 

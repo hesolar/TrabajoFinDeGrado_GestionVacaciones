@@ -25,23 +25,23 @@ public class RolesController : ControllerBase {
 
     [HttpPost("CreateRoles")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> Create([FromBody] CreateRolesCommand command) {
+    public async Task<ActionResult<bool>> Create([FromBody] CreateRolesCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
 
     [HttpPut("UpdateRoles")]
-    public async Task<ActionResult<String>> Update(UpdateRolesCommand command) {
+    public async Task<ActionResult<bool>> Update(UpdateRolesCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     // DELETE api/<RolesController>/5
     [HttpDelete("DeleteRoles")]
-    public async Task<ActionResult<String>> Delete([FromBody] DeleteRolesCommand command) {
+    public async Task<ActionResult<bool>> Delete([FromBody] DeleteRolesCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
 }

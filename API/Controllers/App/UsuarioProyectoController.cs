@@ -17,7 +17,7 @@ public class UsuarioProyectoController : ControllerBase {
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<bool>> CreateUsu([FromBody] CreateUsuarioProyectoCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpDelete("DeleteUsuarioProyecto")]

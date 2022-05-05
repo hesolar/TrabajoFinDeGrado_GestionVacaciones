@@ -7,7 +7,6 @@ public static class ListExtensions {
             return (list, true);
     }
 
-    public static string Completion(this bool b) =>
-        b ? "Operacion completada " : "La operacion no se completo";
+
     
 }

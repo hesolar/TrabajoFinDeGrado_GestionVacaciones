@@ -15,22 +15,22 @@ public class EmployeeController : ControllerBase {
     }
     [HttpPost("CreateEmployee")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> CreateEmployee([FromBody] CreateEmployeeCommand command) {
+    public async Task<ActionResult<bool>> CreateEmployee([FromBody] CreateEmployeeCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpDelete("DeleteEmployee")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> DeleteEmployee(DeleteEmployeeCommand command) {
+    public async Task<ActionResult<bool>> DeleteEmployee(DeleteEmployeeCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
     [HttpPut("ReplaceEmployee")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<String>> UpdateEmployee(UpdateEmployeeCommand command) {
+    public async Task<ActionResult<bool>> UpdateEmployee(UpdateEmployeeCommand command) {
         var result = await _mediator.Send(command);
-        return Ok(result.Completion());
+        return Ok(result);
     }
 
     [HttpGet("GetEmployeeById/{id}")]

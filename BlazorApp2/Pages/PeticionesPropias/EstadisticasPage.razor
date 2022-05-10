@@ -15,8 +15,8 @@
             <h1>Estadísticas </h1>
             <div class="container">
                <RadzenCard Class="mt-4 w-100 mb-4 d-flex align-items-center">
-               <p> En el año @this.YearSeleccionado se han concecido un total de <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Aprobadas").Count())</strong> dias de vacaciones,
-                se han solicitado <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Pendientes").Count()).</strong></p>
+               <p> En el año @this.YearSeleccionado se han registrado un total de <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Aprobadas").Count())</strong> de solicitudes de vacaciones,
+                se han concedido <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Pendientes").Count()).</strong></p>
                 </RadzenCard>
                 <RadzenCard >
 

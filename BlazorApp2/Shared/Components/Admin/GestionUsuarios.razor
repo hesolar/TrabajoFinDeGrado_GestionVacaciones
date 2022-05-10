@@ -1,0 +1,183 @@
+﻿@inherits GestionUsuariosBase
+
+@if (Usuarios != null) {
+    
+<RadzenBadge>Gestión de Usuarios</RadzenBadge>
+
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" 
+                PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data="@Usuarios" TItem="UsuarioResponse"  LogicalFilterOperator="LogicalFilterOperator.Or"
+                RowUpdate="@OnUpdateRow" RowCreate="@OnCreateRow" IsLoading=Loading  @ref=UsuariosGrid >
+    <Columns>
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Nombre" Title="Nombre" >
+            <EditTemplate Context="usuario">
+                <RadzenTextBox @bind-Value="usuario.Nombre"></RadzenTextBox>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="WebRol" Title="WebRol" >
+            <EditTemplate Context="usuario">
+                <RadzenDropDown Data=@(this.Roles.Select(X=>X.Id)) @bind-Value="usuario.WebRol "></RadzenDropDown>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Apellido1" Title="Apellido1" >
+              <EditTemplate Context="usuario">
+                <RadzenTextBox @bind-Value="usuario.Apellido1"></RadzenTextBox>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Apellido2" Title="Apellido2" >
+            <EditTemplate Context="usuario">
+                <RadzenTextBox @bind-Value="usuario.Apellido2"></RadzenTextBox>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmailPersonal" Title="EmailPersonal" >
+             <EditTemplate Context="usuario">
+                <RadzenTextBox @bind-Value="usuario.EmailPersonal"></RadzenTextBox>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Nif" Title="NIF" >
+            <EditTemplate Context="usuario">
+                <RadzenTextBox @bind-Value="usuario.Nif"></RadzenTextBox>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmailCorporativo" Title="EmailCorporativo" >
+              <EditTemplate Context="usuario">
+                <RadzenTextBox @bind-Value="usuario.EmailCorporativo"></RadzenTextBox>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Direccion" Title="Direccion" >
+            <EditTemplate Context="usuario">
+                <RadzenTextBox @bind-Value="usuario.Direccion"></RadzenTextBox>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Telefono1" Title="Telefono1" >
+
+             <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.Telefono1"></RadzenNumeric>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Telefono2" Title="Telefono2" >
+              <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.Telefono2"></RadzenNumeric>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="FechaRegistro" Title="FechaRegistro" />
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="FechaAltaEmpresa" Title="FechaAltaEmpresa" >
+              <EditTemplate Context="usuario">
+                <RadzenDatePicker @bind-Value="usuario.FechaAltaEmpresa"></RadzenDatePicker>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="FechaBajaEmpresa" Title="FechaBajaEmpresa" >
+              <EditTemplate Context="usuario">
+                <RadzenDatePicker @bind-Value="usuario.FechaBajaEmpresa"></RadzenDatePicker>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="SeguimientoFecha" Title="SeguimientoFecha" >
+             <EditTemplate Context="usuario">
+                <RadzenDatePicker @bind-Value="usuario.SeguimientoFecha"></RadzenDatePicker>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="SeguimientoIntervalo" Title="SeguimientoIntervalo" >
+         <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.SeguimientoIntervalo"></RadzenNumeric>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmpresaTarifa" Title="EmpresaTarifa" >
+            <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.EmpresaTarifa"></RadzenNumeric>
+            </EditTemplate>
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmpresaCategoria" Title="EmpresaCategoria" >
+            <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.EmpresaCategoria"></RadzenNumeric>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="ClienteCategoria" Title="ClienteCategoria" >
+             <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.ClienteCategoria"></RadzenNumeric>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="ClienteNivel" Title="ClienteNivel" >
+              <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.ClienteNivel"></RadzenNumeric>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Property="RedmineIdProyecto" Title="RedmineIdProyecto" >
+             <EditTemplate Context="usuario">
+                <RadzenNumeric @bind-Value="usuario.RedmineIdProyecto"></RadzenNumeric>
+            </EditTemplate>
+
+        </RadzenDataGridColumn>
+
+        <RadzenDataGridColumn TItem="UsuarioResponse" Context="sampleBlazorModelsSampleOrder" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="usuario">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(usuario))" @onclick:stopPropagation="true" />
+                            <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(usuario))" @onclick:stopPropagation="true" />
+
+
+                        </Template>
+                        <EditTemplate Context="usuario">
+
+
+                            @if (this.validarUsuario(usuario)) {
+
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(usuario))" />
+                            }
+                            else {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
+
+                            }
+
+                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(usuario))" />
+
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+    </Columns>
+</RadzenDataGrid>
+}
+

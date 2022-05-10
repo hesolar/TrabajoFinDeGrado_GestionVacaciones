@@ -1,15 +1,13 @@
-﻿namespace BlazorApp2.Shared.Components.Admin;
-public class ProyectosGridBase : ComponentBase {
+﻿namespace BlazorApp2.Pages.Administracion.GestionProyecto;
+public class GestionProyectosBase : ComponentBase {
+
+    [Inject]
+    public API _api { get; set; }
 
     protected ErrorBoundary ErrorBoundaryInsercionesNomodificaciones;
     public void RecoverAppState() =>ErrorBoundaryInsercionesNomodificaciones.Recover();
     
-
-    [Parameter]
     public IEnumerable<UsuarioResponse> UsuariosAplicacion { get; set; }
-    [Parameter]
-    public API _api { get; set; }
-    [Parameter]
     public RadzenDataGrid<ProyectoResponse> ordersGrid { get; set; }
 
     protected ProyectoResponse orderToModify;
@@ -25,6 +23,7 @@ public class ProyectosGridBase : ComponentBase {
         IsLoading = true;
         await LoadData();
         IsLoading = false;
+        this.UsuariosAplicacion = await _api.GetAllUsuariosAsync();
     }
 
     public async Task LoadData() {
@@ -70,19 +69,20 @@ public class ProyectosGridBase : ComponentBase {
     }
 
     public async Task DeleteRow(ProyectoResponse order) {
-        if (order == orderToModify) orderToModify = null;
+            if (order == orderToModify) orderToModify = null;
 
 
-        if (Proyectos.Contains(order)) {
-            DeleteProyectoCommand d = MapFrom<ProyectoResponse, DeleteProyectoCommand>.Map(order);
-            await _api.DeleteProyectoAsync(d);
+            if (Proyectos.Contains(order)) {
+                DeleteProyectoCommand d = MapFrom<ProyectoResponse, DeleteProyectoCommand>.Map(order);
+                await _api.DeleteProyectoAsync(d);
 
-            await LoadData();
-            StateHasChanged();
-        }
-        else {
-            ordersGrid.CancelEditRow(order);
-        }
+                await LoadData();
+                StateHasChanged();
+            }
+            else {
+                ordersGrid.CancelEditRow(order);
+            }
+
     }
     public bool insercion = false;
 

@@ -10,7 +10,8 @@
 <RadzenButton Icon="add_circle_outline" 
               Click="@InsertRow" 
               Text="Añadir nueva Solicitud" 
-              ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 10px" />
+              ButtonStyle="ButtonStyle.Secondary" style="margin-bottom: 10px" 
+              Disabled=@(ValorAuxiliarEdicion != null) />
 
 
 <RadzenDataGrid AllowColumnReorder="true" 

@@ -12,64 +12,47 @@
 
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
             <nav class="flex-column">
-
-
-
-
-                
-
-                        <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                                <span class="oi oi-home" aria-hidden="true"></span> Inicio
-                            </NavLink>
-                        </div>
-                
-
-
-                
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Inicio
+                    </NavLink>
+                </div>
                 @*Peticiones propias*@
                 <RadzenPanelMenu>
                     <RadzenPanelMenuItem Text="Ver Peticiones" Icon="description" Style="background-color:steelblue">
-
                         <RadzenCard Style="background-color:lightslategrey">
-
-                        <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="PeticionesPropias/Peticiones">
-                                <span class="oi oi-inbox" aria-hidden="true"/> Peticiones
-                            </NavLink>
-                        </div>
-                        <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="PeticionesPropias/Calendario">
-                                <span class="oi oi-calendar" aria-hidden="true"/>Calendario
-                            </NavLink>
-                        </div>
-                         
-
-                          <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="PeticionesPropias/Estadisticas">
-                                <span class="oi oi-bar-chart" aria-hidden="true"/>Estadísticas
-                            </NavLink>
-                        </div>
-
-
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="PeticionesPropias/Peticiones">
+                                    <span class="oi oi-inbox" aria-hidden="true" /> Peticiones
+                                </NavLink>
+                            </div>
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="PeticionesPropias/Calendario">
+                                    <span class="oi oi-calendar" aria-hidden="true" />Calendario
+                                </NavLink>
+                            </div>
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="PeticionesPropias/Estadisticas">
+                                    <span class="oi oi-bar-chart" aria-hidden="true" />Estadísticas
+                                </NavLink>
+                            </div>
                         </RadzenCard>
-
                     </RadzenPanelMenuItem>
                 </RadzenPanelMenu>
-                 @*Vacaciones*@
-                <RadzenPanelMenu >
-                        <RadzenPanelMenuItem Text="Vacaciones" Icon="flight-takeoff" Style="background-color:steelblue">
+                @*Vacaciones*@
+                <RadzenPanelMenu>
+                    <RadzenPanelMenuItem Text="Vacaciones" Icon="flight-takeoff" Style="background-color:steelblue">
 
                         <RadzenCard Style="background-color:lightslategrey">
                             <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="Vacaciones/Ver">
-                                <span class="oi oi-eye" aria-hidden="true"/>Ver 
-                            </NavLink>
+                                <NavLink class="nav-link" href="Vacaciones/Ver">
+                                    <span class="oi oi-eye" aria-hidden="true" />Ver
+                                </NavLink>
                             </div>
-                             <div class="nav-item px-3">
-                            <NavLink class="nav-link" href="Vacaciones/Cancelar">
-                                <span class="oi oi-circle-x" aria-hidden="true"/>Anular 
-                            </NavLink>
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Vacaciones/Cancelar">
+                                    <span class="oi oi-circle-x" aria-hidden="true" />Anular
+                                </NavLink>
                             </div>
                         </RadzenCard>
 
@@ -78,50 +61,48 @@
                 @*Gestion*@
                 <RadzenPanelMenu>
                     <RadzenPanelMenuItem Text="Gestión" Icon="compare_arrows" Style="background-color:steelblue">
-
                         <RadzenCard Style="background-color:lightslategrey">
-                            
                             <div class="nav-item px-3">
                                 <NavLink class="nav-link" href="Gestion/AprobarPeticiones">
                                     <span class="oi oi-spreadsheet" aria-hidden="true"></span> Ver Solicitudes
                                 </NavLink>
                             </div>
-                             <div class="nav-item px-3">
+                            <div class="nav-item px-3">
                                 <NavLink class="nav-link" href="Identity/Account/Manage">
                                     <span class="oi oi-person" aria-hidden="true"></span> Modificar Perfil
                                 </NavLink>
                             </div>
 
-                             <div class="nav-item px-3">
+                            <div class="nav-item px-3">
                                 <NavLink class="nav-link" href="Gestion/GestionEquipo">
                                     <span class="oi oi-people" aria-hidden="true"></span> Gestión Equipo
                                 </NavLink>
                             </div>
-                        
                         </RadzenCard>
-
                     </RadzenPanelMenuItem>
                 </RadzenPanelMenu>
-
                 <RadzenPanelMenu>
                     <RadzenPanelMenuItem Text="Administración Aplicación" Icon="build" Style="background-color:steelblue">
-
                         <RadzenCard Style="background-color:lightslategrey">
-                            
                             <div class="nav-item px-3">
                                 <NavLink class="nav-link" href="Administracion/Gestion">
                                     <span class="oi oi-pencil" aria-hidden="true"></span>Gestion
                                 </NavLink>
                             </div>
+                            <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Administracion/GestionProyectos">
+                                    <span class="oi oi-project" aria-hidden="true"></span>Proyectos
+                                </NavLink>
+                            </div>
+                             <div class="nav-item px-3">
+                                <NavLink class="nav-link" href="Administracion/GestionRolesUsuarios">
+                                    <span class="oi oi-people" aria-hidden="true"></span>Usuarios y Roles
+                                </NavLink>
+                            </div>
                         </RadzenCard>
-
                     </RadzenPanelMenuItem>
                 </RadzenPanelMenu>
-
             </nav>
-
-
-
         </div>
     </Authorized>
 </AuthorizeView>

@@ -4,9 +4,9 @@
 
 <PageTitle>Administracion</PageTitle>
 
-@if (Proyectos != null && Usuarios != null && Roles!= null && TiposDias!= null && EstadosDias!= null && TotalPeticiones!= null) {
-<RadzenBadge>Gestión de Proyectos</RadzenBadge>
-<BlazorApp2.Shared.Components.Admin.ProyectosGrid _api=_api UsuariosAplicacion=Usuarios/>
+@if ( Usuarios != null && Roles!= null && TiposDias!= null && EstadosDias!= null && TotalPeticiones!= null) {
+
+
 
 <br />
 <RadzenBadge>Usuarios en Proyectos</RadzenBadge>
@@ -46,15 +46,6 @@
     </Columns>
 </RadzenDataGrid>
 
-<br />
-<RadzenBadge>Roles</RadzenBadge>
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-            Data="@Roles" TItem="RolesResponse"  LogicalFilterOperator="LogicalFilterOperator.Or">
-    <Columns>
-        <RadzenDataGridColumn TItem="RolesResponse" Property="Id" Title="ID" />
-        <RadzenDataGridColumn TItem="RolesResponse" Property="Rol" Title="Rol" />
- </Columns>
-</RadzenDataGrid>
 
 <br />
 <RadzenBadge>Tipos Dias </RadzenBadge>
@@ -83,13 +74,10 @@
 <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
             Data=@TotalPeticiones TItem="CalendarioVacacionesResponse"  LogicalFilterOperator="LogicalFilterOperator.Or">
     <Columns>
-
-                <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" />
+               <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" />
                <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" />
                <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="TipoDiaCalendario" />
                <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="Estado" />
-
-
  </Columns>
 </RadzenDataGrid>
 }
@@ -97,7 +85,6 @@
 
 
 @code {
-    IList<ProyectoResponse> Proyectos;
     IEnumerable<UsuarioResponse> Usuarios;
     IEnumerable<RolesResponse> Roles;
     IEnumerable<TipoDiaCalendarioResponse> TiposDias;
@@ -114,7 +101,6 @@
             this.TiposDias = await _api.GetAllTipoDiaCalendarioAsync();
             this.EstadosDias = await _api.GetAllEstadoCalendarioVacacionesAsync();
             var proyectos = await _api.GetAllProyectosAsync();
-            this.Proyectos = proyectos.Where(X => X.Nombre != "ProyectoInicial").ToList();
             this.Usuarios = await _api.GetAllUsuariosAsync();
             var totalPeticiones = await _api.GetAllCalendarioVacacionesAsync();
 

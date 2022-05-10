@@ -122,6 +122,7 @@ public class SolicitudesPropiasBase : ComponentBase {
         if (ValorAuxiliarEdicion != null) CalendarioEditado.FechaCalendario = ValorAuxiliarEdicion.FechaCalendario;
         ValorAuxiliarEdicion = null;
         ComponentePrincipal.CancelEditRow(CalendarioEditado);
+        ComponentePrincipal.Reload();
         //if (this.CalendarioVacacionesUsuario.Any()) await LoadData();
     }
 

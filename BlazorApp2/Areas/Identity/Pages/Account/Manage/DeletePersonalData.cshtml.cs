@@ -72,38 +72,50 @@ namespace BlazorApp2.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+           
+           var user = await _userManager.GetUserAsync(User);
+           return await DeleteUsuarioLogin(user);
+           
+
+            
+        }
+
+
+        public async Task<IActionResult> DeleteUsuarioLogin(IdentityUser usuarioLogin) { 
+            if (usuarioLogin == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            RequirePassword = await _userManager.HasPasswordAsync(user);
+            RequirePassword = await _userManager.HasPasswordAsync(usuarioLogin);
             if (RequirePassword)
             {
-                if (!await _userManager.CheckPasswordAsync(user, Input.Password))
+                if (!await _userManager.CheckPasswordAsync(usuarioLogin, Input.Password))
                 {
                     ModelState.AddModelError(string.Empty, "Incorrect password.");
                     return Page();
                 }
             }
 
-            var result = await _userManager.DeleteAsync(user);
-            var usuarioxAplicacion = await _api.GetUsuarioByCorreoEmpresaAsync(user.Email);
-            DeleteUsuarioCommand d =MapFrom<UsuarioResponse,DeleteUsuarioCommand>.Map(usuarioxAplicacion);
-
-            await _api.DeleteUsuarioAsync(d);
-            var userId = await _userManager.GetUserIdAsync(user);
-            if (!result.Succeeded)
-            {
+            var result = await _userManager.DeleteAsync(usuarioLogin);
+            var userId = await _userManager.GetUserIdAsync(usuarioLogin);
+            if (!result.Succeeded) {
                 throw new InvalidOperationException($"Unexpected error occurred deleting user.");
             }
-
+            else DeleteUsuarioEnAplicacion(usuarioLogin);
             await _signInManager.SignOutAsync();
-
             _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
 
             return Redirect("~/");
         }
+        
+        public async Task DeleteUsuarioEnAplicacion(IdentityUser usuarioLogin) {
+            var usuarioxAplicacion = await _api.GetUsuarioByCorreoEmpresaAsync(usuarioLogin.Email);
+            DeleteUsuarioCommand d = MapFrom<UsuarioResponse, DeleteUsuarioCommand>.Map(usuarioxAplicacion);
+
+            await _api.DeleteUsuarioAsync(d);
+
+        }
+
     }
 }

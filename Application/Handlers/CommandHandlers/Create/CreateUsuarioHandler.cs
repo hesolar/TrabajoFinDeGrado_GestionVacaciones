@@ -10,6 +10,9 @@ public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, bool> 
     public async Task<bool> Handle(CreateUsuarioCommand request, CancellationToken cancellationToken) {
         //añade usuario
         var employeeEntitiy = MapperBase<UsuarioMappingProfile, Core.Entities.Usuario>.MappEntity(request);
+        //rol minimo
+        employeeEntitiy.WebRol = 0;
+
         if (employeeEntitiy is null) throw new ApplicationException("Issue with mapper");
         var result= await _usuarioRepo.AddAsync(employeeEntitiy);
         //añade proyectos de usuario

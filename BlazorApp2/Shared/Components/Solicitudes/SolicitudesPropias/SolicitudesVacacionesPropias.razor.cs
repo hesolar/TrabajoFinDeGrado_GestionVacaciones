@@ -103,10 +103,15 @@ public class SolicitudesPropiasBase : ComponentBase {
     /// <param name="calendarioAEliminar"></param>
     /// <returns></returns>
     public async Task DeleteRow(CalendarioVacaciones_PeticionesPropiasGrid calendarioAEliminar) {
-        await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
-            Fecha = calendarioAEliminar.FechaCalendario,
-            UsuarioID = calendarioAEliminar.IdTecnico
-        });
+
+        DeleteCalendarioVacacionesCommand c = MapFrom<CalendarioVacaciones_PeticionesPropiasGrid, DeleteCalendarioVacacionesCommand>
+                                              .Map(calendarioAEliminar);
+        await _api.DeleteCalendarioVacacionesAsync(c);
+
+        //await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
+        //    FechaCalendario = calendarioAEliminar.FechaCalendario,
+        //    UsuarioID = calendarioAEliminar.IdTecnico
+        //});
         this.CalendarioVacacionesUsuario.ToList().Remove(calendarioAEliminar);
         await ComponentePrincipal.Reload();
         await LoadData();

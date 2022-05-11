@@ -130,7 +130,12 @@ namespace BlazorApp2.Areas.Identity.Pages.Account
                     if (proyectoInicial == null) proyectoInicial = proyectos.First().IdProyecto;
 
                     List<int> p = new() { proyectoInicial };
-                    await _api.CreateUsuarioAsync(new CreateUsuarioCommand() { EmailCorporativo=user.Email,WebRol=0,FechaRegistro=DateTime.Now,Proyectos= p });
+                     
+                    await _api.CreateUsuarioAsync(new CreateUsuarioCommand() { 
+                        EmailCorporativo=user.Email,
+                        FechaRegistro=DateTime.Now,
+                        Proyectos= p 
+                    });
 
                     _logger.LogInformation("User created a new account with password.");
 

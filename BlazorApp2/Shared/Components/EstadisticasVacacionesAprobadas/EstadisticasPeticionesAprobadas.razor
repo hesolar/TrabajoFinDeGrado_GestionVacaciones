@@ -72,13 +72,13 @@
         this.datosGrafico= new List<DatosGrafico>();
         var CalendarioAgrupadoYear = calendarios.GroupBy(X => X.FechaCalendario.Year);
         foreach (var grupoAnual in CalendarioAgrupadoYear) {
-            var dato = grupoAnual.GroupBy(x => x.TipoDiaCalendario);
-            foreach (var cccc in dato) {
-                string tipo = TiposDias.First(x => x.Id == cccc.Key).Descripcion;
+            var grupoPorTipos = grupoAnual.GroupBy(x => x.TipoDiaCalendario);
+            foreach (var grupoTipoDia in grupoPorTipos) {
+                string tipo = TiposDias.First(x => x.Id == grupoTipoDia.Key).Descripcion;
                 datosGrafico.Add(new DatosGrafico {
-                        Year = cccc.First().FechaCalendario.Year,
+                        Year = grupoTipoDia.First().FechaCalendario.Year,
                         TipoDia = tipo,
-                        Total = cccc.Count(),
+                        Total = grupoTipoDia.Count(),
                     });
             }
         }

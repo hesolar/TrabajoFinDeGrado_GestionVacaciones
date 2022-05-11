@@ -6,7 +6,7 @@ public class CreateUsuarioProyectoHandler : IRequestHandler<CreateUsuarioProyect
         _repo = repo;
     }
     public async Task<bool> Handle(CreateUsuarioProyectoCommand request, CancellationToken cancellationToken) {
-        return await _repo.NuevoProyectoUsuario(request.IdTecnico, request.Proyecto);
+        return await _repo.NuevoProyectoUsuario(request.IdTecnico, request.IdProyecto);
     }
 
 

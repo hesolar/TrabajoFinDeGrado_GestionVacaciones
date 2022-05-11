@@ -8,6 +8,8 @@ public class GetAllUsuarioProyectoHandler : IRequestHandler<GetAllUsuarioProyect
     }
     public async Task<IEnumerable<UsuarioProyectoResponse>> Handle(GetAllUsuarioProyectoQuery request, CancellationToken cancellationToken) {
         IReadOnlyList<Core.Entities.UsuarioProyecto> usuarios = await _repo.GetAllAsync(); 
+        var xd = MapperBase<UsuarioProyectoMappingProfile, UsuarioProyectoResponse>.MappIEnumerable(usuarios); 
+
         return MapperBase<UsuarioProyectoMappingProfile, UsuarioProyectoResponse>.MappIEnumerable(usuarios);
     }
 }

@@ -19,14 +19,14 @@ public class GestionRolesBase : ComponentBase {
 
 
     protected override async Task OnInitializedAsync() {
-        IsLoading = true;
         await LoadData();
-        IsLoading = false;
     }
 
     public async Task LoadData() {
+        IsLoading = true;
         this.UsuariosAplicacion = await _api.GetAllUsuariosAsync();
         this.Roles = await _api.GetAllRolesAsync();
+        IsLoading = false;
     }
 
 

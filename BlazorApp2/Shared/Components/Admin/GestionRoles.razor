@@ -1,12 +1,9 @@
 ﻿@using BlazorApp2.Pages.Administracion
 @inherits GestionRolesBase
 
-@if (this.Roles != null) {
-
-
-
     <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
         <ChildContent>
+@if (this.Roles != null) {
             <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Añadir Nuevo Rol" Click="@InsertRow" Disabled=@(rolToModify != null) />
             <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25"
                         AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
@@ -16,48 +13,35 @@
                     <RadzenDataGridColumn TItem="RolesResponse" Property="Id" Title="ID" >
                         <EditTemplate Context="rol">
                             <RadzenNumericRangeValidator Text="Id Requerido" Component="Id" Popup="true" />
-
                             <RadzenNumeric Name="Id" @bind-Value="rol.Id" Data=@Roles TextProperty="Roles" ValueProperty="Roles" />
                         </EditTemplate>
-
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="RolesResponse" Property="Rol" Title="Rol">
                         <EditTemplate Context="rol">
                             <RadzenRequiredValidator Text="Nombre Rol Requerido" Component="Roles" Popup="true" />
-
                             <RadzenTextBox Name="Roles" @bind-Value="rol.Rol" Data=@Roles TextProperty="Roles" ValueProperty="Roles" />
-
                         </EditTemplate>
-
                     </RadzenDataGridColumn>
-                    <RadzenDataGridColumn TItem="RolesResponse" Context="sampleBlazorModelsSampleOrder" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                    <RadzenDataGridColumn TItem="RolesResponse" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
                         <Template Context="rol">
                             <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(rol))" @onclick:stopPropagation="true" />
                             <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(rol))" @onclick:stopPropagation="true" />
-
-
                         </Template>
                         <EditTemplate Context="rol">
-
-
                             @if (this.validarRoles(rol)) {
-
                                 <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(rol))" />
                             }
                             else {
                                 <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
                             }
-
                             <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(rol))" />
-
                         </EditTemplate>
                     </RadzenDataGridColumn>
                 </Columns>
             </RadzenDataGrid>
+}
         </ChildContent>
         <ErrorContent>
             <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="Esta operación no se pudo realizar, pulse para recuperar el estado anterior. " />
         </ErrorContent>
     </ErrorBoundary>
-
-}

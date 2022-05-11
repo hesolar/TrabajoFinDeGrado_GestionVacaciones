@@ -1,0 +1,49 @@
+﻿@inherits GestionUsuarioProyectoBase@if (UsuariosEnProyectos != null) {
+    
+<RadzenBadge>Usuarios participando en Proyectos</RadzenBadge>
+<br /><br /> 
+<RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Añadir Nueva Pariticipacion" Click="@InsertRow" Disabled=@(UsuarioProyectoToModify != null) />
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+            Data="@UsuariosEnProyectos" TItem="UsuarioProyectoResponse"  
+            LogicalFilterOperator="LogicalFilterOperator.Or" @ref=usuarioProyectoGrid>
+    <Columns>
+        <RadzenDataGridColumn TItem="UsuarioProyectoResponse" Property="IdProyecto" Title="Proyecto" >
+            <EditTemplate Context=Proyecto>
+                    <RadzenDropDown Context="Proyecto" @bind-Value="Proyecto.IdProyecto" Data="@Proyectos.Select(X=> X.IdProyecto)" ValueProperty="IdTecnico"/>                                
+                </EditTemplate>    
+               
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="UsuarioProyectoResponse" Property="IdTecnico" Title="IdTecnico" >
+             <EditTemplate Context=Usuario>
+                    <RadzenDropDown Context="Usuario" @bind-Value="Usuario.IdTecnico" Data="@Usuarios.Select(X=> X.IdTecnico)" ValueProperty="IdTecnico"/>                                
+                </EditTemplate>
+        </RadzenDataGridColumn>
+    
+        <RadzenDataGridColumn TItem="UsuarioProyectoResponse" Context="sampleBlazorModelsSampleOrder" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="rol">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(rol))" @onclick:stopPropagation="true" />
+                            <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(rol))" @onclick:stopPropagation="true" />
+
+
+                        </Template>
+                        <EditTemplate Context="rol">
+
+
+                            @if (validarUsuarioProyecto(rol)) {
+
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(rol))" />
+                            }
+                            else {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
+                            }
+
+                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(rol))" />
+
+                        </EditTemplate>
+        </RadzenDataGridColumn>
+    
+    </Columns>
+</RadzenDataGrid>
+}
+

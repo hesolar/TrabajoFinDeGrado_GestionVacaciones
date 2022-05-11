@@ -1,0 +1,86 @@
+﻿@page "/Administracion/TipoPeticiones"
+@inherits GestionTipoPeticionesPageBase
+
+
+@if (TiposDias != null) {
+
+    <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
+        <ChildContent>
+
+            <RadzenBadge>Tipos Peticiones </RadzenBadge>
+
+            <br/><br/>
+            <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Añadir Nuevo Proyecto" Click="@InsertRow" Disabled=@(TipoDiaToModify != null) />
+
+
+
+            <RadzenDataGrid AllowFiltering=true AllowColumnResize=true FilterMode=FilterMode.Advanced AllowSorting=true PageSize=25
+                        AllowPaging=true PagerHorizontalAlign=HorizontalAlign.Left ShowPagingSummary=true
+                        Data=TiposDias TItem=TipoDiaCalendarioResponse LogicalFilterOperator=LogicalFilterOperator.Or @ref=TipoDiaGrid>
+                <Columns>
+                    <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="Id" Title="ID" />
+                    <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="Festivo" Title="Festivo">
+                        <EditTemplate Context=TipoDia>
+                            <RadzenNumeric @bind-Value=TipoDia.Festivo Name="Festivo" />
+                            <RadzenNumericRangeValidator Min=0 Max=1 Component="Festivo" Popup=true />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+
+                    <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="Descripcion" Title="Descripcion">
+
+                        <EditTemplate Context=TipoDia>
+                            <RadzenTextBox @bind-Value=TipoDia.Descripcion Name="Descripcion" />
+                            <RadzenLengthValidator Min=0 Component="Descripcion" Popup=true />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+
+                    <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="ColorRepresentacion" Title="ColorRepresentacion">
+
+                        <EditTemplate Context=TipoDia>
+                            <RadzenTextBox @bind-Value=TipoDia.ColorRepresentacion Name="ColorRepresentacion" />
+                            <RadzenLengthValidator Min=0 Component="ColorRepresentacion" Popup=true />
+                        </EditTemplate>
+
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Context="sampleBlazorModelsSampleOrder" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="tipoDia">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(tipoDia))" @onclick:stopPropagation="true" />
+                            <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(tipoDia))" @onclick:stopPropagation="true" />
+
+
+                        </Template>
+                        <EditTemplate Context="tipoDia">
+
+
+                            @if (validarTipoDia(tipoDia)) {
+
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(tipoDia))" />
+                            }
+                            else {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
+                            }
+
+                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(tipoDia))" />
+
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+
+                </Columns>
+            </RadzenDataGrid>
+
+
+
+             <br />
+   
+             <BlazorApp2.Shared.Components.Admin.GestionEstadoPeticiones/>
+
+        </ChildContent>
+
+        <ErrorContent>
+            <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="Esta operación no se pudo realizar, pulse para recuperar el estado anterior. " />
+        </ErrorContent>
+    </ErrorBoundary>
+}

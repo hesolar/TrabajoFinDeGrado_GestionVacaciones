@@ -27,4 +27,18 @@ public class TipoDiaCalendarioController : ControllerBase {
     public async Task<TipoDiaCalendarioResponse> GetById(int id) {
         return await _mediator.Send(new GetTipoDiaCalendarioByIdQuery() { Id = id });
     }
+    [HttpPut("UpdateTipoDiaCalendario")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<bool>> UpdateTipoDiaCalendario(UpdateTipoDiaCalendarioCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpDelete("DeleteTipoDiaCalendario")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<bool>> DeleteUsuario(DeleteTipoDiaCalendarioCommand command) {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
 }

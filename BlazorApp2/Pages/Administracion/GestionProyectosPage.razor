@@ -7,9 +7,13 @@
 
 
 
-    <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
-        <ChildContent>
+@*    <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
+        <ChildContent>*@
+
+            <RadzenBadge>Proyectos</RadzenBadge><br /><br />
+            
             <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Añadir Nuevo Proyecto" Click="@InsertRow" Disabled=@(orderToModify != null) />
+            
             <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25"
                         AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
                         Data="@Proyectos" TItem="ProyectoResponse" LogicalFilterOperator="LogicalFilterOperator.Or" @ref="ordersGrid"
@@ -17,7 +21,7 @@
                 <Columns>
 
 
-                    @*<RadzenDataGridColumn TItem="ProyectoResponse" Property="IdProyecto" Title="Id Proyecto"/>*@
+                    <RadzenDataGridColumn TItem="ProyectoResponse" Property="IdProyecto" Title="Id Proyecto"/>
 
                     <RadzenDataGridColumn TItem="ProyectoResponse" Property="Nombre" Title="Nombre">
                         <EditTemplate Context="order">
@@ -96,11 +100,15 @@
 
                 </Columns>
             </RadzenDataGrid>
-        </ChildContent>
+    
+        <br>
+        <BlazorApp2.Shared.Components.Admin.GestionUsuarioProyecto/>
+        
+       @* </ChildContent>
 
         <ErrorContent>
             <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="Esta operación no se pudo realizar, pulse para recuperar el estado anterior. " />
         </ErrorContent>
-    </ErrorBoundary>
+    </ErrorBoundary>*@
 
 }

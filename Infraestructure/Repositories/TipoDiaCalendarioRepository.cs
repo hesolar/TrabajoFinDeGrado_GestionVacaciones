@@ -12,9 +12,9 @@ public class TipoDiaCalendarioRepository : ITipoDiaCalendarioRepository {
     public async Task<bool> AddAsync(TipoDiaCalendario entity)
         => await baseOperations.AddAsync(entity);
 
-    public async Task<bool> DeleteAsync(int id){
-        throw new NotImplementedException();
-    }
+    public async Task<bool> DeleteAsync(int id)
+        => await baseOperations.DeleteAsync(_context.TipoDiaCalendario.First(X=> X.Id == id));
+    
 
     public async Task<IReadOnlyList<TipoDiaCalendario>> GetAllAsync() {
 
@@ -29,8 +29,18 @@ public class TipoDiaCalendarioRepository : ITipoDiaCalendarioRepository {
     }
     //=> await baseOperations.GetByIdAsync(id);
 
-    public async Task<bool> UpdateAsync(TipoDiaCalendario entity) 
-         => throw new NotImplementedException();
+    public async Task<bool> UpdateAsync(TipoDiaCalendario entity) {
+        try {
+
+            _context.Set<TipoDiaCalendario>().Update(entity);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        catch (Exception ex) {
+            return false;
+        }
+
+
+    }
 
 
 }

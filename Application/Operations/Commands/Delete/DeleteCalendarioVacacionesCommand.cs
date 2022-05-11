@@ -1,7 +1,7 @@
 ﻿namespace Application.Operations.Commands;
 public class DeleteCalendarioVacacionesCommand : IRequest<bool> {
 
-    public int UsuarioID { get; set; }
-    public DateTime Fecha { get; set; }
+    public int IdTecnico { get; set; }
+    public DateTime FechaCalendario { get; set; }
 
 }

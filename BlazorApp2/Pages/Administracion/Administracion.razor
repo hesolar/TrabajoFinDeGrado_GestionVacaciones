@@ -1,114 +1,62 @@
 ﻿@page "/Administracion/Gestion"
 @inject API _api
-@inject AuthenticationStateProvider _authenticationStateProvider 
+@inject AuthenticationStateProvider _authenticationStateProvider
+@inherits AdministracionVacacionesBase 
 
 <PageTitle>Administracion</PageTitle>
 
-@if ( Usuarios != null && Roles!= null && TiposDias!= null && EstadosDias!= null && TotalPeticiones!= null) {
+@*@if (Usuarios != null && Roles != null && TiposDias != null && EstadosDias != null && TotalPeticiones != null) {*@
+    <RadzenBadge>Peticiones</RadzenBadge>
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data=@TotalPeticiones TItem="CalendarioVacacionesResponse" LogicalFilterOperator="LogicalFilterOperator.Or" @ref=PeticionesGrid>
+        <Columns>
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" Title="Id Tecnico" />
+                 @*<EditTemplate Context="usuarios">
+                            <RadzenNumericRangeValidator Component="IdUsuario" Text="Id usuario requerido" Popup=true Style="position:absolute; z-index: 100;" />
+                            <RadzenDropDown Name="IdTecnico" @bind-Value="usuarios.IdTecnico" Data="@Usuarios.Select(X=>X.IdTecnico)" TextProperty="IdManager" ValueProperty="IdManager" />
+                </EditTemplate>
+           </RadzenDataGridColumn>*@
 
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" Title="Fecha" >
+           <Template Context="order">
+                @order.FechaCalendario.ToString("dd-MM-yyyy")
+            </Template>
+               @* <EditTemplate Context="calendario">
+                    <RadzenDatePicker @bind-Value=calendario.FechaCalendario DateFormat="d"/>
+                </EditTemplate>*@
+            </RadzenDataGridColumn>
 
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="TipoDiaCalendario" Title="Tipo Dia">
+                <EditTemplate Context="calendario">
+                    <RadzenDropDown @bind-Value=calendario.TipoDiaCalendario Data=@(this.TiposDias.Select(X=> X.Id)) > </RadzenDropDown>
+                </EditTemplate>
 
-<br />
-<RadzenBadge>Usuarios en Proyectos</RadzenBadge>
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-            Data="@UsuariosEnProyectos" TItem="UsuarioProyectoResponse"  LogicalFilterOperator="LogicalFilterOperator.Or">
-    <Columns>
-        <RadzenDataGridColumn TItem="UsuarioProyectoResponse" Property="Proyecto" Title="Proyecto" />
-        <RadzenDataGridColumn TItem="UsuarioProyectoResponse" Property="IdTecnico" Title="IdTecnico" />
-    </Columns>
-</RadzenDataGrid>
-
-<br />
-<RadzenBadge>Gestión de Usuarios</RadzenBadge>
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-            Data="@Usuarios" TItem="UsuarioResponse"  LogicalFilterOperator="LogicalFilterOperator.Or">
-    <Columns>
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="IdTecnico" Title="IdTecnico" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Nombre" Title="Nombre" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Apellido1" Title="Apellido1" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Apellido2" Title="Apellido2" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmailPersonal" Title="EmailPersonal" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Nif" Title="NIF" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmailCorporativo" Title="EmailCorporativo" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Direccion" Title="Direccion" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Telefono1" Title="Telefono1" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="Telefono2" Title="Telefono2" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="FechaRegistro" Title="FechaRegistro" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="FechaAltaEmpresa" Title="FechaAltaEmpresa" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="FechaBajaEmpresa" Title="FechaBajaEmpresa" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="SeguimientoFecha" Title="SeguimientoFecha" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="SeguimientoIntervalo" Title="SeguimientoIntervalo" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmpresaTarifa" Title="EmpresaTarifa" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="EmpresaCategoria" Title="EmpresaCategoria" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="ClienteCategoria" Title="ClienteCategoria" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="ClienteNivel" Title="ClienteNivel" />
-        <RadzenDataGridColumn TItem="UsuarioResponse" Property="RedmineIdProyecto" Title="RedmineIdProyecto" />
-    </Columns>
-</RadzenDataGrid>
-
-
-<br />
-<RadzenBadge>Tipos Dias </RadzenBadge>
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-            Data=@TiposDias TItem="TipoDiaCalendarioResponse"  LogicalFilterOperator="LogicalFilterOperator.Or">
-    <Columns>
-        <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="Id" Title="ID" />
-        <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="Festivo" Title="Festivo" />
-        <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="Descripcion" Title="Descripcion" />
-        <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Property="ColorRepresentacion" Title="ColorRepresentacion" />
- </Columns>
-</RadzenDataGrid>
-
-<br />
-<RadzenBadge>Estados Peticiones</RadzenBadge>
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-            Data=@EstadosDias TItem="EstadoCalendarioVacacionesResponse"  LogicalFilterOperator="LogicalFilterOperator.Or">
-    <Columns>
-        <RadzenDataGridColumn TItem="EstadoCalendarioVacacionesResponse" Property="Id" Title="ID" />
-        <RadzenDataGridColumn TItem="EstadoCalendarioVacacionesResponse" Property="Descripcion" Title="Descripcion" />
- </Columns>
-</RadzenDataGrid>
-
-
-<RadzenBadge>Peticiones</RadzenBadge>
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-            Data=@TotalPeticiones TItem="CalendarioVacacionesResponse"  LogicalFilterOperator="LogicalFilterOperator.Or">
-    <Columns>
-               <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" />
-               <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" />
-               <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="TipoDiaCalendario" />
-               <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="Estado" />
- </Columns>
-</RadzenDataGrid>
-}
-
-
-
-@code {
-    IEnumerable<UsuarioResponse> Usuarios;
-    IEnumerable<RolesResponse> Roles;
-    IEnumerable<TipoDiaCalendarioResponse> TiposDias;
-    IEnumerable<EstadoCalendarioVacacionesResponse> EstadosDias;
-    IEnumerable<CalendarioVacacionesResponse> TotalPeticiones;
-    IEnumerable<UsuarioProyectoResponse> UsuariosEnProyectos;
-
-    protected override async Task OnInitializedAsync() {
-        this.UsuariosEnProyectos = await _api.GetAllUsuarioProyectoAsync();
-        this.Roles =await _api.GetAllRolesAsync();
-        var usuarioActual =  _authenticationStateProvider.GetCurrentUser(_api);
-        var rol = Roles.First(X => X.Rol.ToLower() == "admin" || X.Rol.ToLower() == "administrador");
-        if (usuarioActual.WebRol == rol.Id) {
-            this.TiposDias = await _api.GetAllTipoDiaCalendarioAsync();
-            this.EstadosDias = await _api.GetAllEstadoCalendarioVacacionesAsync();
-            var proyectos = await _api.GetAllProyectosAsync();
-            this.Usuarios = await _api.GetAllUsuariosAsync();
-            var totalPeticiones = await _api.GetAllCalendarioVacacionesAsync();
-
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="Estado" Title="Estado">
+                <EditTemplate Context="calendario">
+                    <RadzenDropDown @bind-Value=calendario.Estado Data=@(this.EstadosDias.Select(X=> X.Id)) > </RadzenDropDown>
+                </EditTemplate>    
             
-            this.TotalPeticiones = totalPeticiones.Where(X => EstadosDias.First(Y => X.Estado == Y.Id).Descripcion != "Aprobadas" &&
-                                                              EstadosDias.First(Y => X.Estado == Y.Id).Descripcion !="Canceladas");
+            </RadzenDataGridColumn>
 
-        }
-        StateHasChanged();
-    }
-}
+
+            <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="calendario">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(calendario))" @onclick:stopPropagation="true" />
+                            <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(calendario))" @onclick:stopPropagation="true" />
+                        </Template>
+                        <EditTemplate Context="calendario">
+                            @if (this.validarCalendario(calendario)) {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@(() => SaveRow(calendario))" />
+                            }
+                            else {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
+                            }
+                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(() => CancelEdit(calendario))" />
+                        </EditTemplate>
+           </RadzenDataGridColumn>
+
+        </Columns>
+    </RadzenDataGrid>
+@*}*@
+

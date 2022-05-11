@@ -1,0 +1,44 @@
+﻿@inherits GestionEstadoPeticionesBase
+<RadzenBadge>Estados Peticiones</RadzenBadge>
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                Data=@EstadosDias TItem="EstadoCalendarioVacacionesResponse" LogicalFilterOperator="LogicalFilterOperator.Or" @ref=estadoGrid>
+    <Columns>
+        <RadzenDataGridColumn TItem="EstadoCalendarioVacacionesResponse" Property="Id" Title="ID">
+           @* <EditTemplate Context=estado>
+                <RadzenNumericRangeValidator Text="Id Requerido" Component="Id" Popup="true" />
+                <RadzenNumeric Name="Id" @bind-Value="estado.Id" />
+            </EditTemplate>*@
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EstadoCalendarioVacacionesResponse" Property="Descripcion" Title="Descripcion">
+            @*<EditTemplate Context=estado>
+                <RadzenTextBox Name="Descripcion" @bind-Value=estado.Descripcion TextProperty="Descripcion" ValueProperty="Descripcion">
+            </EditTemplate>*@
+        </RadzenDataGridColumn>
+
+
+        @*Por razones de consistencia de la aplicación los roles deben ser cambiados por un administrador de BD, si se deseara cambiar esto esta sería la opcion para permitir ediciones*@
+       @* <RadzenDataGridColumn TItem="EstadoCalendarioVacacionesResponse"  Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="estado">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(estado))" @onclick:stopPropagation="true" />
+                            <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(estado))" @onclick:stopPropagation="true" />
+
+
+                        </Template>
+                        <EditTemplate Context="estado">
+
+
+                            @if (this.validarEstado(estado)) {
+
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(estado))" />
+                            }
+                            else {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
+                            }
+
+                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(estado))" />
+
+                        </EditTemplate>
+       </RadzenDataGridColumn>*@
+
+    </Columns>
+</RadzenDataGrid>

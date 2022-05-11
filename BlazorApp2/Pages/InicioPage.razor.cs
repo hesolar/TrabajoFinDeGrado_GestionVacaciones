@@ -18,35 +18,13 @@ public class IndexBase : ComponentBase {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var userIdentity = authState.User.Identity;
         UserDisplayedName = userIdentity.Name;
-        var usuario = await Api.GetUsuarioByCorreoEmpresaAsync(UserDisplayedName);
-        if (usuario == null) {
+        var UsuarioAplicacion = await Api.GetUsuarioByCorreoEmpresaAsync(UserDisplayedName);
+        if (UsuarioAplicacion == null) {
             String apellido = UserDisplayedName.Split('@')[0][1..];
-            Api.CreateUsuarioAsync(new CreateUsuarioCommand() {
-                Nombre = UserDisplayedName,
-                Apellido1 = apellido,
-                Apellido2 = null,
-                Nif = null,
-                EmailPersonal = null,
-                EmailCorporativo = UserDisplayedName,
-                Direccion = null,
-                Telefono1 = null,
-                Telefono2 = null,
-                FechaRegistro = DateTime.Now,
-                FechaAltaEmpresa = null,
-                FechaBajaEmpresa = null,
-                WebContrasena = null,
-                WebRol = 0,
-                SeguimientNotificacion = 0,
-                SeguimientoFecha = null,
-                SeguimientoIntervalo = null,
-                EmpresaTarifa = 0,
-                EmpresaCategoria = 0,
-                ClienteCuenta = null,
-                ClienteCategoria = 0,
-                ClienteNivel = null,
-                RedmineAPIKey = null,
-                RedmineIdProyecto = null
-            });
+
+           var d = MapFrom<UsuarioResponse, CreateUsuarioCommand>.Map(UsuarioAplicacion);
+           await Api.CreateUsuarioAsync(d);
+            
         }
     }
 

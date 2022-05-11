@@ -279,9 +279,10 @@ public class VacacionesCalendarBase : ComponentBase {
         if (diasBorrar.Any())
             foreach (var diaBorrar in diasBorrar) {
 
+
                 await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
-                    Fecha = diaBorrar.Date,
-                    UsuarioID = IdTecnicoUsuario
+                    FechaCalendario = diaBorrar.Date,
+                    IdTecnico = IdTecnicoUsuario
                 });
             }
     }

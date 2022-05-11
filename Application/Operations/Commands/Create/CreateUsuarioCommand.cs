@@ -15,7 +15,6 @@ public class CreateUsuarioCommand : IRequest<bool>
     public DateTime? FechaAltaEmpresa { get; set; }
     public DateTime? FechaBajaEmpresa { get; set; }
     public string? WebContrasena { get; set; }
-    public int WebRol { get; set; }
     public int? SeguimientNotificacion { get; set; }
     public DateTime? SeguimientoFecha { get; set; }
     public int? SeguimientoIntervalo { get; set; }

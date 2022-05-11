@@ -11,7 +11,7 @@ public class UsuarioProyectoController : ControllerBase {
     [HttpGet("GetAllUsuarioProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IEnumerable<UsuarioProyectoResponse>> Get() {
-        return await _mediator.Send(new GetAllUsuarioProyectoQuery());
+         return await _mediator.Send(new GetAllUsuarioProyectoQuery());
     }
     [HttpPost("CreateUsuarioProyecto")]
     [ProducesResponseType(StatusCodes.Status200OK)]

@@ -29,7 +29,7 @@ public class UsuarioProyectoRepository:  IUsuarioProyectoRepository {
         await _context.UsuarioProyecto.Where(X => X.IdProyecto == proyecto).Select(X => X.IdTecnico).ToListAsync();
 
 
-    public Task<bool> NuevoProyectoUsuario(int IdProyecto, int idTecnico) 
+    public Task<bool> NuevoProyectoUsuario(int idTecnico, int IdProyecto) 
         => AddAsync( new UsuarioProyecto() { IdTecnico = idTecnico, IdProyecto = IdProyecto });
     
 

@@ -22,8 +22,8 @@ public class CancelarVacacionesBase : ComponentBase {
     }
 
     public async Task BorrarDia(CalendarioVacacionesResponse order) {
-
-        await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {Fecha=order.FechaCalendario, UsuarioID=order.IdTecnico });
+        DeleteCalendarioVacacionesCommand c = MapFrom<CalendarioVacacionesResponse, DeleteCalendarioVacacionesCommand>.Map(order);
+        await _api.DeleteCalendarioVacacionesAsync(c);
         var datosTotalVacaciones = await _api.GetUsuarioCalendarioVacacionesAsync(InfoUsuario.IdTecnico);
         Estados = await _api.GetAllEstadoCalendarioVacacionesAsync();
 

@@ -1538,6 +1538,102 @@
         }
       }
     },
+    "/api/TipoDiaCalendario/UpdateTipoDiaCalendario": {
+      "put": {
+        "tags": [
+          "TipoDiaCalendario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTipoDiaCalendarioCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTipoDiaCalendarioCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTipoDiaCalendarioCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TipoDiaCalendario/DeleteTipoDiaCalendario": {
+      "delete": {
+        "tags": [
+          "TipoDiaCalendario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteTipoDiaCalendarioCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteTipoDiaCalendarioCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteTipoDiaCalendarioCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Usuario/GetAllUsuarios": {
       "get": {
         "tags": [
@@ -2266,10 +2362,6 @@
             "type": "string",
             "nullable": true
           },
-          "webRol": {
-            "type": "integer",
-            "format": "int32"
-          },
           "seguimientNotificacion": {
             "type": "integer",
             "format": "int32",
@@ -2336,7 +2428,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "proyecto": {
+          "idProyecto": {
             "type": "integer",
             "format": "int32"
           }
@@ -2346,11 +2438,11 @@
       "DeleteCalendarioVacacionesCommand": {
         "type": "object",
         "properties": {
-          "usuarioID": {
+          "idTecnico": {
             "type": "integer",
             "format": "int32"
           },
-          "fecha": {
+          "fechaCalendario": {
             "type": "string",
             "format": "date-time"
           }
@@ -2397,6 +2489,16 @@
         },
         "additionalProperties": false
       },
+      "DeleteTipoDiaCalendarioCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeleteUsuarioCommand": {
         "type": "object",
         "properties": {
@@ -2414,7 +2516,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "proyecto": {
+          "idProyecto": {
             "type": "integer",
             "format": "int32"
           }
@@ -2693,6 +2795,28 @@
         },
         "additionalProperties": false
       },
+      "UpdateTipoDiaCalendarioCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "colorRepresentacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "festivo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateUsuarioCommand": {
         "type": "object",
         "properties": {
@@ -2816,7 +2940,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "proyecto": {
+          "idProyecto": {
             "type": "integer",
             "format": "int32"
           }

@@ -274,15 +274,15 @@ public class InteractiveCalendarBase : ComponentBase {
     /// Borrar datos de la aplicacion
     /// </summary>
     /// <param name="diasBorrar">Dias para borrar en la aplicacion</param>
-    /// <param name="IdTecnicoUsuario">Id del usuario dle que se borran las vacaciones</param>
+    /// <param name="IdTecnico">Id del usuario dle que se borran las vacaciones</param>
     /// <returns></returns>
-    public async Task BorrarDatosCalendario(IEnumerable<DatoDia> diasBorrar,int IdTecnicoUsuario) {
+    public async Task BorrarDatosCalendario(IEnumerable<DatoDia> diasBorrar,int IdTecnico) {
         if (diasBorrar.Any())
             foreach (var diaBorrar in diasBorrar) {
 
                 await _api.DeleteCalendarioVacacionesAsync(new DeleteCalendarioVacacionesCommand() {
-                    Fecha = diaBorrar.Date,
-                    UsuarioID = IdTecnicoUsuario
+                    FechaCalendario = diaBorrar.Date,
+                    IdTecnico = IdTecnico
                 });
             }
     }

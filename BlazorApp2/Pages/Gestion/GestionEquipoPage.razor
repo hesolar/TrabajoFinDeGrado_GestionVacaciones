@@ -1,0 +1,67 @@
+﻿@page "/Gestion/GestionEquipo"
+@inject API _api
+@inject AuthenticationStateProvider _authenticationStateProvider
+
+
+
+
+<PageTitle>Gestion Equipo</PageTitle>
+
+
+
+    
+<RadzenBadge BadgeStyle="BadgeStyle.Primary" Text="Datos Por Usuario Equipo" />
+<RadzenCard Class="mt-4" Style="background-color:steelblue">
+    <RadzenButton Click="()=>TarjetaComboVacacionesUsuario.Visible=!TarjetaComboVacacionesUsuario.Visible"
+                  Text="@(TarjetaComboVacacionesUsuario.Visible? "Ocultar" : "Mostrar")"
+                  ButtonStyle="@(TarjetaComboVacacionesUsuario.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />
+    <RadzenCard Class="mt-4" @ref="TarjetaComboVacacionesUsuario" Style="border:none;background-color:white">
+        
+        <BlazorApp2.Shared.Components.GestionEquipo.ComboVacacionesUsuario.ComboVacacionesUsuario _api=_api _authenticationStateProvider=_authenticationStateProvider/>
+        
+    </RadzenCard>
+</RadzenCard>
+
+
+
+<br />
+
+
+<RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text="Calendario Anual Equipo" />
+<br />
+<br />
+
+
+
+<RadzenCard Style="background-color:lightblue; border:none">
+
+
+    <RadzenButton Click="()=>TarjetaCalendarioEquipo.Visible=!TarjetaCalendarioEquipo.Visible"
+                  Text="@(TarjetaCalendarioEquipo.Visible? "Ocultar" : "Mostrar")"
+                  ButtonStyle="@(TarjetaCalendarioEquipo.Visible? ButtonStyle.Light :  ButtonStyle.Secondary)" style="margin-bottom: 10px" />
+
+    <RadzenCard Class="mt-4" @ref="TarjetaCalendarioEquipo" Style="border:none;background-color:white">
+        @*<BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo/>*@
+        <BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo/>
+    </RadzenCard>
+</RadzenCard>
+
+
+
+
+
+@code {
+    protected RadzenCard TarjetaComboVacacionesUsuario = new();
+    protected RadzenCard TarjetaCalendarioEquipo = new();
+
+  
+
+}
+
+
+
+
+
+
+
+

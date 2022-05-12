@@ -1,0 +1,54 @@
+﻿@inherits ComboVacacionesUsuarioBase
+
+
+@if (this.proyectosUsuario != null) {
+<div style="align-self:center" > <h4>Proyectos:</h4> </div>
+<RadzenDropDownDataGrid TValue="string" Data=@(this.proyectosUsuario.Select(X=> X.Nombre))
+                                        Change=OnChange Style="align-self:center; width: 25%" @ref=dropdownProyectos/>
+
+
+    @if (this.proyectoSeleccionado != null) {
+      <RadzenCard Visible=actualizarProyecto>
+
+        <CalendarioPorUsuarios Proyecto=proyectoSeleccionado _api=_api/>
+      </RadzenCard>  
+
+    
+    
+    }
+}
+@code{
+
+    [Parameter]
+    public API _api{ get; set; }
+    [Parameter]
+    public AuthenticationStateProvider _authenticationStateProvider{ get; set; }
+
+
+    public List<ProyectoResponse> proyectosUsuario;
+    RadzenDropDownDataGrid<String> dropdownProyectos;
+    ProyectoResponse proyectoSeleccionado;
+
+
+    protected override async Task OnInitializedAsync() {
+
+        UsuarioResponse currentAppUser = _authenticationStateProvider.GetCurrentUser(_api);
+        IEnumerable<int> IdProyectos = await _api.GetProyectosUsuarioAsync(currentAppUser.IdTecnico);
+        proyectosUsuario = new ();
+        foreach (var idProyecto in IdProyectos) {
+            ProyectoResponse s = await _api.GetProyectoByIdAsync(idProyecto);
+            proyectosUsuario.Add(s);
+        }
+    }
+    public bool actualizarProyecto;
+    void OnChange(Object value)
+    {
+        this. proyectoSeleccionado = this.proyectosUsuario.First(X => X.Nombre == this.dropdownProyectos.SelectedItem.ToString());
+        actualizarProyecto=false;
+        StateHasChanged();
+        actualizarProyecto=true;
+
+    }
+    public void NotifyChange() { }
+
+}

@@ -1,10 +1,41 @@
-﻿
+﻿@using BlazorApp2.Pages.Gestion.CalendarioEquipo
+<h3>CalendarioEquipo</h3>
+hola que tal
 
 
-namespace BlazorApp2.Pages.Peticiones.InteractiveCalendar;
 
-public class InteractiveCalendarBase : ComponentBase {
-    #region variables principales
+@if (this.diasCalendario != null) {
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+                @foreach (var mes in OperacionesCalendario.DividirYearEnMeses(this.diasCalendario)) {
+                    <div class="col mb-3">
+                        <div class="card h-100">
+
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="@PublicVariables.Meses[mes.Key]" />
+
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="add_circle_outline" Click="()=>SelectAllMonthButtonListener(mes.Value)" Text="Seleccionar mes" />
+                                </div>
+                            </div>
+                            <RadzenCard>
+                                <MonthCalendarioEquipo2 Mes=mes.Key datosMes=mes.Value OnClickCallback="@DaySelectorEventListener" OnHover="@HoverButtonListener"/>
+                            </RadzenCard>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+@code {
+     #region variables principales
 
     //Dias Calendario
     public DatosDias diasCalendario;
@@ -38,23 +69,6 @@ public class InteractiveCalendarBase : ComponentBase {
 
     //Estados de las selecciones, representa un estado de dia y su color => Laboral, azul
     public Dictionary<string, string> TipoDiaColor = new();
-
-
-
-    #endregion
-
-    public DatosDias datosDiasIniciales;
-   
-
-
-    /// <summary>
-    /// Permite seleccionar multiples dias a la vez con el estado de dia actual
-    /// </summary>
-    /// <param name="diasEnMultiseleccion">Conjunto de dias</param>
-    /// <returns></returns>
-    public void SelectMultipleDays(DatosDias diasEnMultiseleccion)
-       => OperacionesCalendario.AplyFilterToDays(diasEnMultiseleccion, new Action<DatoDia>(dia => SingleSelectionDay(dia)));
-
 
 
 
@@ -111,7 +125,6 @@ public class InteractiveCalendarBase : ComponentBase {
     public void ActualizarDiasCalendario(IEnumerable<CalendarioVacacionesResponse> vacaciones,
                                           IEnumerable<TipoDiaCalendarioResponse> tiposDias, IEnumerable<EstadoCalendarioVacacionesResponse> estados) {
         this.diasCalendario = GenerarDatosCalendario(vacaciones, tiposDias,estados);
-        this.datosDiasIniciales = GenerarDatosCalendario(vacaciones, tiposDias, estados);
         StateHasChanged();
     }
     /// <summary>
@@ -163,34 +176,10 @@ public class InteractiveCalendarBase : ComponentBase {
 
 
     public void NotifyDayChanges() {
-        var ResultadosCambios = this.datosDiasIniciales.Equals(this.diasCalendario);
-        NotifyChange.InvokeAsync(ResultadosCambios);
         StateHasChanged();
     }
 
-    /// <summary>
-    /// Gestión de la multiseleccion de los dias
-    /// </summary>
-    /// <param name="dia"></param>
-    /// <returns></returns>
-    public void MultiSelectionDayClickListener(DatoDia dia) {
-        //Establece el primer dia para la multiseleccion si no ha comenzado ya
-        if (OperacionesCalendario.NingunDiaFiltro(this.diasCalendario, new Func<DatoDia, bool>(dia => dia.ColorSeleccion == PublicVariables.colorInicioMultiseleccion))) {
-            dia.ColorSeleccion = PublicVariables.colorInicioMultiseleccion;
-            return;
-        }
-
-        //Si ya existe un primer dia de multiseleecion, este click marca el final de la multiseleccion, por tanto debemos marcar los dias como seleccionados
-        if (OperacionesCalendario.NumeroDiasFiltro(this.diasCalendario, new Func<DatoDia, bool>(dia => dia.ColorSeleccion == PublicVariables.colorInicioMultiseleccion)) > 0) {
-            //this.DayMultiseletionMode = false;
-
-            //Devuelve el resultado de hacer multiseleccion en los dias
-            SelectMultipleDays(
-                new DatosDias(OperacionesCalendario.FiltroDia(this.diasCalendario, new(dia => dia.ColorSeleccion == PublicVariables.colorInicioMultiseleccion || dia.ColorSeleccion == PublicVariables.colorOver))
-            ));
-        }
-    }
-
+    
     /// <summary>
     /// Este metodo colorea el dia en el calendario si no estaba seleccionado al hacer hover, si estaba seleccionado lo deselecciona.
     /// Hay que tener en cuenta que no se podrá colorear el boton de inicio de la multiseleccion y que el modo de multiseleccion deberá estar activo
@@ -310,10 +299,3 @@ public class InteractiveCalendarBase : ComponentBase {
 
     #endregion
 }
-
-
-
-
-
-
-

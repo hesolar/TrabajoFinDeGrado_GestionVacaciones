@@ -1,0 +1,78 @@
+﻿@inject AuthenticationStateProvider _authenticationStateProvider
+
+<h3>CalendarioPorUsuarios</h3>
+
+@if (this.usuarios != null) {
+
+    <RadzenListBox @bind-Value=@value Data=@(usuarios.Select(X=>$"{X.EmailCorporativo}"))
+               Change=@(args => OnChange()) Style="width:20%;" @ref=ListBoxUsuarios />
+
+}
+
+
+@if (usuarioSeleccionado != null) {
+    <h3>Datos del usuario @(_authenticationStateProvider.GetCurrentUser(_api).EmailCorporativo)</h3><br />
+
+    
+
+    @if (ColoresBotones != null) {
+        <RadzenCard Visible=hide>
+
+            <div class="col-md-6 p-3">
+                @foreach (var dataItem in ColoresBotones) {
+                    <RadzenBadge Style=@($"background-color:{dataItem.ColorRepresentacion}; color:black;")
+                     Text="@dataItem.Descripcion" IsPill="true" />
+                }
+            </div>
+
+
+        
+
+            <BlazorApp2.Shared.Components.InteractiveCalendar.InteractiveCalendar usuarioCalendario=usuarioSeleccionado />
+            <BlazorApp2.Pages.PeticionesPropias.EstadisticasPage usuarioApp=usuarioSeleccionado/>
+        </RadzenCard>
+        
+
+    }
+
+
+}
+
+
+
+
+@code {
+    [Parameter]
+    public ProyectoResponse Proyecto { get; set; }
+    [Parameter]
+    public API _api { get; set; }
+    public List<UsuarioResponse> usuarios = new();
+
+    String value;
+    RadzenListBox<String> ListBoxUsuarios;
+    bool hide;
+
+    IEnumerable<TipoDiaCalendarioResponse> ColoresBotones;
+
+    UsuarioResponse usuarioSeleccionado;
+    protected override async Task OnInitializedAsync() {
+
+        ColoresBotones = await _api.GetAllTipoDiaCalendarioAsync();
+        IEnumerable<int> idUsuarios = await _api.GetUsuariosProyectoAsync(Proyecto.IdProyecto);
+        foreach (var idUsuario in idUsuarios) {
+            UsuarioResponse usuario = await _api.GetUsuarioByIdAsync(idUsuario);
+            this.usuarios.Add(usuario);
+        }
+    }
+    protected async Task OnChange() {
+        string correo = this.ListBoxUsuarios.SelectedItem.ToString();
+        this.usuarioSeleccionado = await _api.GetUsuarioByCorreoEmpresaAsync(correo);
+        StateHasChanged();
+        hide = false;
+        StateHasChanged();
+        hide = true;
+
+
+        StateHasChanged();
+    }
+}

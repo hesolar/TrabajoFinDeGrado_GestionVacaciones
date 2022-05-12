@@ -70,9 +70,12 @@
     public ICollection<EstadoCalendarioVacacionesResponse> EstadosDias;
     public UsuarioResponse usuario;
 
+    [Parameter]
+    public UsuarioResponse? usuarioApp{ get; set; }
 
     protected override async Task OnInitializedAsync() {
-        this.usuario = _authenticationStateprovider.GetCurrentUser(_api);
+        if(usuarioApp!=null) this.usuario= usuarioApp;
+        else this.usuario = _authenticationStateprovider.GetCurrentUser(_api);
         this.EstadosDias = await _api.GetAllEstadoCalendarioVacacionesAsync();
         this.TiposDias = await _api.GetAllTipoDiaCalendarioAsync();
         var datosRecibidos = await _api.GetUsuarioCalendarioVacacionesAsync(usuario.IdTecnico);

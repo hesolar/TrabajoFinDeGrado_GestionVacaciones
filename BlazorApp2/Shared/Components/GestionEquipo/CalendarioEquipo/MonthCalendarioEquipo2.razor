@@ -1,5 +1,6 @@
 ﻿@using BlazorApp2.Pages.Gestion.CalendarioEquipo;
-
+@inject Radzen.DialogService DialogService
+@inject API _api
     <table>
     @*Dias de la semana*@
     <tr>
@@ -39,7 +40,7 @@
                 
                     
                         <button class="@variable.TipoDia" style="background-color:@color" disabled=@(variable.TipoDia=="Disabled")
-                        @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
+                        @onclick="@(() =>ShowInlineDialog(variable))" 
                         @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>   
                     
 
@@ -75,7 +76,7 @@
                                 <th>
                                    
                                     <button class="@variable.TipoDia" style="background-color:@color" disabled=@(variable.TipoDia=="Disabled")
-                                    @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
+                                    @onclick="@(() =>ShowInlineDialog(variable))" 
                                     @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
                                     
                                 </th>
@@ -94,8 +95,57 @@
     public DatosDias datosMes { get; set; }
     [Parameter]
     public int Mes { get; set; }
-    [Parameter]
-    public EventCallback<DatoDiaCalendarioEquipo> OnClickCallback { get; set; }
+
     [Parameter]
     public EventCallback<DatoDiaCalendarioEquipo> OnHover { get; set; }
+
+    [Parameter]
+    public int proyecto{ get; set; }
+
+    async Task ShowInlineDialog(DatoDiaCalendarioEquipo calendario)
+    {
+        var p = await _api.GetUsuariosProyectoAsync(proyecto);
+        List<UsuarioResponse> usuarios = new List<UsuarioResponse>();
+        foreach (var u in p) {
+            var usuario = await _api.GetUsuarioByIdAsync(u);
+            var vacaciones =  await _api.GetUsuarioCalendarioVacacionesAsync(usuario.IdTecnico);
+            if (vacaciones.Any(X => X.FechaCalendario == calendario.Date)) {
+                usuarios.Add(usuario);
+            }
+        }
+
+        var result = await DialogService.OpenAsync($"Dia {calendario.Date.ToShortDateString()}", ds =>
+        @<div>
+            <div class="row my-4">
+                <div class="col-md-12">
+                    <RadzenCard>
+                        <h3 class="h5">
+                            Movidas
+                            <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text="prueba"/>
+                        </h3>
+                        <RadzenDataGrid AllowFiltering="true" AllowPaging="true" AllowSorting="true" 
+                                    Data=usuarios TItem=UsuarioResponse ColumnWidth="200px" Class="mt-3">
+                            <Columns>
+                                <RadzenDataGridColumn TItem=UsuarioResponse Property="IdTecnico" Title="IdTecnico" />
+                                <RadzenDataGridColumn TItem=UsuarioResponse Property="Nombre" Title="Nombre" />
+                                <RadzenDataGridColumn TItem=UsuarioResponse Property="Apellido1" Title="Apellido1" />
+                                <RadzenDataGridColumn TItem=UsuarioResponse Property="Apellido2" Title="Apellido2" />
+                                
+                            </Columns>
+                        </RadzenDataGrid>
+                    </RadzenCard>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <RadzenButton Text="Ok" Click="() => ds.Close(true)"  Style="width: 80px;" Class="mr-1 float-right" />
+
+                    
+                </div>
+            </div>
+        </div>);
+    
+    }
+
+
 }

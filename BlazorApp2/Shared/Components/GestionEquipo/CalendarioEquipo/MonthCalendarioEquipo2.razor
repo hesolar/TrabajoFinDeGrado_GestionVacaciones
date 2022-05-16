@@ -23,19 +23,25 @@
             }
             //Resto de dias
             while (i < 7){
-                DatoDia variable = datosMes.ElementAt(totalDias);
+                DatoDiaCalendarioEquipo variable = datosMes.ElementAt(totalDias);
 
+                String color;
+                Func<System.Drawing.Color,String> getHex= (c) =>  "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+                if (variable.usuariosDeVacaciones == 0) color = System.Drawing.Color.LimeGreen.Name;
+                else {
+
+                    color = variable.ColorSeleccion;
+                }
+                 
+                
 
                 <th> 
-
-                    @if (variable.Estado == "Aprobadas") {
-                        <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
-                    }
-                    else {
-                        <button class="@variable.TipoDia" style="background-color:@variable.ColorSeleccion" disabled=@(variable.TipoDia=="Disabled")
+                
+                    
+                        <button class="@variable.TipoDia" style="background-color:@color" disabled=@(variable.TipoDia=="Disabled")
                         @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
                         @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>   
-                    }
+                    
 
                 </th>         
 
@@ -49,23 +55,29 @@
         @{
             while(totalDias < datosMes.Count){
                <tr>
-                    @{
-                        int semana = 0;
-                
-                        while (semana < 7){
-                            semana++;
-                    
-                            if (totalDias < datosMes.Count){
-                                DatoDia variable = datosMes.ElementAt(totalDias);
+                @{
+                    int semana = 0;
+
+                    while (semana < 7){
+                        semana++;
+
+                        if (totalDias < datosMes.Count){
+                            DatoDiaCalendarioEquipo variable = datosMes.ElementAt(totalDias);
+                            String color;
+                            Func<System.Drawing.Color,String> getHex= (c) =>  "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+                            if (variable.usuariosDeVacaciones == 0) color = System.Drawing.Color.LimeGreen.Name;
+                            else {
+                                color = variable.ColorSeleccion;
+                                //color = getHex(variable.ColorSeleccion);
+                            }
+
+
                                 <th>
-                                    @if (variable.Estado == "Aprobadas") {
-                                        <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
-                                    }
-                                    else {
-                                    <button class="@variable.TipoDia" style="background-color:@variable.ColorSeleccion" disabled=@(variable.TipoDia=="Disabled")
+                                   
+                                    <button class="@variable.TipoDia" style="background-color:@color" disabled=@(variable.TipoDia=="Disabled")
                                     @onclick="@(() => OnClickCallback.InvokeAsync(variable))" 
                                     @onmouseover="@(() =>OnHover.InvokeAsync(variable))">@datosMes.ElementAt(totalDias).Date.Day </button>
-                                    }
+                                    
                                 </th>
                              }  
                           totalDias++;
@@ -83,7 +95,7 @@
     [Parameter]
     public int Mes { get; set; }
     [Parameter]
-    public EventCallback<DatoDia> OnClickCallback { get; set; }
+    public EventCallback<DatoDiaCalendarioEquipo> OnClickCallback { get; set; }
     [Parameter]
-    public EventCallback<DatoDia> OnHover { get; set; }
+    public EventCallback<DatoDiaCalendarioEquipo> OnHover { get; set; }
 }

@@ -1,13 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 namespace BlazorApp2.Pages.Gestion.CalendarioEquipo;
-public class DatoDia {
+public class DatoDiaCalendarioEquipo {
     #region constructor
-    public DatoDia(DateTime d) {
+    public DatoDiaCalendarioEquipo(DateTime d,int usuariosTrabajando) {
         //todo
         this.TipoDia = (d.DayOfWeek.ToString().ToLower() is "saturday" or "sunday") ? "Disabled" : "Laborable";
         this.Date = d;
+        this.usuariosDeVacaciones = usuariosTrabajando;
     }
     #endregion
 
@@ -15,17 +17,17 @@ public class DatoDia {
     [Key]
     public DateTime Date { get; set; }
     public String TipoDia { get; set; }
-    public String Estado { get; set; } = "";
-    public String ColorSeleccion { get; set; } = "none";
+    public String ColorSeleccion { get; set; } = "none"; 
+    public int usuariosDeVacaciones { get; set; }
     #endregion
 
 
 }
 
 //Encapsular dias para no repetirlos
-public class DatosDias : KeyedCollection<DateTime, DatoDia> {
-    public DatosDias(IEnumerable<DatoDia> dias) => dias.ToList().ForEach(dia => this.Items.Add(dia));
-    protected override DateTime GetKeyForItem(DatoDia item) => item.Date;
+public class DatosDias : KeyedCollection<DateTime, DatoDiaCalendarioEquipo> {
+    public DatosDias(IEnumerable<DatoDiaCalendarioEquipo> dias) => dias.ToList().ForEach(dia => this.Items.Add(dia));
+    protected override DateTime GetKeyForItem(DatoDiaCalendarioEquipo item) => item.Date;
     public override bool Equals(object? obj) {
         if (obj == null) return false;
         DatosDias diasComparar = obj as DatosDias;

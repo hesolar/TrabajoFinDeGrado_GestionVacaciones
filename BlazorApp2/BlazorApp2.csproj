@@ -11,11 +11,9 @@
     <Content Remove="ConexionOpenAPI\Application.json" />
     <Content Remove="ConexionOpenAPI\Applicattion.json" />
     <Content Remove="ConexionOpenAPI\Sharepoint.json" />
-    <Content Remove="Shared\Components\GestionEquipo\CalendarioEquipo\MonthCalendarioEquipo.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Shared\Components\GestionEquipo\CalendarioEquipo\MonthCalendarioEquipo.razor" />
     <None Include="Shared\Components\InteractiveCalendar\ComponentePrincipalCalendario.razor" />
     <None Include="Shared\Components\InteractiveCalendar\HeadearCalendario.razor" />
     <None Include="Shared\Components\InteractiveCalendar\InteractiveCalendar.razor" />

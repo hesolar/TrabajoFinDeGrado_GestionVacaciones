@@ -11,20 +11,20 @@ public static class OperacionesCalendario {
         DateTime FechaInicio = new(year, 1, 1);
         DateTime FechaMaxima = new(year + 1, 1, 1);
 
-        List<DatoDia> resultados = new();
+        List<DatoDiaCalendarioEquipo> resultados = new();
         while (FechaInicio < FechaMaxima) {
-            resultados.Add(new DatoDia(FechaInicio));
+            resultados.Add(new DatoDiaCalendarioEquipo(FechaInicio,0));
             FechaInicio = FechaInicio.AddDays(1);
         }
         return new DatosDias(resultados);
     }
 
     //Dias que cumplen un predicado
-    public static List<DatoDia> FiltroDia(DatosDias dias, Func<DatoDia, bool> Filtrado) => dias.Where(dia => Filtrado(dia)).ToList();
+    public static List<DatoDiaCalendarioEquipo> FiltroDia(DatosDias dias, Func<DatoDiaCalendarioEquipo, bool> Filtrado) => dias.Where(dia => Filtrado(dia)).ToList();
     //Cuantos dias cumplen un predicado
-    public static int NumeroDiasFiltro(DatosDias dias, Func<DatoDia, bool> Filtrado) => dias.Count(dia => Filtrado(dia));
+    public static int NumeroDiasFiltro(DatosDias dias, Func<DatoDiaCalendarioEquipo, bool> Filtrado) => dias.Count(dia => Filtrado(dia));
     //Devuelve verdadero si ningun dia cumple el predicado
-    public static bool NingunDiaFiltro(DatosDias dias, Func<DatoDia, bool> Filtrado) => !dias.Where(dia => Filtrado(dia)).Any();
+    public static bool NingunDiaFiltro(DatosDias dias, Func<DatoDiaCalendarioEquipo, bool> Filtrado) => !dias.Where(dia => Filtrado(dia)).Any();
 
     /// <summary>
     /// Devuelve los meses de unaño 
@@ -45,5 +45,5 @@ public static class OperacionesCalendario {
     /// </summary>
     /// <param name="dias"></param>
     /// <param name="accionFiltro"></param>
-    public static void AplyFilterToDays(DatosDias dias, Action<DatoDia> accionFiltro) => dias.AsParallel().ForAll(dia => accionFiltro(dia));
+    public static void AplyFilterToDays(DatosDias dias, Action<DatoDiaCalendarioEquipo> accionFiltro) => dias.AsParallel().ForAll(dia => accionFiltro(dia));
 }

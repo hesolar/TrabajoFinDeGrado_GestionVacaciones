@@ -1,7 +1,6 @@
-﻿@page "/Gestion/GestionEquipo"
-@inject API _api
+﻿@inject API _api
 @inject AuthenticationStateProvider _authenticationStateProvider
-
+@inherits GestionEquipoPageBase
 
 
 
@@ -42,21 +41,13 @@
 
     <RadzenCard Class="mt-4" @ref="TarjetaCalendarioEquipo" Style="border:none;background-color:white">
         @*<BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo/>*@
-        <BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo/>
+
     </RadzenCard>
 </RadzenCard>
 
 
 
 
-
-@code {
-    protected RadzenCard TarjetaComboVacacionesUsuario = new();
-    protected RadzenCard TarjetaCalendarioEquipo = new();
-
-  
-
-}
 
 
 

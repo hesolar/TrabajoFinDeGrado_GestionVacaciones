@@ -1,15 +1,10 @@
 ﻿@page "/"
 @inherits IndexBase
 
+    <PageTitle>Index</PageTitle>
+    <h1>Bienvenido,@UserDisplayedName </h1>
+<body>
 
-<PageTitle>Index</PageTitle>
-
-<h1>Hola,@UserDisplayedName </h1>
-Esta es la página de presentación de la aplicación
-
-@code{
-    protected override async  Task OnParametersSetAsync() {
-        ComprobarNuevoUsuario();
-    }
-
-}
+<p> Esta página ha sido construida utilizando Blazor .Net 6</p>
+</body>
+    

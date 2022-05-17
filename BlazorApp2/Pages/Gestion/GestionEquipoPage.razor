@@ -1,23 +1,37 @@
-﻿@inject API _api
-@inject AuthenticationStateProvider _authenticationStateProvider
-@inherits GestionEquipoPageBase
-
+﻿@page "/Gestion/GestionEquipo"
+@using BlazorApp2.Pages.GestionEquipo
+@inherits  GestionEquipoBase
 
 
 <PageTitle>Gestion Equipo</PageTitle>
 
 
 
-    
+
 <RadzenBadge BadgeStyle="BadgeStyle.Primary" Text="Datos Por Usuario Equipo" />
 <RadzenCard Class="mt-4" Style="background-color:steelblue">
     <RadzenButton Click="()=>TarjetaComboVacacionesUsuario.Visible=!TarjetaComboVacacionesUsuario.Visible"
                   Text="@(TarjetaComboVacacionesUsuario.Visible? "Ocultar" : "Mostrar")"
                   ButtonStyle="@(TarjetaComboVacacionesUsuario.Visible? ButtonStyle.Light :  ButtonStyle.Primary)" style="margin-bottom: 10px" />
     <RadzenCard Class="mt-4" @ref="TarjetaComboVacacionesUsuario" Style="border:none;background-color:white">
-        
-        <BlazorApp2.Shared.Components.GestionEquipo.ComboVacacionesUsuario.ComboVacacionesUsuario _api=_api _authenticationStateProvider=_authenticationStateProvider/>
-        
+        @if (this.proyectosUsuario != null) {
+
+            <div style="align-self:center"> <h4>Proyectos:</h4> </div>
+            <RadzenDropDownDataGrid TValue="string" Data=@(this.proyectosUsuario.Select(X=> X.Nombre))
+                                Change=OnChange Style="align-self:center; width: 25%" @ref=dropdownProyectos />
+
+
+            @if (this.proyectoSeleccionado != null) {
+                <RadzenCard Visible=actualizarProyecto>
+
+                    <CalendarioPorUsuarios Proyecto=proyectoSeleccionado _api=_api />
+                </RadzenCard>
+
+
+
+            }
+        }
+
     </RadzenCard>
 </RadzenCard>
 
@@ -40,19 +54,12 @@
                   ButtonStyle="@(TarjetaCalendarioEquipo.Visible? ButtonStyle.Light :  ButtonStyle.Secondary)" style="margin-bottom: 10px" />
 
     <RadzenCard Class="mt-4" @ref="TarjetaCalendarioEquipo" Style="border:none;background-color:white">
-        @*<BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo/>*@
-
+        @if(TotalUsuariosProyecto>0 && totalVacaciones!=null){
+            <BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo 
+            totalDias=totalVacaciones TotalUsuarios=TotalUsuariosProyecto   proyectoActual=this.proyectoSeleccionado/>
+        }
+        
     </RadzenCard>
 </RadzenCard>
-
-
-
-
-
-
-
-
-
-
 
 

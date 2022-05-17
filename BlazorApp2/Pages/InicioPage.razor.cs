@@ -28,4 +28,7 @@ public class IndexBase : ComponentBase {
         }
     }
 
+    protected override async Task OnParametersSetAsync() =>
+       ComprobarNuevoUsuario();
+
 }

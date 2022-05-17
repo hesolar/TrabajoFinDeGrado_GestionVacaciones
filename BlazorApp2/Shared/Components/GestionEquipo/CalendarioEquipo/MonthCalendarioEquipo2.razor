@@ -100,17 +100,17 @@
     public EventCallback<DatoDiaCalendarioEquipo> OnHover { get; set; }
 
     [Parameter]
-    public int proyecto{ get; set; }
+    public ProyectoResponse proyecto{ get; set; }
 
     async Task ShowInlineDialog(DatoDiaCalendarioEquipo calendario)
     {
-        var p = await _api.GetUsuariosProyectoAsync(proyecto);
-        List<UsuarioResponse> usuarios = new List<UsuarioResponse>();
-        foreach (var u in p) {
-            var usuario = await _api.GetUsuarioByIdAsync(u);
+        List<UsuarioResponse> dialogData = new List<UsuarioResponse>();
+        IEnumerable<int> usuariosProyecto =await _api.GetUsuariosProyectoAsync(this.proyecto.IdProyecto);
+        foreach (var user in usuariosProyecto) {
+            var usuario = await _api.GetUsuarioByIdAsync(user);
             var vacaciones =  await _api.GetUsuarioCalendarioVacacionesAsync(usuario.IdTecnico);
             if (vacaciones.Any(X => X.FechaCalendario == calendario.Date)) {
-                usuarios.Add(usuario);
+                dialogData.Add(usuario);
             }
         }
 
@@ -120,11 +120,11 @@
                 <div class="col-md-12">
                     <RadzenCard>
                         <h3 class="h5">
-                            Movidas
-                            <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text="prueba"/>
+                            <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text=" Faltas Previstas"/>
+                           
                         </h3>
                         <RadzenDataGrid AllowFiltering="true" AllowPaging="true" AllowSorting="true" 
-                                    Data=usuarios TItem=UsuarioResponse ColumnWidth="200px" Class="mt-3">
+                                    Data=dialogData TItem=UsuarioResponse ColumnWidth="200px" Class="mt-3">
                             <Columns>
                                 <RadzenDataGridColumn TItem=UsuarioResponse Property="IdTecnico" Title="IdTecnico" />
                                 <RadzenDataGridColumn TItem=UsuarioResponse Property="Nombre" Title="Nombre" />

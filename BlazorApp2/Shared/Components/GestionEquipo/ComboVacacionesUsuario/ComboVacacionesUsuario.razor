@@ -56,7 +56,8 @@
 
     <RadzenCard Class="mt-4" @ref="TarjetaCalendarioEquipo" Style="border:none;background-color:white">
         @if(TotalUsuariosProyecto>0 && totalVacaciones!=null){
-            <BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo totalDias=totalVacaciones TotalUsuarios=TotalUsuariosProyecto   />
+            <BlazorApp2.Shared.Components.GestionEquipo.CalendarioEquipo.CalendarioEquipo 
+            totalDias=totalVacaciones TotalUsuarios=TotalUsuariosProyecto   proyectoActual=this.proyectoSeleccionado/>
         }
         
     </RadzenCard>

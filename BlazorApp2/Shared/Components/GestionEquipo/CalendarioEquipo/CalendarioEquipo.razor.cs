@@ -7,6 +7,8 @@ public class CalendarioEquipoBase : ComponentBase {
     //Dias Calendario
     public DatosDias diasCalendario;
 
+
+    [Parameter]public ProyectoResponse proyectoActual { get; set; }
     [Parameter]
     public Dictionary<CalendarioVacacionesResponse, int> totalDias { get; set; }
 

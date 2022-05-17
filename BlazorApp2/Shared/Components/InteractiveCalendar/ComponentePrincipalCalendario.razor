@@ -1,15 +1,15 @@
-﻿@inject API _api;
+﻿@inherits ComponentePrincipalCalendarioBase
+@inject Radzen.DialogService DialogService
 
 @*Botones de seleccion*@
-<RadzenCard Style="border:none;background-color:azure">
+<RadzenCard Style="border:none;background-color:#305975">
 
     <HeadearCalendario CancelarCambiosButtonListener=calendario.CancelarCambiosButtonListener SaveCalendarButtonListener=calendario.SaveCalendarButtonListener botonesVisibles=BotonesVisibles/>
     <br />
     <br />
-    <RadzenButton Style="background-color:greenyellow; width: 30%;color:black;" Text="Peticiones Aprobadas"  Icon="check_circle"  />
+    <RadzenButton Style="background-color:greenyellow; width: 20%;color:grey;" Text="Peticiones Aprobadas"  Icon="check_circle"  />
     <br />
-    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Text="Peticiones Pendientes" />
-    <br />
+    <RadzenBadge BadgeStyle="BadgeStyle.Secondary" IsPill="true" Style="width: 10%" Text="Peticiones Pendientes" />
     <RadzenRadioButtonList @bind-Value=@valor TValue="string" @ref="radiobutton" >
         <Items>
             @foreach (var dataItem in data) {
@@ -18,42 +18,28 @@
         </Items>
     </RadzenRadioButtonList>
     <br />
-   <p> Multiseleccion</p> 
-   <RadzenSwitch @bind-Value=@Multiseleccion  />
+   <div class="row">
+   <h3>Activar/Desactivar Multiseleccion
 
+   <RadzenButton Icon=privacy_tip ButtonStyle="ButtonStyle.Info" Click="InfoMultiseleccion" Style="width:30px"/></h3>
+   </div>
+   <RadzenSwitch @bind-Value=@Multiseleccion  />
      <CascadingValue Value="@Multiseleccion" Name="Multiseleccion">
         <CascadingValue Value="@valor" Name="EstadoDiaSeleccion">
             <InteractiveCalendar @ref="calendario" NotifyChange=NotifyChange />
         </CascadingValue>
     </CascadingValue>
 </RadzenCard>
-
-
-
 @code{
-    [Parameter]
-    public bool BotonesVisibles{ get; set; }
-    public void NotifyChange(bool change) {
-        BotonesVisibles = !change;
-    }
+async Task InfoMultiseleccion(){
 
+var result = await DialogService.OpenAsync("Ayuda Multiselección", ds =>
+        @<div>
+        <RadzenCard>
+            <p style="color:black">La multiselección permite seleccionar varios dias al desplazar el ratón sobre ellos, para ello pulsa un día y comienza a arrastrar sobre los demas, para finalizar pulsa click sobre otro día.</p>
+        </RadzenCard>
+        </div>, new Radzen.DialogOptions() { CloseDialogOnOverlayClick = true });
 
-
-
-    public IEnumerable<TipoDiaCalendarioResponse> data { get; set; } = new List<TipoDiaCalendarioResponse>();
-
-    protected override async Task OnParametersSetAsync() {
-        data = await _api.GetAllTipoDiaCalendarioAsync();
-        this.valor = data.First().Descripcion;
-        this.radiobutton.Value = valor;
-        StateHasChanged();
-    }
-
-    RadzenRadioButtonList<string> radiobutton;
-
-    public string valor;
-
-    public bool Multiseleccion { get; set; }
-    InteractiveCalendar calendario=new();
+}
 
 }

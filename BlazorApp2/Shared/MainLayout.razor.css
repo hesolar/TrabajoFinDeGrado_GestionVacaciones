@@ -12,6 +12,9 @@ main {
     background-image: linear-gradient(45deg, #9bc1c4 0%, #023262 70%);
 
 }
+.menusuperior {
+    background-image:url("/img/logoHiberus.png");
+}
 
 .top-row {
     background-color: #e1ebed;
@@ -45,6 +48,8 @@ main {
         margin-left: 0;
     }
 }
+
+
 
 @media (min-width: 641px) {
     .page {

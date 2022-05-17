@@ -1,7 +1,7 @@
 ﻿@page "/Gestion/GestionEquipo"
 @using BlazorApp2.Pages.GestionEquipo
 @inherits  GestionEquipoBase
-
+@inject API _api
 
 <PageTitle>Gestion Equipo</PageTitle>
 
@@ -23,8 +23,7 @@
 
             @if (this.proyectoSeleccionado != null) {
                 <RadzenCard Visible=actualizarProyecto>
-
-                    <CalendarioPorUsuarios Proyecto=proyectoSeleccionado _api=_api />
+                    <BlazorApp2.Shared.Components.GestionEquipo.ComboVacacionesUsuario.CalendarioPorUsuarios Proyecto=proyectoSeleccionado _api=_api/>
                 </RadzenCard>
 
 

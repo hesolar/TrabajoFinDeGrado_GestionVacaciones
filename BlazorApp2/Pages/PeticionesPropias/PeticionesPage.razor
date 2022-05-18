@@ -3,14 +3,10 @@
 
 <PageTitle>Solicitudes Vacaciones</PageTitle>
 
-
-
 @*Seccion de Solicitudes*@
 <RadzenBadge BadgeStyle="BadgeStyle.Primary" Text="Solicitudes" />
 <br />
 <br />
-
-
 <RadzenCard Style="background-color:steelblue">
     <RadzenButton Click="()=>TarjetaPeticionesPropias.Visible=!TarjetaPeticionesPropias.Visible"
                   Text="@(TarjetaPeticionesPropias.Visible? "Ocultar" : "Mostrar")"
@@ -21,40 +17,26 @@
         <br />
     </RadzenCard>
 </RadzenCard>
-
-
-
 <br />
-
-
 <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text="Calendario Anual de Vacaciones" />
 <br />
 <br />
-
-
-
 <RadzenCard Style="background-color:#305975; border:transparent;">
-
-
     <RadzenButton Click="()=>TarjetaCalendario.Visible=!TarjetaCalendario.Visible"
                   Text="@(TarjetaCalendario.Visible? "Ocultar" : "Mostrar")"
                   ButtonStyle="@(TarjetaCalendario.Visible? ButtonStyle.Light :  ButtonStyle.Secondary)"
                   Style="width:10px" />
-
     <RadzenCard Class="mt-4" @ref="TarjetaCalendario" Style="border:none;background-color:transparent">
         <h4 class="mb-4" style="color:white"> Este calendario es informativo, si deseas editarlo consulta <a href="/PeticionesPropias/Calendario" style="color:steelblue;">Aquí</a></h4>
         <br />
         <RadzenButton Style="background-color:greenyellow; width: 30%;color:black;" Text="Peticiones Aprobadas" Icon="check_circle" />
-
-        <div id="divbloqueo">
-
+        <div style="pointer-events:none;" id="divbloqueo">
             <div class="col-md-6 p-3">
                 @foreach (var dataItem in ColoresBotones) {
                     <RadzenBadge Style=@($"background-color:{dataItem.ColorRepresentacion}; color:black;") Text="@dataItem.Descripcion" IsPill="true" />
                 }
             </div>
             <BlazorApp2.Shared.Components.InteractiveCalendar.InteractiveCalendar />
-
         </div>
     </RadzenCard>
 </RadzenCard>

@@ -1,4 +1,6 @@
-﻿@inject AuthenticationStateProvider _authenticationStateProvider
+﻿@inherits CalendarioPorUsuariosBase
+
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 <h3>CalendarioPorUsuarios</h3>
 
@@ -39,40 +41,3 @@
 }
 
 
-
-
-@code {
-    [Parameter]
-    public ProyectoResponse Proyecto { get; set; }
-    [Parameter]
-    public API _api { get; set; }
-    public List<UsuarioResponse> usuarios = new();
-
-    String value;
-    RadzenListBox<String> ListBoxUsuarios;
-    bool hide;
-
-    IEnumerable<TipoDiaCalendarioResponse> ColoresBotones;
-
-    UsuarioResponse usuarioSeleccionado;
-    protected override async Task OnInitializedAsync() {
-
-        ColoresBotones = await _api.GetAllTipoDiaCalendarioAsync();
-        IEnumerable<int> idUsuarios = await _api.GetUsuariosProyectoAsync(Proyecto.IdProyecto);
-        foreach (var idUsuario in idUsuarios) {
-            UsuarioResponse usuario = await _api.GetUsuarioByIdAsync(idUsuario);
-            this.usuarios.Add(usuario);
-        }
-    }
-    protected async Task OnChange() {
-        string correo = this.ListBoxUsuarios.SelectedItem.ToString();
-        this.usuarioSeleccionado = await _api.GetUsuarioByCorreoEmpresaAsync(correo);
-        StateHasChanged();
-        hide = false;
-        StateHasChanged();
-        hide = true;
-
-
-        StateHasChanged();
-    }
-}

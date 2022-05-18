@@ -24,12 +24,13 @@
 
 }
 .nav-item px-3 {
-    
+   
 }
 
 
-    .nav-item:first-of-type {
-    }
+.nav-item:first-of-type {
+   
+}
 
 .nav-item:last-of-type {
     /*padding-bottom: 1rem;*/

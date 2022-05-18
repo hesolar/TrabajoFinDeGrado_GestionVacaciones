@@ -3,7 +3,6 @@
 
 <PageTitle>Vacaciones</PageTitle>
 
-
 <RadzenBadge BadgeStyle="BadgeStyle.Primary" Text="Solicitudes" />
 <RadzenCard Class="mt-4" Style="background-color:steelblue">
     <RadzenButton Click="()=>TarjetaPeticionesPropias.Visible=!TarjetaPeticionesPropias.Visible"
@@ -13,41 +12,26 @@
         <BlazorApp2.Shared.Components.Vacaciones.Ver.Grid.VacacionesGrid/>
     </RadzenCard>
 </RadzenCard>
-
 <br />
-
-
 <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text="Calendario Anual de Vacaciones" />
 <br />
 <br />
-
-
-
 <RadzenCard Style="background-color:#305975; border:none">
-
-
     <RadzenButton Click="()=>TarjetaCalendario.Visible=!TarjetaCalendario.Visible"
                   Text="@(TarjetaCalendario.Visible? "Ocultar" : "Mostrar")"
                   ButtonStyle="@(TarjetaCalendario.Visible? ButtonStyle.Light :  ButtonStyle.Secondary)" style="margin-bottom: 10px" />
-
     <RadzenCard Class="mt-4" @ref="TarjetaCalendario" Style="border:none;background-color:transparent">
-        <h4 class="mb-4"> Este calendario es informativo, si deseas hacer otras peticiones consulta <a href="/PeticionesPropias/Calendario" 
-            style="color:steelblue;">Aquí</a></h4>
+        <h4 class="mb-4"> Este calendario es informativo, si deseas hacer otras peticiones consulta 
+            <a href="/PeticionesPropias/Calendario" style="color:steelblue;">Aquí</a></h4>
         <br />
         <RadzenButton Style="background-color:greenyellow; width: 30%;color:black;" Text="Peticiones Aprobadas"  Icon="check_circle"  />
-
         <div style="pointer-events:none">
             <BlazorApp2.Shared.Components.Vacaciones.Ver.Calendario.VacacionesCalendar/>
         </div>
     </RadzenCard>
 </RadzenCard>
 
-
-
-
-
 @code {
     protected RadzenCard TarjetaPeticionesPropias = new();
     protected RadzenCard TarjetaCalendario = new();
-
 }

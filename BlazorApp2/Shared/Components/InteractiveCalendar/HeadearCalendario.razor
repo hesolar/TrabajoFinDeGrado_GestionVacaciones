@@ -19,11 +19,11 @@
             <RadzenButton Icon="warning_amber" Text="Cancelar Cambios" ButtonStyle="ButtonStyle.Danger" Click=@(async() =>{
                       bool? result = await _dialogService.Confirm("Confirmar Operación?", "Confirmación", new ConfirmOptions() { CancelButtonText = "Cancelar",OkButtonText = "Eliminar",Resizable=true});
                       if(result.HasValue && result.Value)await CancelarCambiosButtonListener.InvokeAsync();
-                      }) />
+                      }) Style="margin-right:15%;width:25%;" />
             <RadzenButton Icon="check_circle" Text="Guardar Seleccion" ButtonStyle="ButtonStyle.Success" Click=@(async() => {
                       bool? result =await _dialogService.Confirm("Confirmar Operación?", "Confirmación", new ConfirmOptions() {OkButtonText = "Guardar", CancelButtonText = "Cancelar" ,});
                       if(result.HasValue && result.Value)await SaveCalendarButtonListener.InvokeAsync();
-                      }) />
+                      }) Style="margin-left:15%;width:25%;"/>
         }
     </div>
 

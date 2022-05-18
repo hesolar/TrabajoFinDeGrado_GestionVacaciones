@@ -1,97 +1,71 @@
 ﻿namespace BlazorApp2.Pages.Administracion;
 public class GestionTipoPeticionesPageBase : ComponentBase {
 
-    [Inject]
-    public API _api { get; set; }
-
+    [Inject] protected API _api { get; set; }
     protected ErrorBoundary ErrorBoundaryInsercionesNomodificaciones;
-    public void RecoverAppState() => ErrorBoundaryInsercionesNomodificaciones.Recover();
-
-    public IEnumerable<UsuarioResponse> UsuariosAplicacion { get; set; }
-    public IEnumerable<TipoDiaCalendarioResponse> TiposDias { get; set; }
-    public RadzenDataGrid<TipoDiaCalendarioResponse> TipoDiaGrid { get; set; }
-
+    protected IEnumerable<UsuarioResponse> UsuariosAplicacion { get; set; }
+    protected IEnumerable<TipoDiaCalendarioResponse> TiposDias { get; set; }
+    protected RadzenDataGrid<TipoDiaCalendarioResponse> TipoDiaGrid { get; set; }
     protected TipoDiaCalendarioResponse TipoDiaToModify;
+    protected bool GridIsLoading = false;
 
-
-    public bool IsLoading = false;
-
+    protected bool InsertarNuevoDato = false;
 
 
     protected override async Task OnInitializedAsync() {
-        IsLoading = true;
+        GridIsLoading = true;
         await LoadData();
-        IsLoading = false;
+        GridIsLoading = false;
     }
+    protected void RecoverAppState() => ErrorBoundaryInsercionesNomodificaciones.Recover();
 
-    public async Task LoadData() {
+    protected async Task LoadData() {
         this.UsuariosAplicacion = await _api.GetAllUsuariosAsync();
         this.TiposDias = await _api.GetAllTipoDiaCalendarioAsync();
     }
 
-
     protected async Task OnUpdateRow(TipoDiaCalendarioResponse order) {
-
-
-        if (order == TipoDiaToModify) {
-
-            TipoDiaToModify = null;
-        }
-        //UpdateTipoDia u = MapFrom<TipoDiaesResponse, UpdateTipoDiaesCommand>.Map(order);
-        //await _api.UpdateTipoDiaesAsync(u);
-        //todo
-
+        if (order == TipoDiaToModify) TipoDiaToModify = null;
         await LoadData();
-
     }
 
-    public async Task SaveRow(TipoDiaCalendarioResponse tipoDia) {
-        if (insercion && validarTipoDia(tipoDia)) {
-            CreateTipoDiaCalendarioCommand c = MapFrom<TipoDiaCalendarioResponse, CreateTipoDiaCalendarioCommand>.Map(tipoDia);
-
-           
+    protected async Task SaveRow(TipoDiaCalendarioResponse tipoDia) {
+         //inserción
+        if (InsertarNuevoDato && validarTipoDia(tipoDia)) {
+            CreateTipoDiaCalendarioCommand c = MapFrom<TipoDiaCalendarioResponse, CreateTipoDiaCalendarioCommand>.Map(tipoDia);       
             await _api.CreateTipoDiaCalendarioAsync(c);
             await LoadData();
-            insercion = false;
+            InsertarNuevoDato = false;
         }
+        //modificación
         else {
             UpdateTipoDiaCalendarioCommand command = MapFrom<TipoDiaCalendarioResponse,UpdateTipoDiaCalendarioCommand>.Map(tipoDia);
             await _api.UpdateTipoDiaCalendarioAsync(command);
             await TipoDiaGrid.UpdateRow(tipoDia);
         }
     }
+    //Este método comprobaría si el total de dias del usuario es menor que el que puede coger, de momento no ha sido necesario se queda planteado para ampliaciones del proyecto.
+    protected bool validarTipoDia(TipoDiaCalendarioResponse tipoDia) 
+        => true;
 
-    public bool validarTipoDia(TipoDiaCalendarioResponse tipoDia) {
-        return true;
-        //return !string.IsNullOrEmpty(tipoDia.TipoDia) && tipoDia.Id > 0;
-    }
-
-    public void CancelEdit(TipoDiaCalendarioResponse tipoDia) {
+    protected void CancelEdit(TipoDiaCalendarioResponse tipoDia) {
         if (tipoDia == TipoDiaToModify) TipoDiaToModify = null;
         TipoDiaGrid.CancelEditRow(tipoDia);
     }
 
-    public async Task DeleteRow(TipoDiaCalendarioResponse tipoDia) {
-        if (tipoDia == TipoDiaToModify) TipoDiaToModify = null;
-
-
-        
-         DeleteTipoDiaCalendarioCommand d = MapFrom<TipoDiaCalendarioResponse, DeleteTipoDiaCalendarioCommand>.Map(tipoDia);
+    protected async Task DeleteRow(TipoDiaCalendarioResponse tipoDia) {
+        if (tipoDia == TipoDiaToModify) TipoDiaToModify = null;      
+        DeleteTipoDiaCalendarioCommand d = MapFrom<TipoDiaCalendarioResponse, DeleteTipoDiaCalendarioCommand>.Map(tipoDia);
         await _api.DeleteTipoDiaCalendarioAsync(d);
         await LoadData();
-        StateHasChanged();
-
-        
-
+        StateHasChanged();        
     }
-    public bool insercion = false;
 
     protected async Task InsertRow() {
-        insercion = true;
+        InsertarNuevoDato = true;
         this.TipoDiaToModify = new TipoDiaCalendarioResponse();
         int id = _api.GetAllTipoDiaCalendarioAsync().Result.Max(X => X.Id);
         TipoDiaToModify.Id = id + 1;
-
         await TipoDiaGrid.InsertRow(TipoDiaToModify);
     }
 
@@ -99,6 +73,5 @@ public class GestionTipoPeticionesPageBase : ComponentBase {
         this.TipoDiaToModify = TipoDia;
         await TipoDiaGrid.EditRow(TipoDia);
     }
-
 
 }

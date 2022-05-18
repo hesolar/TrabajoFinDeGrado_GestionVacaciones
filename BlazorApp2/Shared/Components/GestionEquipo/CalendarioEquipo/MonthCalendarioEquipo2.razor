@@ -90,6 +90,9 @@
 </table>
 
 
+@*
+    Código en este clase sin separar por el html para que se vea correctamente.
+*@
 @code {
     [Parameter]
     public DatosDias datosMes { get; set; }
@@ -102,8 +105,7 @@
     [Parameter]
     public ProyectoResponse proyecto{ get; set; }
 
-    async Task ShowInlineDialog(DatoDiaCalendarioEquipo calendario)
-    {
+    async Task ShowInlineDialog(DatoDiaCalendarioEquipo calendario){
         List<UsuarioResponse> dialogData = new List<UsuarioResponse>();
         IEnumerable<int> usuariosProyecto =await _api.GetUsuariosProyectoAsync(this.proyecto.IdProyecto);
         foreach (var user in usuariosProyecto) {

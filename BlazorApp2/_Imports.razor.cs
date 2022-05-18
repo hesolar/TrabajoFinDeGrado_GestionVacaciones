@@ -10,3 +10,5 @@ global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
 global using MudBlazor.Services;
+global using System.Globalization;
+global using Radzen;

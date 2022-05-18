@@ -16,27 +16,7 @@ public class CreateUsuarioHandler : IRequestHandler<CreateUsuarioCommand, bool> 
         if (employeeEntitiy is null) throw new ApplicationException("Issue with mapper");
         var result= await _usuarioRepo.AddAsync(employeeEntitiy);
         //añade proyectos de usuario
-        bool resultadoAñadir =  await AddProyectosUsuario(request.Proyectos, employeeEntitiy.IdTecnico);
         //resultado de añadir usuario y sus proyectos
-        return result && resultadoAñadir;
+        return result;
     }
-
-    //todo
-    /// <summary>
-    /// Añade proyectos de un usuario
-    /// </summary>
-    /// <param name="proyectos"></param>
-    /// <param name="idUsuario"></param>
-    /// <returns></returns>
-    public async Task<bool> AddProyectosUsuario(IEnumerable<int> proyectos, int idUsuario) {
-        //bool result = true;
-        //foreach (var proyecto in proyectos) { 
-        //    result = result &&  await _usuarioProyectoRepo.NuevoProyectoUsuario(idUsuario, proyecto);
-        
-        //}
-
-        //return result;
-        return true;
-    }
-
 }

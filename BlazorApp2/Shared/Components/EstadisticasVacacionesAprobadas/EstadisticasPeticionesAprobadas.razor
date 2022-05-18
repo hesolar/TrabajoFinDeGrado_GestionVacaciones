@@ -1,6 +1,6 @@
-﻿@using BlazorApp2.Shared.Components.EstadisticasPeticionesAprobadas.Model
-@inject API _api;
-@inject AuthenticationStateProvider _authenticationStateprovider;
+﻿@inherits EstadisticasPeticionesAprobadasBase
+
+@using BlazorApp2.Shared.Components.EstadisticasVacacionesAprobadas.Model
 
 @if (this.datosGrafico != null) {
     <h2>Peticiones Aprobadas</h2>
@@ -15,8 +15,8 @@
                     <RadzenAxisTitle Text="Tipos Dias" />
                 </RadzenCategoryAxis>
                 @{
-                        foreach (var t in this.TiposDias) {
-                            var datos = datosGrafico.Where(r => r.Year == YearSeleccionado && r.TipoDia == t.Descripcion);
+                        foreach (var t in this.TiposDias.OrderBy(X=>X.Descripcion)) {
+                            var datos = datosGrafico.Where(r => r.Year == YearSeleccionado && r.TipoDia == t.Descripcion).OrderBy(X=> X.TipoDia);
                             if (datos.Any()) {
                                 var titulo = datos.FirstOrDefault()?.TipoDia;
                                 <RadzenColumnSeries LineType="LineType.Dashed" Data="@datos" CategoryProperty="TipoDia" ValueProperty="Total" Title=@titulo />
@@ -38,52 +38,3 @@
 }
 
 
-
-@code {
-
-    [Parameter]
-    public ColorScheme colorScheme { get; set; }
-
-    [Parameter]
-    public int YearSeleccionado { get; set; } 
-
-    [Parameter]
-    public ICollection<CalendarioVacacionesResponse> calendarios { get; set; }
-    [Parameter]
-
-    public ICollection<TipoDiaCalendarioResponse> TiposDias { get; set; } 
-    [Parameter]
-
-    public ICollection<EstadoCalendarioVacacionesResponse> EstadosDias { get; set; }
-
-    [Parameter]
-    public UsuarioResponse usuario{ get; set; }
-
-    IList<DatosGrafico> datosGrafico;
-
-
-    protected override void OnParametersSet() {
-
-        UsuarioResponse usuario = _authenticationStateprovider.GetCurrentUser(_api);
-
-        if(this.calendarios!=null) GenerarDatosGrafico();
-    }
-    public void GenerarDatosGrafico() {
-        this.datosGrafico= new List<DatosGrafico>();
-        var CalendarioAgrupadoYear = calendarios.GroupBy(X => X.FechaCalendario.Year);
-        foreach (var grupoAnual in CalendarioAgrupadoYear) {
-            var grupoPorTipos = grupoAnual.GroupBy(x => x.TipoDiaCalendario);
-            foreach (var grupoTipoDia in grupoPorTipos) {
-                string tipo = TiposDias.First(x => x.Id == grupoTipoDia.Key).Descripcion;
-                datosGrafico.Add(new DatosGrafico {
-                        Year = grupoTipoDia.First().FechaCalendario.Year,
-                        TipoDia = tipo,
-                        Total = grupoTipoDia.Count(),
-                    });
-            }
-        }
-        datosGrafico = datosGrafico.OrderBy(x => x.TipoDia).ToList();
-        StateHasChanged();
-    }
-
-}

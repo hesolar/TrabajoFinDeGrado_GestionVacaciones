@@ -66,7 +66,6 @@ public class CalendarioEquipoBase : ComponentBase {
                 dia.ColorSeleccion = ColorTranslator.ToHtml(color);
             }
         });
-        var xxxxxxx = 3;
         return datosCalendario;
     }
 

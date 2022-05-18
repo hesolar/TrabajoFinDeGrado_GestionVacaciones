@@ -11,8 +11,7 @@
         <RadzenDataGridColumn TItem="UsuarioProyectoResponse" Property="IdProyecto" Title="Proyecto" >
             <EditTemplate Context=Proyecto>
                     <RadzenDropDown Context="Proyecto" @bind-Value="Proyecto.IdProyecto" Data="@Proyectos.Select(X=> X.IdProyecto)" ValueProperty="IdTecnico"/>                                
-                </EditTemplate>    
-               
+                </EditTemplate>               
         </RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="UsuarioProyectoResponse" Property="IdTecnico" Title="IdTecnico" >
              <EditTemplate Context=Usuario>
@@ -24,25 +23,17 @@
                         <Template Context="rol">
                             <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(rol))" @onclick:stopPropagation="true" />
                             <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(rol))" @onclick:stopPropagation="true" />
-
-
                         </Template>
                         <EditTemplate Context="rol">
-
-
                             @if (validarUsuarioProyecto(rol)) {
-
                                 <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@((args) => SaveRow(rol))" />
                             }
                             else {
                                 <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
                             }
-
                             <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(rol))" />
-
                         </EditTemplate>
-        </RadzenDataGridColumn>
-    
+        </RadzenDataGridColumn>  
     </Columns>
 </RadzenDataGrid>
 }

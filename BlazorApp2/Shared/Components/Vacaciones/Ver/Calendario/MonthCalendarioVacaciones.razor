@@ -3,14 +3,11 @@
     <table>
     @*Dias de la semana*@
 
-
     <tr>
-        @foreach(var diaSemana in PublicVariables.WeekDays.Values)
-        { 
+        @foreach(var diaSemana in PublicVariables.WeekDays.Values){ 
         <th class="weekdays"> @(diaSemana)  </th>
         }
     </tr>
-
 
     @*primera semana*@
     <tr>
@@ -26,27 +23,19 @@
             //Resto de dias
             while (i < 7){
                 DatoDia variable = datosMes.ElementAt(totalDias);
-
-
                 <th>
-                                @if (variable.Estado == "Aprobadas") {
-                                    <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
-                                }
-                                else {
-                                    if (variable.Date.DayOfWeek == DayOfWeek.Saturday || variable.Date.DayOfWeek == DayOfWeek.Sunday) {
-
-                                        <button class="Disabled">@datosMes.ElementAt(totalDias).Date.Day </button>
-                                    }
-                                    else{
-                                        
-                                        <button class="Laborable">@datosMes.ElementAt(totalDias).Date.Day </button>
-                                        
-                                    }
-
-                               }
-                  </th>       
-
-                
+                    @if (variable.Estado == "Aprobadas") {
+                        <button class="Aprobadas" disabled>@datosMes.ElementAt(totalDias).Date.Day</button>
+                    }
+                    else {
+                        if (variable.Date.DayOfWeek == DayOfWeek.Saturday || variable.Date.DayOfWeek == DayOfWeek.Sunday) {
+                            <button class="Disabled">@datosMes.ElementAt(totalDias).Date.Day </button>
+                        }
+                        else{             
+                            <button class="Laborable">@datosMes.ElementAt(totalDias).Date.Day </button>   
+                        }
+                    }
+                </th>                   
                 i++;
                 totalDias++;
             }
@@ -57,11 +46,9 @@
             while(totalDias < datosMes.Count){
                <tr>
                     @{
-                        int semana = 0;
-                
+                        int semana = 0;               
                         while (semana < 7){
-                            semana++;
-                    
+                            semana++;                    
                             if (totalDias < datosMes.Count){
                                 DatoDia variable = datosMes.ElementAt(totalDias);
                                 <th>
@@ -75,11 +62,9 @@
                                     }
                                     else{
                                         
-                                        <button class="Laborable">@datosMes.ElementAt(totalDias).Date.Day </button>
-                                        
+                                        <button class="Laborable">@datosMes.ElementAt(totalDias).Date.Day </button>                                       
                                     }
-
-                                    }
+                                }
                                 </th>
                              }  
                           totalDias++;
@@ -92,9 +77,6 @@
 
 
 @code {
-    [Parameter]
-    public DatosDias datosMes { get; set; }
-    [Parameter]
-    public int Mes { get; set; }
-   
+    [Parameter] public DatosDias datosMes { get; set; }
+    [Parameter] public int Mes { get; set; } 
 }

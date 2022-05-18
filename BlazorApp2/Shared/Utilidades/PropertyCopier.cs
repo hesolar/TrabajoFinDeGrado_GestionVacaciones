@@ -2,6 +2,11 @@
 
 public static class PropertyCopier<TParent, TChild> where TParent : class
                                              where TChild : class,new() {
+    /// <summary>
+    /// Copiar propiedades de objetos
+    /// </summary>
+    /// <param name="parent"></param>
+    /// <param name="child"></param>
     public static void Copy(TParent parent, TChild child) {
         var parentProperties = parent.GetType().GetProperties();
 

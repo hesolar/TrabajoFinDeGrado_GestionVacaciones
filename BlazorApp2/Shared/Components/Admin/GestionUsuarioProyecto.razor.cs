@@ -1,24 +1,15 @@
 ﻿namespace BlazorApp2.Shared.Components.Admin; 
 public class GestionUsuarioProyectoBase : ComponentBase  {
-    [Inject]
-    public API _api { get; set; }
-
+    [Inject] public API _api { get; set; }
     protected ErrorBoundary ErrorBoundaryInsercionesNomodificaciones;
-    public void RecoverAppState() => ErrorBoundaryInsercionesNomodificaciones.Recover();
-
-
-    public IEnumerable<UsuarioProyectoResponse> UsuariosEnProyectos;
-    public IEnumerable<ProyectoResponse> Proyectos;
-    public IEnumerable<UsuarioResponse> Usuarios;
-    public UsuarioProyectoResponse UsuarioProyectoToModify;
-
-
-    public RadzenDataGrid<UsuarioProyectoResponse> usuarioProyectoGrid { get; set; }
-
-
-
-    public bool insercion = false;
-    public bool IsLoading = false;
+    protected void RecoverAppState() => ErrorBoundaryInsercionesNomodificaciones.Recover();
+    protected IEnumerable<UsuarioProyectoResponse> UsuariosEnProyectos;
+    protected IEnumerable<ProyectoResponse> Proyectos;
+    protected IEnumerable<UsuarioResponse> Usuarios;
+    protected UsuarioProyectoResponse UsuarioProyectoToModify;
+    protected RadzenDataGrid<UsuarioProyectoResponse> usuarioProyectoGrid { get; set; }
+    protected bool insercion = false;
+    protected bool IsLoading = false;
 
 
 
@@ -28,17 +19,14 @@ public class GestionUsuarioProyectoBase : ComponentBase  {
         IsLoading = false;
     }
 
-    public async Task LoadData() {
+    protected async Task LoadData() {
         this.UsuariosEnProyectos = await _api.GetAllUsuarioProyectoAsync();
         //Elimina el proyecto inicial
-
         var  proyectosTotales = await _api.GetAllProyectosAsync();
         proyectosTotales.Remove(proyectosTotales.First(X => X.Nombre == "ProyectoInicial"));
         this.Proyectos = proyectosTotales;
-
         this.Usuarios = await _api.GetAllUsuariosAsync();
     }
-
 
     protected async Task OnUpdateRow(UsuarioProyectoResponse usuarioProyecto) {
         if (usuarioProyecto == UsuarioProyectoToModify) UsuarioProyectoToModify = null;   
@@ -47,7 +35,7 @@ public class GestionUsuarioProyectoBase : ComponentBase  {
         await LoadData();
     }
 
-    public async Task SaveRow(UsuarioProyectoResponse order) {
+    protected async Task SaveRow(UsuarioProyectoResponse order) {
         if (insercion && validarUsuarioProyecto(order)) {
             CreateUsuarioProyectoCommand c = MapFrom<UsuarioProyectoResponse, CreateUsuarioProyectoCommand>.Map(order);
             await _api.CreateUsuarioProyectoAsync(c);
@@ -58,31 +46,22 @@ public class GestionUsuarioProyectoBase : ComponentBase  {
         else await usuarioProyectoGrid.UpdateRow(order);
     }
 
-    public bool validarUsuarioProyecto(UsuarioProyectoResponse usuarioRolesProyecto) {
-        return this.Usuarios.Select(X => X.IdTecnico).Contains(usuarioRolesProyecto.IdTecnico)
-                && this.Proyectos.Select(X => X.IdProyecto).Contains(usuarioRolesProyecto.IdProyecto);
-    }
+    protected bool validarUsuarioProyecto(UsuarioProyectoResponse usuarioRolesProyecto) =>
+        this.Usuarios.Select(X => X.IdTecnico).Contains(usuarioRolesProyecto.IdTecnico)
+        && this.Proyectos.Select(X => X.IdProyecto).Contains(usuarioRolesProyecto.IdProyecto);
+    
 
-    public void CancelEdit(UsuarioProyectoResponse usuarioProyectoToModify) {
+    protected void CancelEdit(UsuarioProyectoResponse usuarioProyectoToModify) {
         if (usuarioProyectoToModify == UsuarioProyectoToModify) UsuarioProyectoToModify = null;
         usuarioProyectoGrid.CancelEditRow(usuarioProyectoToModify);
     }
 
     public async Task DeleteRow(UsuarioProyectoResponse usuarioProyectoToModify) {
         if (usuarioProyectoToModify == UsuarioProyectoToModify) UsuarioProyectoToModify = null;
-
-
-        
             DeleteUsuarioProyectoCommand d = MapFrom<UsuarioProyectoResponse, DeleteUsuarioProyectoCommand>.Map(usuarioProyectoToModify);
             await _api.DeleteUsuarioProyectoAsync(d);
-
             await LoadData();
             StateHasChanged();
-        
-        
-            //rolGrid.CancelEditRow(order);
-        
-
     }
 
     protected async Task InsertRow() {
@@ -94,10 +73,6 @@ public class GestionUsuarioProyectoBase : ComponentBase  {
     protected async Task EditRow(UsuarioProyectoResponse usuarioProyectoResponse) {
         this.UsuarioProyectoToModify = usuarioProyectoResponse;
         await usuarioProyectoGrid.EditRow(usuarioProyectoResponse);
-    }
-    protected async Task OnCreateRow(UsuarioProyectoResponse usuarioProyectoResponse) {
-        //CreateUsuarioProyectoCommand c = MapFrom<UsuarioProyectoResponse, CreateUsuarioProyectoCommand>.Map(usuarioProyectoResponse);
-        //await _api.CreateUsuarioProyectoAsync(c);
     }
 
 }

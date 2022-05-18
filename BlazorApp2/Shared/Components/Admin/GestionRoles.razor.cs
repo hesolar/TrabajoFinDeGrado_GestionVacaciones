@@ -1,51 +1,39 @@
 ﻿namespace BlazorApp2.Pages.Administracion;
 public class GestionRolesBase : ComponentBase {
 
-    [Inject]
-    public API _api { get; set; }
+    [Inject] protected API _api { get; set; }
 
     protected ErrorBoundary ErrorBoundaryInsercionesNomodificaciones;
-    public void RecoverAppState() => ErrorBoundaryInsercionesNomodificaciones.Recover();
-
-    public IEnumerable<UsuarioResponse> UsuariosAplicacion { get; set; }
-    public IEnumerable<RolesResponse> Roles{ get; set; }
-    public RadzenDataGrid<RolesResponse> rolGrid { get; set; }
-
+    protected void RecoverAppState() => ErrorBoundaryInsercionesNomodificaciones.Recover();
+    protected IEnumerable<UsuarioResponse> UsuariosAplicacion { get; set; }
+    protected IEnumerable<RolesResponse> Roles{ get; set; }
+    protected RadzenDataGrid<RolesResponse> rolGrid { get; set; }
     protected RolesResponse rolToModify;
-
-
-    public bool IsLoading = false;
-
+    protected bool IsLoading = false;
+    protected bool insercion = false;
 
 
     protected override async Task OnInitializedAsync() {
         await LoadData();
     }
 
-    public async Task LoadData() {
+    protected async Task LoadData() {
         IsLoading = true;
         this.UsuariosAplicacion = await _api.GetAllUsuariosAsync();
         this.Roles = await _api.GetAllRolesAsync();
         IsLoading = false;
+        StateHasChanged();
     }
 
 
     protected async Task OnUpdateRow(RolesResponse order) {
-
-
-        if (order == rolToModify) {
-
-            rolToModify = null;
-        }
+        if (order == rolToModify) rolToModify = null;
         UpdateRolesCommand u = MapFrom<RolesResponse, UpdateRolesCommand>.Map(order);
         await _api.UpdateRolesAsync(u);
-
-
         await LoadData();
-
     }
 
-    public async Task SaveRow(RolesResponse order) {
+    protected async Task SaveRow(RolesResponse order) {
         if (insercion && validarRoles(order)) {
             CreateRolesCommand c = MapFrom<RolesResponse, CreateRolesCommand>.Map(order);
             await _api.CreateRolesAsync(c);
@@ -55,32 +43,28 @@ public class GestionRolesBase : ComponentBase {
         else await rolGrid.UpdateRow(order);
     }
 
-    public bool validarRoles(RolesResponse order) {
-        return !string.IsNullOrEmpty(order.Rol) && order.Id> 0;
-    }
+    protected bool validarRoles(RolesResponse order) 
+        => !string.IsNullOrEmpty(order.Rol) && order.Id> 0;
+    
 
-    public void CancelEdit(RolesResponse order) {
+    protected async void CancelEdit(RolesResponse order) {
         if (order == rolToModify) rolToModify = null;
         rolGrid.CancelEditRow(order);
+        await LoadData();
     }
 
-    public async Task DeleteRow(RolesResponse order) {
+    protected async Task DeleteRow(RolesResponse order) {
         if (order == rolToModify) rolToModify = null;
-
-
         if (Roles.Contains(order)) {
             DeleteRolesCommand d = MapFrom<RolesResponse, DeleteRolesCommand>.Map(order);
             await _api.DeleteRolesAsync(d);
-
             await LoadData();
             StateHasChanged();
         }
         else {
             rolGrid.CancelEditRow(order);
         }
-
     }
-    public bool insercion = false;
 
     protected async Task InsertRow() {
         insercion = true;

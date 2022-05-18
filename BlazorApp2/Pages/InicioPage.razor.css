@@ -1,7 +1,10 @@
 ﻿body {
     background-image: url("/img/HiberusFoto.jpg");
     background-color: steelblue;
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position-y: -150px;
+   
 
 }
 h1 {

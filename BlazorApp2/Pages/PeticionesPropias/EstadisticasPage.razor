@@ -1,51 +1,40 @@
 ﻿@page "/PeticionesPropias/Estadisticas"
-
-@inject API _api;
-@inject AuthenticationStateProvider _authenticationStateprovider;
-@inject TooltipService tooltipService
-
-@using System.Globalization
+@inherits EstadisticasPageBase
 
 <ErrorBoundary>
     <ChildContent>
-
         @if (datos != null) {
-
 
             <h1>Estadísticas </h1>
             <div class="container">
                <RadzenCard Class="mt-4 w-100 mb-4 d-flex align-items-center">
                <p> En el año @this.YearSeleccionado se han registrado un total de <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Aprobadas").Count())</strong> de solicitudes de vacaciones,
                 se han concedido <strong> @(this.datos.Where(X=> this.EstadosDias.First(y=> X.Estado==y.Id).Descripcion=="Pendientes").Count()).</strong></p>
-                </RadzenCard>
-                <RadzenCard >
-
+               </RadzenCard>
+               <RadzenCard >
                     <RadzenLabel Text="Cambiar Coloración:"  />
                     <RadzenDropDown Data="@colorSchemes" @bind-Value="@colorScheme" />
                     <br>
                     <RadzenLabel Text="Seleccionar Estadisticas año:"  />
                     <RadzenDropDown Data=@this.datos.GroupBy(X=> X.FechaCalendario.Year).Select(X=> X.Key).OrderBy(X=>X) @bind-Value="@YearSeleccionado" />
-                </RadzenCard>
+               </RadzenCard>
                 <br />
-
-                <RadzenCard>
-                    <BlazorApp2.Shared.Components.EstadisticasVacacionesAprobadas.EstadisticasPeticionesAprobadas calendarios=@datos.Where(X=>this.EstadosDias.First(y=> y.Id ==X.Estado).Descripcion=="Aprobadas").ToList() colorScheme=colorScheme EstadosDias=EstadosDias TiposDias=TiposDias usuario=usuario YearSeleccionado=this.YearSeleccionado />
-
-
+               <RadzenCard>
+                    <BlazorApp2.Shared.Components.EstadisticasVacacionesAprobadas.EstadisticasPeticionesAprobadas 
+                                    calendarios=@datos.Where(X=>this.EstadosDias.First(y=> y.Id ==X.Estado).Descripcion=="Aprobadas").ToList() 
+                                    colorScheme=colorScheme EstadosDias=EstadosDias TiposDias=TiposDias usuario=usuario 
+                                    YearSeleccionado=this.YearSeleccionado />
                     <br />
-
                     <BlazorApp2.Shared.Components.EstadisticasPorMes.EstadisticasPorMes YearSeleccionado=YearSeleccionado
                                                                                     calendarios=@datos.Where(X=>X.FechaCalendario.Year==this.YearSeleccionado).ToList()
                                                                                     EstadosDias=EstadosDias TiposDias=TiposDias colorScheme=colorScheme EstadoDeseado="Aprobadas" />
                 </RadzenCard>
                 <br />
                 <br />
-
-                <RadzenCard>
+               <RadzenCard>
                     <BlazorApp2.Shared.Components.EstadisticasPorEstadoVacaciones.EstadisticasPorEstadoVacaciones YearSeleccionado=YearSeleccionado                                                                                          calendarios=@datos.Where(X=>X.FechaCalendario.Year==this.YearSeleccionado).ToList() EstadosDias=EstadosDias TiposDias=TiposDias colorScheme=colorScheme />
-                </RadzenCard>
+               </RadzenCard>
             </div>
-
         }
     </ChildContent>
     <ErrorContent>
@@ -58,34 +47,3 @@
 
 
 
-@code {
-    IEnumerable<ColorScheme> colorSchemes = Enum.GetValues(typeof(ColorScheme)).Cast<ColorScheme>();
-    public int YearSeleccionado = DateTime.Now.Year;
-    public ColorScheme colorScheme = ColorScheme.Pastel;
-
-    public ICollection<CalendarioVacacionesResponse> datos;
-
-
-    public ICollection<TipoDiaCalendarioResponse> TiposDias;
-    public ICollection<EstadoCalendarioVacacionesResponse> EstadosDias;
-    public UsuarioResponse usuario;
-
-    [Parameter]
-    public UsuarioResponse? usuarioApp{ get; set; }
-
-    protected override async Task OnInitializedAsync() {
-        if(usuarioApp!=null) this.usuario= usuarioApp;
-        else this.usuario = _authenticationStateprovider.GetCurrentUser(_api);
-        this.EstadosDias = await _api.GetAllEstadoCalendarioVacacionesAsync();
-        this.TiposDias = await _api.GetAllTipoDiaCalendarioAsync();
-        var datosRecibidos = await _api.GetUsuarioCalendarioVacacionesAsync(usuario.IdTecnico);
-
-        if (datosRecibidos is not null && datosRecibidos.Any())
-            this.datos = datosRecibidos.ToList();
-
-        StateHasChanged();
-    }
-
-
-
-}

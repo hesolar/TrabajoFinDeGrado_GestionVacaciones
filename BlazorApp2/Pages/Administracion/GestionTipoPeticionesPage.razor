@@ -6,13 +6,10 @@
 
     <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
         <ChildContent>
-
             <RadzenBadge>Tipos Peticiones </RadzenBadge>
-
-            <br/><br/>
+            <br/>
+            <br/>
             <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Añadir Nuevo Proyecto" Click="@InsertRow" Disabled=@(TipoDiaToModify != null) />
-
-
 
             <RadzenDataGrid AllowFiltering=true AllowColumnResize=true FilterMode=FilterMode.Advanced AllowSorting=true PageSize=25
                         AllowPaging=true PagerHorizontalAlign=HorizontalAlign.Left ShowPagingSummary=true
@@ -42,14 +39,11 @@
                             <RadzenTextBox @bind-Value=TipoDia.ColorRepresentacion Name="ColorRepresentacion" />
                             <RadzenLengthValidator Min=0 Component="ColorRepresentacion" Popup=true />
                         </EditTemplate>
-
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn TItem="TipoDiaCalendarioResponse" Context="sampleBlazorModelsSampleOrder" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
                         <Template Context="tipoDia">
                             <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(tipoDia))" @onclick:stopPropagation="true" />
                             <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(tipoDia))" @onclick:stopPropagation="true" />
-
-
                         </Template>
                         <EditTemplate Context="tipoDia">
 
@@ -63,22 +57,13 @@
                             }
 
                             <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@((args) => CancelEdit(tipoDia))" />
-
                         </EditTemplate>
                     </RadzenDataGridColumn>
-
-
                 </Columns>
             </RadzenDataGrid>
-
-
-
-             <br />
-   
-             <BlazorApp2.Shared.Components.Admin.GestionEstadoPeticiones/>
-
+            <br />
+            <BlazorApp2.Shared.Components.Admin.GestionEstadoPeticiones/>
         </ChildContent>
-
         <ErrorContent>
             <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="Esta operación no se pudo realizar, pulse para recuperar el estado anterior. " />
         </ErrorContent>

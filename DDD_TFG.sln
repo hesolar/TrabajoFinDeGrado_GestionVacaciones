@@ -15,13 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4_API_Sharepoint", "WebAPI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp2", "BlazorApp2\BlazorApp2.csproj", "{38344BA6-176B-41B6-8D15-A3804303B35F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Otros", "Otros", "{FF5DE84E-A6D6-4D11-8F4E-6D9C9DA8E2DB}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Desktop\CreateDBScript.sql = ..\..\..\..\Desktop\CreateDBScript.sql
-		..\..\..\..\Desktop\DB_script_11_05_2022.sql = ..\..\..\..\Desktop\DB_script_11_05_2022.sql
-		..\..\..\..\Desktop\ScriptDB.sql = ..\..\..\..\Desktop\ScriptDB.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

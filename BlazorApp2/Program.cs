@@ -16,7 +16,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 //APIS
-builder.Services.AddSingleton<SharePointAPI>(new SharePointAPI ("https://localhost:7036//", new HttpClient()));
+builder.Services.AddSingleton<SharePointAPI>(new SharePointAPI("https://localhost:7036//", new HttpClient()));
 builder.Services.AddSingleton<API>(new API("https://localhost:7140//", new HttpClient()));
 
 //MudBlazor
@@ -36,10 +36,12 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) {
+if (app.Environment.IsDevelopment())
+{
     app.UseMigrationsEndPoint();
 }
-else {
+else
+{
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();

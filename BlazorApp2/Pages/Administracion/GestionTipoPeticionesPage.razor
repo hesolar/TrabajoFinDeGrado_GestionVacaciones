@@ -1,9 +1,13 @@
 ﻿@page "/Administracion/TipoPeticiones"
 @inherits GestionTipoPeticionesPageBase
-
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 @if (TiposDias != null) {
+ 
 
+ @if (_authenticationStateProvider.GetCurrentUser(_api).WebRol==2) { 
+ 
+  
     <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
         <ChildContent>
             <RadzenBadge>Tipos Peticiones </RadzenBadge>
@@ -68,4 +72,10 @@
             <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="Esta operación no se pudo realizar, pulse para recuperar el estado anterior. " />
         </ErrorContent>
     </ErrorBoundary>
+     }
+     else{
+         <_401/>
+
+     }
+
 }

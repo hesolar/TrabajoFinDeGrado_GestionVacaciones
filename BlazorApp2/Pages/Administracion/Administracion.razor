@@ -1,6 +1,11 @@
 ﻿@page "/Administracion/Gestion"
 @inherits AdministracionVacacionesBase
+@inject AuthenticationStateProvider _authenticationStateProvider 
 
+
+ @if (_authenticationStateProvider.GetCurrentUser(_api).WebRol==2)
+   {
+       
 <PageTitle>Administracion</PageTitle>
 
 <RadzenBadge>Peticiones</RadzenBadge>
@@ -47,3 +52,8 @@
 </RadzenDataGrid>
 
 
+  }
+     else{
+         <_401/>
+
+     }

@@ -94,7 +94,6 @@ public class InteractiveCalendarBase : ComponentBase {
                 vacaciones = await _api.GetUsuarioCalendarioVacacionesAsync(usuarioActual.IdTecnico);
             }
 
-
             IEnumerable<TipoDiaCalendarioResponse> tiposDias = await _api.GetAllTipoDiaCalendarioAsync();
             this.TipoDiaColor = tiposDias.ToDictionary(keySelector: m => m.Descripcion, elementSelector: m => m.ColorRepresentacion);
             var estados = await _api.GetAllEstadoCalendarioVacacionesAsync();

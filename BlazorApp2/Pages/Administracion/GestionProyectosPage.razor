@@ -2,9 +2,13 @@
 @using BlazorApp2.Pages.Administracion.GestionProyecto
 
 @inherits GestionProyectosBase
+@inject AuthenticationStateProvider _authenticationStateProvider 
 
 @if (this.Proyectos != null) {
+     
 
+
+         @if (_authenticationStateProvider.GetCurrentUser(_api).WebRol==2){
             <RadzenBadge>Proyectos</RadzenBadge><br /><br />
             
             <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Añadir Nuevo Proyecto" Click="@InsertRow" Disabled=@(orderToModify != null) />
@@ -79,5 +83,9 @@
     
         <br>
         <BlazorApp2.Shared.Components.Admin.GestionUsuarioProyecto/>
+         }
+             else{
+                 <_401/>
 
+             }
 }

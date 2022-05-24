@@ -1,6 +1,12 @@
 ﻿@page "/Administracion/GestionRolesUsuarios"
+@inject AuthenticationStateProvider _authenticationStateProvider 
+@inject API _api
 <PageTitle>RolesYUsuarios</PageTitle>
 
+
+
+ @if (_authenticationStateProvider.GetCurrentUser(_api).WebRol==2)
+   {
 <RadzenBadge Color=Blazorise.Color.Default>Gestion Roles</RadzenBadge>
 <br />
 <br />
@@ -12,3 +18,8 @@
 <br />
 
 
+}
+     else{
+         <_401/>
+
+     }

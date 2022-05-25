@@ -1,4 +1,7 @@
-﻿
+﻿@inject API _api
+@inject AuthenticationStateProvider _authenticationStateProvider 
+
+
 <AuthorizeView>
     <Authorized>
         <div class="top-row ps-3 navbar navbar-dark">
@@ -82,6 +85,9 @@
                         </RadzenCard>
                     </RadzenPanelMenuItem>
                 </RadzenPanelMenu>
+                @*Administración*@
+                @if (_authenticationStateProvider.GetCurrentUser(_api).WebRol == 2){
+                    
                 <RadzenPanelMenu>
                     <RadzenPanelMenuItem Text="Administración Aplicación" Icon="build" Style="background-color:steelblue">
                         <RadzenCard Style="background-color:lightslategrey">
@@ -109,6 +115,7 @@
                         </RadzenCard>
                     </RadzenPanelMenuItem>
                 </RadzenPanelMenu>
+                }
             </nav>
         </div>
     </Authorized>

@@ -1,10 +1,13 @@
-﻿<h3>Error 401</h3>
+﻿@inject NavigationManager nav
+
+<h3>Error 401</h3>
 
 <div class="col-lg-6 col-xl-4 p-3">
         <RadzenCard>
             <h4 class="mb-4">Acceso no autoriazado, necesitas permisos de administración.</h4>
-            <form method="get" action="/">
-            <RadzenButton Text="Volver Inicio" Class="w-100" ButtonStyle="ButtonStyle.Danger"/>
-            </form>
+
+            <RadzenButton Text="Volver Inicio" Class="w-100" ButtonStyle="ButtonStyle.Danger" Click='()=> nav.NavigateTo("/")'/>
+
         </RadzenCard>
 </div>
+

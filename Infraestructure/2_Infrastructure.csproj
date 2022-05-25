@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Core\1_Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="p\" />
+  </ItemGroup>
+
 </Project>

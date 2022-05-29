@@ -10,7 +10,6 @@ public class PeticionesPageBase: ComponentBase {
     /// </summary>
     /// <returns></returns>
     protected override async Task OnInitializedAsync() {
-        var estados = await _api.GetAllEstadoCalendarioVacacionesAsync();
         ColoresBotones = await _api.GetAllTipoDiaCalendarioAsync();
         StateHasChanged();
     }

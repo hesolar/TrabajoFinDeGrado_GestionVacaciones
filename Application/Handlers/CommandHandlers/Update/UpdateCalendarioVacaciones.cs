@@ -9,8 +9,10 @@ public class UpdateCalendarioVacaciones : IRequestHandler<UpdateCalendarioVacaci
     }
 
     public async Task<bool> Handle(UpdateCalendarioVacacionesCommand request, CancellationToken cancellationToken) {
-        Core.Entities.CalendarioVacaciones entity= MapperBase<CalendarioVacacionesMappingProfile, Core.Entities.CalendarioVacaciones>.MappEntity(request);
-        return await _repostory.UpdateAsync(entity);
+        Core.Entities.CalendarioVacaciones newEntity= MapperBase<CalendarioVacacionesMappingProfile, Core.Entities.CalendarioVacaciones>.MappEntity(request);
+        var oldEntity  = await _repostory.GetByIdAsync(Tuple.Create(newEntity.IdTecnico, newEntity.FechaCalendario));
+        
+        return await _repostory.UpdateAsync(newEntity,oldEntity);
     }
 
 

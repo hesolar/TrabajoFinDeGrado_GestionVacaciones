@@ -1,5 +1,5 @@
 ﻿namespace Core.Repositories;
 
-public interface IEstadoCalendarioVacacionesRepository : IRepository<EstadoCalendarioVacaciones, int> {
+public interface IEstadoCalendarioVacacionesRepository : IRepositoryBase<EstadoCalendarioVacaciones, int> {
 
 }

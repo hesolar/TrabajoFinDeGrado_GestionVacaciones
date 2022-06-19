@@ -7,6 +7,6 @@ public class DeleteRolesHandler : IRequestHandler<DeleteRolesCommand, bool> {
         => this._context = context;
 
     public async Task<bool> Handle(DeleteRolesCommand request, CancellationToken cancellationToken)
-       => await _context.DeleteAsync(request.Id);
+       => await _context.DeleteByIdAsync(request.Id);
 
 }

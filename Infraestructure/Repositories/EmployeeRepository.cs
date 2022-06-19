@@ -1,27 +1,16 @@
 ﻿
 namespace Infrastructure.Repositories;
-public class EmployeeRepository : IEmployeeRepository {
-
-    EmployeeContext _context;
-    RepositoryBase<Core.Entities.Employee,int,EmployeeContext> baseOperations;
-    public  EmployeeRepository(EmployeeContext context) { 
-        _context = context;
-        baseOperations = new(_context);
+public class EmployeeRepository : RepositoryBase<Employee, int>, IEmployeeRepository {
     
+
+    public  EmployeeRepository(Context context) : base(context){ 
+
     }
 
-    public Task<bool> AddAsync(Employee entity) 
-        => baseOperations.AddAsync(entity);
-    
+    public override async Task<bool> DeleteByIdAsync(int entity)
+        =>await base.DeleteAsync(_context.Employees.First(x=>x.EmployeeId==entity));
 
-    
 
-    public Task<bool> DeleteAsync(int entity)
-        => baseOperations.DeleteAsync(_context.Employees.First(x=>x.EmployeeId==entity));
-
-    public Task<IReadOnlyList<Employee>> GetAllAsync() => baseOperations.GetAllAsync();
-
-    public Task<Employee> GetByIdAsync(int id) =>baseOperations.GetByIdAsync(id);
 
     public async Task<IEnumerable<Employee>> GetEmployeeByLastName(string lastname) {
         
@@ -29,8 +18,8 @@ public class EmployeeRepository : IEmployeeRepository {
     }
 
     public Task<bool> UpdateAsync(Employee entity) {
-        var oldEntity= _context.Employees.First(X=> X.EmployeeId == entity.EmployeeId);
-       return  baseOperations.UpdateAsync(oldEntity, entity);
+       var oldEntity= _context.Employees.First(X=> X.EmployeeId == entity.EmployeeId);
+       return  base.UpdateAsync(oldEntity, entity);
     }
     
 

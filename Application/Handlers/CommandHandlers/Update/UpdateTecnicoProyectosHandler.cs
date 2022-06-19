@@ -9,8 +9,9 @@ public class UpdateTecncioProyectosHandler : IRequestHandler<UpdateTecnicoProyec
 
     public async Task<bool> Handle(UpdateTecnicoProyectosCommand request, CancellationToken cancellationToken) {
 
-        Core.Entities.TecnicoProyectos entity= MapperBase<TecnicoProyectosMappingProfile, Core.Entities.TecnicoProyectos>.MappEntity(request);
-        return await _repostory.UpdateAsync(entity);
+        Core.Entities.TecnicoProyectos newEntity= MapperBase<TecnicoProyectosMappingProfile, Core.Entities.TecnicoProyectos>.MappEntity(request);
+        Core.Entities.TecnicoProyectos oldEntity = await _repostory.GetByIdAsync(newEntity.IdTecnico);
+        return await _repostory.UpdateAsync(oldEntity, newEntity);
 
         
     }

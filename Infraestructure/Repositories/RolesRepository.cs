@@ -1,28 +1,17 @@
 ﻿namespace Infrastructure.Repositories;
-public class RolesRepository : IRolesRepository {
+public class RolesRepository : RepositoryBase<Core.Entities.Roles, int>, IRolesRepository {
+    
+    public RolesRepository(Context context):base(context) {
 
-    RolesContext _context;
-    RepositoryBase<Core.Entities.Roles, int, RolesContext> baseOperations;
-    public RolesRepository(RolesContext context) {
-        _context = context;
-        baseOperations = new(_context);
     }
 
-    public Task<bool> AddAsync(Roles entity) 
-        => baseOperations.AddAsync(entity);
-    
+    public override async Task<bool> DeleteByIdAsync(int entity)
+        => await base.DeleteAsync(_context.Roles.First(x=>x.Id==entity));
 
-    public Task<IReadOnlyList<Roles>> GetAllAsync() 
-        => baseOperations.GetAllAsync();
+    public override async Task<bool> UpdateAsync(Roles oldEntity, Roles newEntity)
+      => await base.UpdateAsync(oldEntity,newEntity);
+    public override async Task<bool> DeleteAsync(Roles entity)
+    => await base.DeleteAsync(entity);
 
-
-    public Task<Roles> GetByIdAsync(int id) 
-        => baseOperations.GetByIdAsync(id);
-
-    public async Task<bool> DeleteAsync(int entity)
-        => await baseOperations.DeleteAsync(_context.Roles.First(x=>x.Id==entity));
-
-    public Task<bool> UpdateAsync(Roles entity)
-      => baseOperations.UpdateAsync(_context.Roles.First(x => entity.Id == x.Id), entity);
 }
 

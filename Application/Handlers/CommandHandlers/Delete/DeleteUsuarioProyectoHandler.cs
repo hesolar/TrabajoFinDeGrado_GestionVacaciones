@@ -7,7 +7,7 @@ public class DeleteUsuarioProyectoHandler : IRequestHandler<DeleteUsuarioProyect
 
     public async Task<bool> Handle(DeleteUsuarioProyectoCommand request, CancellationToken cancellationToken) 
     
-     => await _context.DeleteAsync(Tuple.Create(request.IdTecnico,request.IdProyecto));
+     => await _context.DeleteByIdAsync(Tuple.Create(request.IdTecnico,request.IdProyecto));
     
     
     

@@ -1,29 +1,15 @@
 ﻿namespace Infrastructure.Repositories;
 
-public class TecnicoProyectosRepository : ITecnicoProyectosRepository {
-    
-    TecnicoProyectosContext _context;
-    RepositoryBase<Core.Entities.TecnicoProyectos, int, TecnicoProyectosContext> baseOperations;
-    public TecnicoProyectosRepository(TecnicoProyectosContext context) {
-        _context = context;
-        baseOperations = new(_context);
+public class TecnicoProyectosRepository : RepositoryBase<Core.Entities.TecnicoProyectos, int>, ITecnicoProyectosRepository {
+
+    public TecnicoProyectosRepository(Context context) : base(context) {
     }
 
-    public Task<bool> AddAsync(TecnicoProyectos entity)
-        => baseOperations.AddAsync(entity);
 
+    public override async Task<bool> DeleteByIdAsync(int id)
+        => await base.DeleteAsync(_context.TecnicoProyectos.First(x => x.IdTecnicoProyecto == id));
 
-    public Task<IReadOnlyList<TecnicoProyectos>> GetAllAsync()
-        => baseOperations.GetAllAsync();
-
-
-    public Task<TecnicoProyectos> GetByIdAsync(int id)
-        => baseOperations.GetByIdAsync(id);
-
-    public async Task<bool> DeleteAsync(int id)
-        => await baseOperations.DeleteAsync(_context.TecnicoProyectos.First(x => x.IdTecnicoProyecto == id));
-
-    public Task<bool> UpdateAsync(TecnicoProyectos entity)
-      => baseOperations.UpdateAsync(_context.TecnicoProyectos.First(x => x.IdTecnico == entity.IdTecnico),entity);
+    public override async Task<bool> UpdateAsync(TecnicoProyectos oldEntity,TecnicoProyectos newEntity)
+      => await base.UpdateAsync(oldEntity,newEntity);
 }
 

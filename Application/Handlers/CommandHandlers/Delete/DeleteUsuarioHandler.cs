@@ -6,7 +6,7 @@ public class DeleteUsuario : IRequestHandler<DeleteUsuarioCommand, bool> {
     public DeleteUsuario(IUsuarioRepository context) => this._context = context;
 
     public async Task<bool> Handle(DeleteUsuarioCommand request, CancellationToken cancellationToken) 
-       =>  await _context.DeleteAsync(request.IdTecnico);
+       =>  await _context.DeleteByIdAsync(request.IdTecnico);
     
 }
 

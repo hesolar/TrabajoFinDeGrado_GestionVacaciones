@@ -1,6 +1,6 @@
 ﻿namespace Core.Repositories;
 
-public interface IUsuarioProyectoRepository : IRepository<UsuarioProyecto, Tuple<int, int>> {
+public interface IUsuarioProyectoRepository : IRepositoryBase<UsuarioProyecto, Tuple<int, int>> {
 
     public Task<IEnumerable <int>> GetProyectosUsuario(int Usuario);
     public Task<IEnumerable <int>> GetUsuarioProyectos(int proyecto);

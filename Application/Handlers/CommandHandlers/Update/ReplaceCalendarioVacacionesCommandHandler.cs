@@ -16,7 +16,7 @@ public class ReplaceCalendarioVacacionesCommandHandler : IRequestHandler<Replace
         Core.Entities.CalendarioVacaciones newCoreEntity=  MapperBase<CalendarioVacacionesMappingProfile,Core.Entities.CalendarioVacaciones>.MappEntity(newEntity);
 
         var KeyOldEntity = Tuple.Create(request.IdTecnico, request.FechaCalendarioOld);
-        await _repository.DeleteAsync(KeyOldEntity);
+        await _repository.DeleteByIdAsync(KeyOldEntity);
         return await _repository.AddAsync(newCoreEntity);
     }
 

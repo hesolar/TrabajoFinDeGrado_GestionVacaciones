@@ -8,7 +8,7 @@ public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeCommand,bool>
         
         Core.Entities.Employee employeeEntitiy = MapperBase<EmployeeMappingProfile, Core.Entities.Employee>.MappEntity(request);
         if (employeeEntitiy is null)  throw new ApplicationException("Issue with mapper");
-        return await _context.DeleteAsync(request.EmployeeID);
+        return await _context.DeleteByIdAsync(request.EmployeeID);
     }
 }
 

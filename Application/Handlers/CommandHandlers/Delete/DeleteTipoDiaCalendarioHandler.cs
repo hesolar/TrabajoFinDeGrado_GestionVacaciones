@@ -8,7 +8,7 @@ public class DeleteTipoDiaCalendarioHandler : IRequestHandler<DeleteTipoDiaCalen
         
         Core.Entities.TipoDiaCalendario TipoDiaCalendarioEntitiy = MapperBase<TipoDiaCalendarioMappingProfile, Core.Entities.TipoDiaCalendario>.MappEntity(request);
         if (TipoDiaCalendarioEntitiy is null)  throw new ApplicationException("Issue with mapper");
-        return await _context.DeleteAsync(request.Id);
+        return await _context.DeleteByIdAsync(request.Id);
     }
 }
 

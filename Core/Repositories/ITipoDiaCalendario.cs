@@ -1,5 +1,5 @@
 ﻿namespace Core.Repositories;
 
-public interface ITipoDiaCalendarioRepository : IRepository<TipoDiaCalendario, int> {
+public interface ITipoDiaCalendarioRepository : IRepositoryBase<TipoDiaCalendario, int> {
 
 }

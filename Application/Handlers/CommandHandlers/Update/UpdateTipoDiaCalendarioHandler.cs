@@ -9,8 +9,9 @@ public class UpdateTipoDiaCalendarioHandler : IRequestHandler<UpdateTipoDiaCalen
 
     public async Task<bool> Handle(UpdateTipoDiaCalendarioCommand request, CancellationToken cancellationToken) {
         
-        Core.Entities.TipoDiaCalendario TipoDiaCalendarioEntitiy = MapperBase<TipoDiaCalendarioMappingProfile,Core.Entities.TipoDiaCalendario>.MappEntity(request);
-        return await _repostory.UpdateAsync(TipoDiaCalendarioEntitiy);
+        Core.Entities.TipoDiaCalendario newEntity = MapperBase<TipoDiaCalendarioMappingProfile,Core.Entities.TipoDiaCalendario>.MappEntity(request);
+        Core.Entities.TipoDiaCalendario oldEntity = await _repostory.GetByIdAsync(newEntity.Id);
+        return await _repostory.UpdateAsync(oldEntity,newEntity);
          
     }
 

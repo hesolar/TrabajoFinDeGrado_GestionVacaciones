@@ -1,30 +1,15 @@
 ﻿
 namespace Infrastructure.Repositories;
-public class ProyectoRepository : IProyectoRepository {
-    readonly ProyectosContext _context;
-    readonly RepositoryBase<Core.Entities.Proyecto, Tuple<int, DateTime>, ProyectosContext> baseOperations;
-    public ProyectoRepository(ProyectosContext context) {
-        _context = context;
-        baseOperations = new(_context);
+public class ProyectoRepository : RepositoryBase<Core.Entities.Proyecto, int>, IProyectoRepository {
+    public ProyectoRepository(Context context) : base(context) { 
     }
 
-    public Task<bool> AddAsync(Proyecto entity) 
-        => baseOperations.AddAsync(entity);
-    
+    public override async Task<bool> DeleteByIdAsync(int id)
+        => await base.DeleteAsync(_context.Proyectos.First(x => x.IdProyecto==id));
 
-    public Task<bool> DeleteAsync(int id)
-        => baseOperations.DeleteAsync(_context.Proyectos.First(x => x.IdProyecto==id));
-
-    public Task<IReadOnlyList<Proyecto>> GetAllAsync() 
-        => baseOperations.GetAllAsync();
-
-    public async Task<Proyecto> GetByIdAsync(int id)
-        => await _context.Set<Proyecto>().FindAsync(id);
-    
-
-    public Task<bool> UpdateAsync(Proyecto entity) {
-        Proyecto oldEntity = _context.Proyectos.First(X => X.IdProyecto == entity.IdProyecto);
-        return baseOperations.UpdateAsync(oldEntity, entity);
+    public virtual async Task<bool> UpdateAsync(Proyecto oldEntity, Proyecto newEntity) {
+        //Proyecto oldEntity = _context.Proyectos.First(X => X.IdProyecto == entity.IdProyecto);
+        return await base.UpdateAsync(oldEntity, newEntity);
     }
 }
 

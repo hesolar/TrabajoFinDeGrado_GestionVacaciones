@@ -8,8 +8,9 @@ public class UpdateRolesHandler : IRequestHandler<UpdateRolesCommand, bool> {
     }
 
     public async Task<bool> Handle(UpdateRolesCommand request, CancellationToken cancellationToken) {
-        Core.Entities.Roles entity = MapperBase<RolesMappingProfile, Core.Entities.Roles>.MappEntity(request);
-        return await _repostory.UpdateAsync(entity);
+        Core.Entities.Roles newEntity = MapperBase<RolesMappingProfile, Core.Entities.Roles>.MappEntity(request);
+        Core.Entities.Roles oldEntity = await _repostory.GetByIdAsync(newEntity.Id);
+        return await _repostory.UpdateAsync(oldEntity,newEntity);
     }
 
 }

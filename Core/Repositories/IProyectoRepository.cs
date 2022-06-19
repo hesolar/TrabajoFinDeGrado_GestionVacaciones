@@ -1,5 +1,5 @@
 ﻿
 namespace Core.Repositories;
-public interface IProyectoRepository : IRepository<Proyecto,int> {
+public interface IProyectoRepository : IRepositoryBase<Proyecto,int> {
     //can be new custom operations
 }

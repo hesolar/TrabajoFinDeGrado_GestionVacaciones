@@ -2,7 +2,7 @@
 
 using Application.Handlers.CommandHandlers;
 using Core.Repositories;
-using Infrastructure.Data;
+using Infraestructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -19,15 +19,15 @@ builder.Services.AddSwaggerGen();
 var connectionString= builder.Configuration.GetConnectionString("TFG_DB");
 
 //DB Context
-builder.Services.AddDbContext<EmployeeContext>(m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<UsuariosContext>( m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<CalendarioVacacionesContext>( m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<ProyectosContext>( m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<RolesContext>( m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<TecnicoProyectosContext>( m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<UsuarioProyectoContext>( m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<TipoDiaCalendarioContext>( m => m.UseSqlServer(connectionString));
-builder.Services.AddDbContext<EstadoCalendarioVacacionesContext>(m => m.UseSqlServer(connectionString));
+builder.Services.AddDbContext<Context>(m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<UsuariosContext>( m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<CalendarioVacacionesContext>( m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<ProyectosContext>( m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<RolesContext>( m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<TecnicoProyectosContext>( m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<UsuarioProyectoContext>( m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<TipoDiaCalendarioContext>( m => m.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<EstadoCalendarioVacacionesContext>(m => m.UseSqlServer(connectionString));
 
 //stuff automapper and mediatr
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -11,7 +11,7 @@ public class UpdateTipoDiaCalendarioHandler : IRequestHandler<UpdateTipoDiaCalen
         
         Core.Entities.TipoDiaCalendario newEntity = MapperBase<TipoDiaCalendarioMappingProfile,Core.Entities.TipoDiaCalendario>.MappEntity(request);
         Core.Entities.TipoDiaCalendario oldEntity = await _repostory.GetByIdAsync(newEntity.Id);
-        return await _repostory.UpdateAsync(oldEntity,newEntity);
+        return await _repostory.ReplaceAsync(oldEntity,newEntity);
          
     }
 

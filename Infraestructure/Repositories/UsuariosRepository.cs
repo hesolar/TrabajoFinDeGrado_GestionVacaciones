@@ -10,7 +10,7 @@ public class UsuarioRepository : RepositoryBase<Core.Entities.Usuario, int>, IUs
         => await base.DeleteAsync(_context.Usuarios.First(x => x.IdTecnico == entity));
 
     public async Task<bool> UpdateAsync(Usuario entity)
-        => await base.UpdateAsync(_context.Usuarios.First(x => entity.IdTecnico == x.IdTecnico), entity);
+        => await base.ReplaceAsync(_context.Usuarios.First(x => entity.IdTecnico == x.IdTecnico), entity);
 
     public async Task<Usuario> GetUsuarioByCorreo(string correo) {
         return await Task.FromResult(_context.Usuarios.FirstOrDefault(X => X.EmailCorporativo == correo));

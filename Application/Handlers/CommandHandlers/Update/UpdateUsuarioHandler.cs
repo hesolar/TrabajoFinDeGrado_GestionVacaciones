@@ -11,7 +11,7 @@ public class UpdateUsuarioHandler : IRequestHandler<UpdateUsuarioCommand, bool> 
         Core.Entities.Usuario newEntity = MapperBase<UsuarioMappingProfile,Core.Entities.Usuario>.MappEntity(request);
         Core.Entities.Usuario oldEntity = await _repostory.GetByIdAsync(newEntity.IdTecnico);
         
-        return await _repostory.UpdateAsync(oldEntity,newEntity);
+        return await _repostory.ReplaceAsync(oldEntity,newEntity);
     }
 
 

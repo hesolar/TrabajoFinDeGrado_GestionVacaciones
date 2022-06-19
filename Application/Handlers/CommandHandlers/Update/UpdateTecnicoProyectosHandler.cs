@@ -11,7 +11,7 @@ public class UpdateTecncioProyectosHandler : IRequestHandler<UpdateTecnicoProyec
 
         Core.Entities.TecnicoProyectos newEntity= MapperBase<TecnicoProyectosMappingProfile, Core.Entities.TecnicoProyectos>.MappEntity(request);
         Core.Entities.TecnicoProyectos oldEntity = await _repostory.GetByIdAsync(newEntity.IdTecnico);
-        return await _repostory.UpdateAsync(oldEntity, newEntity);
+        return await _repostory.ReplaceAsync(oldEntity, newEntity);
 
         
     }

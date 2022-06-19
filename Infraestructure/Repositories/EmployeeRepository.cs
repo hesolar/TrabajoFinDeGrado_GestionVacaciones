@@ -17,9 +17,9 @@ public class EmployeeRepository : RepositoryBase<Employee, int>, IEmployeeReposi
         return await _context.Employees.Where(m => m.LastName == lastname).ToListAsync();
     }
 
-    public Task<bool> UpdateAsync(Employee entity) {
+    public Task<bool> ReplaceAsync(Employee entity) {
        var oldEntity= _context.Employees.First(X=> X.EmployeeId == entity.EmployeeId);
-       return  base.UpdateAsync(oldEntity, entity);
+       return  base.ReplaceAsync(oldEntity, entity);
     }
     
 

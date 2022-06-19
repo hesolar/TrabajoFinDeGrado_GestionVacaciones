@@ -8,8 +8,8 @@ public class RolesRepository : RepositoryBase<Core.Entities.Roles, int>, IRolesR
     public override async Task<bool> DeleteByIdAsync(int entity)
         => await base.DeleteAsync(_context.Roles.First(x=>x.Id==entity));
 
-    public override async Task<bool> UpdateAsync(Roles oldEntity, Roles newEntity)
-      => await base.UpdateAsync(oldEntity,newEntity);
+    public override async Task<bool> ReplaceAsync(Roles oldEntity, Roles newEntity)
+      => await base.ReplaceAsync(oldEntity,newEntity);
     public override async Task<bool> DeleteAsync(Roles entity)
     => await base.DeleteAsync(entity);
 

@@ -10,7 +10,7 @@ public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployeeCommand, bool
     public async Task<bool> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken) {
         Core.Entities.Employee newEntity = MapperBase<EmployeeMappingProfile,Core.Entities.Employee>.MappEntity(request);
         Core.Entities.Employee oldEntity = await _repostory.GetByIdAsync(newEntity.EmployeeId);
-        return await _repostory.UpdateAsync(oldEntity,newEntity);
+        return await _repostory.ReplaceAsync(oldEntity,newEntity);
     }
 
 

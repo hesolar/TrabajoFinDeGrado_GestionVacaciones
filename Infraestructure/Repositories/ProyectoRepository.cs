@@ -9,7 +9,7 @@ public class ProyectoRepository : RepositoryBase<Core.Entities.Proyecto, int>, I
 
     public virtual async Task<bool> UpdateAsync(Proyecto oldEntity, Proyecto newEntity) {
         //Proyecto oldEntity = _context.Proyectos.First(X => X.IdProyecto == entity.IdProyecto);
-        return await base.UpdateAsync(oldEntity, newEntity);
+        return await base.ReplaceAsync(oldEntity, newEntity);
     }
 }
 

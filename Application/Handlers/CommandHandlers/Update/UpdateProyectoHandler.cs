@@ -10,7 +10,7 @@ public class UpdateProyectoHandler : IRequestHandler<UpdateProyectoCommand, bool
     public async Task<bool> Handle(UpdateProyectoCommand request, CancellationToken cancellationToken) {
         Core.Entities.Proyecto newValue = MapperBase<ProyectoMappingProfile, Core.Entities.Proyecto>.MappEntity(request);
         Core.Entities.Proyecto oldValue = await _repostory.GetByIdAsync(newValue.IdProyecto);
-        return await _repostory.UpdateAsync(oldValue,newValue);
+        return await _repostory.ReplaceAsync(oldValue,newValue);
     }
 }
 

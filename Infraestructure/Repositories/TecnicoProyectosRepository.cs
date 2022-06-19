@@ -9,7 +9,7 @@ public class TecnicoProyectosRepository : RepositoryBase<Core.Entities.TecnicoPr
     public override async Task<bool> DeleteByIdAsync(int id)
         => await base.DeleteAsync(_context.TecnicoProyectos.First(x => x.IdTecnicoProyecto == id));
 
-    public override async Task<bool> UpdateAsync(TecnicoProyectos oldEntity,TecnicoProyectos newEntity)
-      => await base.UpdateAsync(oldEntity,newEntity);
+    public override async Task<bool> ReplaceAsync(TecnicoProyectos oldEntity,TecnicoProyectos newEntity)
+      => await base.ReplaceAsync(oldEntity,newEntity);
 }
 

@@ -14,10 +14,15 @@ public class RepositoryBase<T, TKey> : IRepositoryBase<T, TKey> where T : class 
     }
 
 
-    public virtual async Task<bool> UpdateAsync(T oldEntity, T newEntity) {
+    public virtual async Task<bool> ReplaceAsync(T oldEntity, T newEntity) {
         PropertyCopier<T, T>.Copy(newEntity, oldEntity);
-        _context.Set<T>().Update(oldEntity);
-        return await _context.SaveChangesAsync() > 0;
+        
+        bool borrado = await DeleteAsync(oldEntity);
+        bool insercion = await AddAsync(newEntity);
+        
+
+        return borrado&& insercion ?
+        await _context.SaveChangesAsync() > 0 : false;
     }
 
     public virtual async Task<IReadOnlyList<T>> GetAllAsync() {
@@ -47,5 +52,15 @@ public class RepositoryBase<T, TKey> : IRepositoryBase<T, TKey> where T : class 
         T entity = await GetByIdAsync(id);
         return await DeleteAsync(entity);
     }
+
+ 
+
+    public virtual async Task<bool> UpdateAsync(T entity) {
+
+           var cambios =   _context.Update<T>(entity);
+           return _context.SaveChanges()!=0;
+    }
+            
+            
 }
 

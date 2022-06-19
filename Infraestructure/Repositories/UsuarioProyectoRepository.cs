@@ -31,7 +31,7 @@ public class UsuarioProyectoRepository: RepositoryBase<Core.Entities.UsuarioProy
 
     public async Task<bool> UpdateAsync(UsuarioProyecto oldEntity , UsuarioProyecto newEntity) {
         //var OldEntity = _context.UsuarioProyecto.First(X => X.IdTecnico == entity.IdTecnico && X.IdProyecto == entity.IdProyecto);
-        return await base.UpdateAsync(oldEntity, newEntity); ;
+        return await base.ReplaceAsync(oldEntity, newEntity); ;
     }
 }
 

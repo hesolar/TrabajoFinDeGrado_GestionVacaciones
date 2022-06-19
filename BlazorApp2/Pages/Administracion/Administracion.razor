@@ -1,59 +1,64 @@
 ﻿@page "/Administracion/Gestion"
 @inherits AdministracionVacacionesBase
-@inject AuthenticationStateProvider _authenticationStateProvider 
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 
- @if (_authenticationStateProvider.GetCurrentUser(_api).WebRol==2)
-   {
-       
-<PageTitle>Administracion</PageTitle>
+@if (_authenticationStateProvider.GetCurrentUser(_api).WebRol == 2) {
 
-<RadzenBadge>Peticiones</RadzenBadge>
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-                Data=@TotalPeticiones TItem="CalendarioVacacionesResponse" LogicalFilterOperator="LogicalFilterOperator.Or" @ref=PeticionesGrid>
-    <Columns>
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" Title="Id Tecnico" />
+    <PageTitle>Administracion</PageTitle>
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" Title="Fecha">
-            <Template Context="order">
-                @order.FechaCalendario.ToString("dd-MM-yyyy")
-            </Template>
-        </RadzenDataGridColumn>
+    <ErrorBoundary @ref="ErrorBoundaryInsercionesNomodificaciones">
+        <ChildContent>
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="TipoDiaCalendario" Title="Tipo Dia">
-            <EditTemplate Context="calendario">
-                <RadzenDropDown @bind-Value=calendario.TipoDiaCalendario Data=@(this.TiposDias.Select(X=> X.Id))/> 
-            </EditTemplate>
-        </RadzenDataGridColumn>
+            <RadzenBadge>Peticiones</RadzenBadge>
+            <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="25" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+                        Data=@TotalPeticiones TItem="CalendarioVacacionesResponse" LogicalFilterOperator="LogicalFilterOperator.Or" @ref=PeticionesGrid>
+                <Columns>
+                    <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="IdTecnico" Title="Id Tecnico" />
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="Estado" Title="Estado">
-            <EditTemplate Context="calendario">
-                <RadzenDropDown @bind-Value=calendario.Estado Data=@(this.EstadosDias.Select(X=> X.Id))/>
-            </EditTemplate>
-        </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="FechaCalendario" Title="Fecha">
+                        <Template Context="order">
+                            @order.FechaCalendario.ToString("dd-MM-yyyy")
+                        </Template>
+                    </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
-            <Template Context="calendario">
-                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(calendario))" @onclick:stopPropagation="true" />
-                <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(calendario))" @onclick:stopPropagation="true" />
-            </Template>
-            <EditTemplate Context="calendario">
-                @if (this.validarCalendario(calendario)) {
-                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@(() => SaveRow(calendario))" />
-                }
-                else {
-                    <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
-                }
-                <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(() => CancelEdit(calendario))" />
-            </EditTemplate>
-        </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="TipoDiaCalendario" Title="Tipo Dia">
+                        <EditTemplate Context="calendario">
+                            <RadzenDropDown @bind-Value=calendario.TipoDiaCalendario Data=@(this.TiposDias.Select(X=> X.Id)) />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
 
-    </Columns>
-</RadzenDataGrid>
+                    <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Property="Estado" Title="Estado">
+                        <EditTemplate Context="calendario">
+                            <RadzenDropDown @bind-Value=calendario.Estado Data=@(this.EstadosDias.Select(X=> X.Id)) />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+                    <RadzenDataGridColumn TItem="CalendarioVacacionesResponse" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                        <Template Context="calendario">
+                            <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(args => EditRow(calendario))" @onclick:stopPropagation="true" />
+                            <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Danger" Class="m-1" Click="@(args => DeleteRow(calendario))" @onclick:stopPropagation="true" />
+                        </Template>
+                        <EditTemplate Context="calendario">
+                            @if (this.validarCalendario(calendario)) {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Click="@(() => SaveRow(calendario))" />
+                            } else {
+                                <RadzenButton Icon="check" ButtonStyle="ButtonStyle.Primary" Class="m-1" Disabled />
+                            }
+                            <RadzenButton Icon="close" ButtonStyle="ButtonStyle.Light" Class="m-1" Click="@(() => CancelEdit(calendario))" />
+                        </EditTemplate>
+                    </RadzenDataGridColumn>
+
+                </Columns>
+            </RadzenDataGrid>
+        </ChildContent>
+        <ErrorContent>
+            <RadzenButton Icon="report" ButtonStyle="ButtonStyle.Danger" Click="RecoverAppState" Text="Esta operación no se pudo realizar, pulse para recuperar el estado anterior. " />
+        </ErrorContent>
+    </ErrorBoundary>
 
 
-  }
-     else{
-         <_401/>
+} else {
+    <_401 />
 
-     }
+}
